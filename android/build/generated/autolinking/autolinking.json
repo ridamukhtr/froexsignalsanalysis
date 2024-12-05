@@ -1,6 +1,6 @@
 {
-  "root": "E:\\remote\\forex-signals-analysis",
-  "reactNativePath": "E:\\remote\\forex-signals-analysis\\node_modules\\react-native",
+  "root": "E:\\remote\\froexsignalsanalysis",
+  "reactNativePath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native",
   "reactNativeVersion": "0.75",
   "dependencies": {},
   "commands": [
@@ -164,7 +164,7 @@
         {
           "name": "--path <path>",
           "description": "Path to the React Native project root.",
-          "default": "E:\\remote\\forex-signals-analysis"
+          "default": "E:\\remote\\froexsignalsanalysis"
         },
         {
           "name": "--platform <string>",
@@ -447,7 +447,7 @@
   "assets": [],
   "project": {
     "ios": {
-      "sourceDir": "E:\\remote\\forex-signals-analysis\\ios",
+      "sourceDir": "E:\\remote\\froexsignalsanalysis\\ios",
       "xcodeProject": {
         "name": "forex_signals_analysis.xcodeproj",
         "path": ".",
@@ -456,7 +456,7 @@
       "assets": []
     },
     "android": {
-      "sourceDir": "E:\\remote\\forex-signals-analysis\\android",
+      "sourceDir": "E:\\remote\\froexsignalsanalysis\\android",
       "appName": "app",
       "packageName": "com.forex_signals_analysis",
       "applicationId": "com.forex_signals_analysis",

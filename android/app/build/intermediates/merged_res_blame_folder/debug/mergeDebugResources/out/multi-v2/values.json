@@ -23,6 +23,23 @@
                     }
                 },
                 {
+                    "source": "E:\\remote\\froexsignalsanalysis\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "17",
+                        "endColumns": "59",
+                        "endOffsets": "72"
+                    },
+                    "to": {
+                        "startLines": "322",
+                        "startColumns": "4",
+                        "startOffsets": "20673",
+                        "endColumns": "59",
+                        "endOffsets": "20728"
+                    }
+                },
+                {
                     "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\f7ff4ed6d33f9b1177c3ea8f0651504b\\transformed\\lifecycle-runtime-2.5.1\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -90,23 +107,6 @@
                         "endLines": "5,16,17,54,55,158,159,160,161,162,163,164,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,197,198,199,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,251,252,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,292,370,1767,1771,1772,1776,1777,2014,2015,2690,2728,2807,2828,3004,3010",
                         "endColumns": "59,71,87,68,62,69,67,71,69,60,73,72,60,60,61,63,61,60,67,99,59,65,72,68,56,51,61,71,75,64,58,58,59,59,59,59,59,59,59,59,59,59,58,59,59,59,59,59,59,59,59,59,59,58,59,59,58,58,58,58,58,58,34,34,54,62,54,57,57,60,62,56,50,49,60,56,65,33,34,34,69,70,116,12,109,12,128,71,66,24,24,24,24,24,24",
                         "endOffsets": "354,1085,1173,3681,3744,10737,10805,10877,10947,11008,11082,11155,12000,12061,12123,12187,12249,12310,12378,12478,12538,12604,12677,12746,12803,12855,12917,13442,13518,13583,13806,13865,13925,13985,14045,14105,14165,14225,14285,14345,14405,14465,14524,14584,14644,14704,14764,14824,14884,14944,15004,15064,15124,15183,15243,15303,15362,15421,15480,15539,15598,15657,16465,16500,16883,16946,17001,17059,17117,17178,17241,17298,17349,17399,17460,17517,17583,17617,17652,17687,18602,26723,119729,119930,120040,120241,120370,136930,136997,159356,161027,164687,165368,170220,170387"
-                    }
-                },
-                {
-                    "source": "E:\\remote\\forex-signals-analysis\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
-                    "from": {
-                        "startLines": "6",
-                        "startColumns": "4",
-                        "startOffsets": "159",
-                        "endColumns": "63",
-                        "endOffsets": "218"
-                    },
-                    "to": {
-                        "startLines": "291",
-                        "startColumns": "4",
-                        "startOffsets": "18473",
-                        "endColumns": "63",
-                        "endOffsets": "18532"
                     }
                 },
                 {
@@ -258,31 +258,31 @@
                     }
                 },
                 {
-                    "source": "E:\\remote\\forex-signals-analysis\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "source": "E:\\remote\\froexsignalsanalysis\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
                     "from": {
-                        "startLines": "1",
+                        "startLines": "6",
                         "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "59",
-                        "endOffsets": "71"
+                        "startOffsets": "159",
+                        "endColumns": "63",
+                        "endOffsets": "218"
                     },
                     "to": {
-                        "startLines": "322",
+                        "startLines": "291",
                         "startColumns": "4",
-                        "startOffsets": "20673",
-                        "endColumns": "59",
-                        "endOffsets": "20728"
+                        "startOffsets": "18473",
+                        "endColumns": "63",
+                        "endOffsets": "18532"
                     }
                 },
                 {
-                    "source": "E:\\remote\\forex-signals-analysis\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "E:\\remote\\froexsignalsanalysis\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
-                        "startOffsets": "54",
+                        "startOffsets": "57",
                         "endLines": "6",
                         "endColumns": "12",
-                        "endOffsets": "267"
+                        "endOffsets": "273"
                     },
                     "to": {
                         "startLines": "388",
