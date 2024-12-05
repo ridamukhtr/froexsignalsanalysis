@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native"
+import { COLORS, SCREEN_HEIGHT } from "./theme-styles";
 
 export const FONTS = {
     bold : "Montserrat-Bold",
@@ -8,9 +9,10 @@ export const FONTS = {
 }
 
 const globalStyles = StyleSheet.create({
-    screenHeadingTxt : { fontSize: 24, lineHeight: 30, color: COLORS.PRIMARY, fontFamily: FONTS.bold, textAlign: 'center' },
+    screenHeadingTxt : { fontSize: 24, lineHeight: 30, color: COLORS.textColor, fontFamily: FONTS.bold, textAlign: 'center' },
+    container:{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
     screenDescTxt : { textAlign:'center' },
-    defaultTxt : { fontSize: 16, lineHeight: 20, color: COLORS.GREY, fontFamily: FONTS.regular },
+    defaultTxt : { fontSize: 16, lineHeight: 20, color: COLORS.WHITE, fontFamily: FONTS.regular },
     authContentContainerStyle : {flexGrow: 1, alignItems:'center', gap: 36, paddingTop : SCREEN_HEIGHT > 700 ? '28%' : '18%', paddingBottom: SCREEN_HEIGHT > 700 ? '15%' : '8%'},
     authContentBox : {gap:12, width:'100%'},
     imgContainer:{gap:12, width:128, height:128, borderRadius:64,backgroundColor: COLORS.DIM_GRAY,justifyContent:"center", alignItems:"center" },

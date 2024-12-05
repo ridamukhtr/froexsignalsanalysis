@@ -1,10 +1,14 @@
 import { StyleSheet, Text, } from 'react-native'
 import React from 'react'
-import globalStyles from '../../styles/global-styles'
+import globalStyles, { FONTS } from '../../styles/global-styles'
+import useThemeManager from '../../lib/customHooks/useThemeManager'
+import { COLORS } from '../../styles/theme-styles'
 
 const CustomText = ({ children, onPress, numberOfLines, style }) => {
+
+    const { textColor } = useThemeManager();
     return (
-        <Text onPress={onPress} style={[globalStyles.defaultTxt, style]} numberOfLines={numberOfLines}>
+        <Text onPress={onPress} style={[styles.defaultTxt(textColor), style]} numberOfLines={numberOfLines}>
             {children}
 
         </Text>
@@ -13,4 +17,7 @@ const CustomText = ({ children, onPress, numberOfLines, style }) => {
 
 export default CustomText
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    defaultTxt: (textColor) => ({ fontSize: 16, lineHeight: 20, color: textColor ? COLORS.WHITE : COLORS.PRIMARY, fontFamily: FONTS.regular }),
+
+})
