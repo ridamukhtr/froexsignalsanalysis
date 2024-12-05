@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, } from 'react-native'
 import React from 'react'
+import globalStyles from '../../styles/global-styles'
 
-const CustomText = () => {
+const CustomText = ({ children, onPress, numberOfLines, style }) => {
     return (
-        <View>
-            <Text>CustomText</Text>
-        </View>
+        <Text onPress={onPress} style={[globalStyles.defaultTxt, style]} numberOfLines={numberOfLines}>
+            {children}
+
+        </Text>
     )
 }
 
