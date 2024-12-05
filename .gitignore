@@ -48,3 +48,15 @@ Thumbs.db
 *.mov
 *.wmv
 
+# iOS
+ios/Pods/
+
+# Android
+android/.gradle/
+android/app/build/
+
+# General
+node_modules/
+*.log
+*.lock
+.env
