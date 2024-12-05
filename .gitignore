@@ -52,7 +52,7 @@ Thumbs.db
 ios/Pods/
 
 # Android
-android/.gradle/
+# android/.gradle/
 android/app/build/
 
 # General
