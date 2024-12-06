@@ -1,69 +1,110 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 import CustomText from '../customComponents/CustomText';
 import globalStyles from '../../styles/global-styles';
 import { COLORS } from '../../styles/theme-styles';
-import useThemeManager from '../../lib/customHooks/useThemeManager';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Favourite from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ViewScreens = ({ data, onPressItem, renderRightSection }) => {
+const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
+    const [favorites, setFavorites] = useState([]);
 
-    const {textColor, } = useThemeManager();
+    // Load favorites from AsyncStorage on mount
+    useEffect(() => {
+        loadFavorites();
+    }, []);
+
+    const loadFavorites = async () => {
+        try {
+            const storedFavorites = await AsyncStorage.getItem('favorites');
+            if (storedFavorites) {
+                setFavorites(JSON.parse(storedFavorites));
+            }
+        } catch (error) {
+            console.error('Error loading favorites:', error);
+        }
+    };
+
+    const toggleFavorite = async (itemId) => {
+        let updatedFavorites;
+        if (favorites.includes(itemId)) {
+            // Remove from favorites
+            updatedFavorites = favorites.filter(id => id !== itemId);
+        } else {
+            // Add to favorites
+            updatedFavorites = [...favorites, itemId];
+        }
+        try {
+            await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            setFavorites(updatedFavorites);
+        } catch (error) {
+            console.error('Error saving favorites:', error);
+        }
+    };
+
+    const displayData = isFavoriteScreen
+        ? data.filter(item => favorites.includes(item.id))
+        : data;
 
     const renderItem = ({ item }) => (
-    
-        <CustomTouchableOpacity
-            style={{ paddingVertical: 14, borderBottomWidth: 1, borderColor: COLORS.GREY }}
-            onPress={() => onPressItem?.(item)}
-        >
+        <View style={styles.itemContainer}>
+            <CustomTouchableOpacity onPress={() => toggleFavorite(item.id)}>
+                <Favourite
+                    name="heart"
+                    size={20}
+                    color={favorites.includes(item.id) ? COLORS.GREEN : COLORS.WHITE}
+                />
+            </CustomTouchableOpacity>
 
-            <View style={globalStyles.container}>
-                <View style={[globalStyles.container, { gap: 7 }]}>
-
-                    <CustomText style={styles.title} >{item?.title}</CustomText>
-                    <CustomText>|</CustomText>
-                    <CustomText>{item?.status}</CustomText>
-                </View>
-                <CustomText>{item?.amount}</CustomText>
-            </View>
-
-            <View style={globalStyles.container}>
-
-                <View style={[globalStyles.container, { gap: 7 }]}>
-                    <CustomText>{item?.type}</CustomText>
-                    <CustomText>{item?.time}</CustomText>
-                    <CustomText>|</CustomText>
-                    <CustomText>{item?.description}</CustomText>
-                </View>
-
-                {renderRightSection ? (
-                    renderRightSection(item)
-                ) : (
+            <CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
+                <View style={globalStyles.container}>
                     <View style={[globalStyles.container, { gap: 7 }]}>
-                        <CustomText>{item?.change}</CustomText>
-                        <CustomText>{item?.percentage}</CustomText>
+                        <CustomText style={styles.titleText}>{item?.title}</CustomText>
+                        <CustomText style={styles.titleText}>|</CustomText>
+                        <CustomText style={[styles.titleText, { color: COLORS.GREEN }]}>{item?.status}</CustomText>
                     </View>
-                )}
-            </View>
-
-        </CustomTouchableOpacity>
+                    <CustomText style={[styles.titleText, { fontSize: 15 }]}>{item?.amount}</CustomText>
+                </View>
+                <View style={globalStyles.container}>
+                    <View style={[globalStyles.container, { gap: 7 }]}>
+                        <Icon name="clockcircle" size={15} color={COLORS.GREEN} />
+                        <CustomText style={styles.timeText}>{item?.time}</CustomText>
+                        <CustomText style={styles.timeText}>|</CustomText>
+                        <CustomText style={styles.timeText}>{item?.description}</CustomText>
+                    </View>
+                    <View style={[globalStyles.container, { gap: 7 }]}>
+                        <CustomText style={[styles.timeText, { color: COLORS.GREEN }]}>{item?.change}</CustomText>
+                        <CustomText style={[styles.timeText, { color: COLORS.RED }]}>{item?.percentage}</CustomText>
+                    </View>
+                </View>
+            </CustomTouchableOpacity>
+        </View>
     );
 
     return (
-
         <FlatList
-            data={data}
+            data={displayData}
             renderItem={renderItem}
-            keyExtractor={(item) => item?.id}
+            keyExtractor={item => item?.id}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
         />
-
     );
 };
 
-export default ViewScreens;
-
 const styles = StyleSheet.create({
-    title: {}
+    itemContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        paddingVertical: 14,
+        borderBottomWidth: 1,
+        borderColor: COLORS.GREY,
+    },
+    titleText: { fontSize: 16, fontWeight: '700', lineHeight: 25 },
+    timeText: { fontSize: 14, fontWeight: '300', color: COLORS.DIM },
 });
+
+export default ViewScreens;

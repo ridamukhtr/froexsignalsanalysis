@@ -1,0 +1,102 @@
+[
+    {
+        "id": "1",
+        "title": "Peugeot",
+        "amount": "25,598.95",
+        "status": "Strong",
+        "time": "11:43:21",
+        "description": "Nasa",
+        "change": "+0.75",
+        "percentage": "(+0.75%)"
+    },
+    {
+        "id": "2",
+        "title": "Tesla",
+        "amount": "48,732.20",
+        "status": "Weak",
+        "time": "12:14:05",
+        "description": "SpaceX",
+        "change": "-1.12",
+        "percentage": "(-1.12%)"
+    },
+    {
+        "id": "3",
+        "title": "Toyota",
+        "amount": "30,145.80",
+        "status": "Week",
+        "time": "10:09:18",
+        "description": "Mars",
+        "change": "+2.45",
+        "percentage": "(+2.45%)"
+    },
+    {
+        "id": "4",
+        "title": "Ford",
+        "amount": "22,989.67",
+        "status": "Strong",
+        "time": "14:32:49",
+        "description": "Jupiter",
+        "change": "+0.98",
+        "percentage": "(+0.98%)"
+    },
+    {
+        "id": "5",
+        "title": "BMW",
+        "amount": "40,712.55",
+        "status": "Weak",
+        "time": "09:43:12",
+        "description": "Earth",
+        "change": "-0.75",
+        "percentage": "(-0.75%)"
+    },
+    {
+        "id": "6",
+        "title": "Audi",
+        "amount": "35,215.40",
+        "status": "Strong",
+        "time": "16:21:37",
+        "description": "Pluto",
+        "change": "+1.10",
+        "percentage": "(+1.10%)"
+    },
+    {
+        "id": "7",
+        "title": "Volkswagen",
+        "amount": "29,999.99",
+        "status": "Week",
+        "time": "07:25:10",
+        "description": "Saturn",
+        "change": "+0.55",
+        "percentage": "(+0.55%)"
+    },
+    {
+        "id": "8",
+        "title": "Mercedes",
+        "amount": "45,678.22",
+        "status": "Strong",
+        "time": "13:18:47",
+        "description": "Venus",
+        "change": "+2.05",
+        "percentage": "(+2.05%)"
+    },
+    {
+        "id": "9",
+        "title": "Nissan",
+        "amount": "28,450.33",
+        "status": "Weak",
+        "time": "06:12:54",
+        "description": "Uranus",
+        "change": "-0.30",
+        "percentage": "(-0.30%)"
+    },
+    {
+        "id": "10",
+        "title": "Hyundai",
+        "amount": "33,110.44",
+        "status": "Week",
+        "time": "15:45:22",
+        "description": "Mercury",
+        "change": "+1.25",
+        "percentage": "(+1.25%)"
+    }
+]

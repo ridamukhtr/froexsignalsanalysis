@@ -1,6 +1,11 @@
 export const ROUTES = {
-    root :'root',
-    screenRoadMap:'screen-RoadMap',
-    screenHome : 'screen-home',
-   
+    root: 'root',
+    screenHome: 'Home',
+    screenFavourite: 'Favourite',
+    screenForex: 'Forex',
+    screenStock: 'Stock',
+    screenCommodities: 'Commodities',
+    screenIndices: 'Indices',
+    screenCrypto: 'Crypto Currency',
+
 }

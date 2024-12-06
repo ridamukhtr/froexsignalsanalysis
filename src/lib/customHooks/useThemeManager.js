@@ -22,9 +22,9 @@ export default function () {
     const heading = currentTheme == 'dark' ? 'white' : 'blue'
     const fnToggleTheme = () => {
         {
-            heading && <DZText style={[styles.heading, headingStyle]}>
+            heading && <CustomText style={[styles.heading, headingStyle]}>
                 {heading}
-            </DZText>
+            </CustomText>
         }
         const newTheme = currentTheme == 'dark' ? 'light' : 'dark'
 
