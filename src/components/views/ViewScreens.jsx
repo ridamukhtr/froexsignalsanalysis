@@ -61,22 +61,22 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
             <CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
                 <View style={globalStyles.container}>
                     <View style={[globalStyles.container, { gap: 7 }]}>
-                        <CustomText style={styles.titleText}>{item?.title}</CustomText>
-                        <CustomText style={styles.titleText}>|</CustomText>
-                        <CustomText style={[styles.titleText, { color: COLORS.GREEN }]}>{item?.status}</CustomText>
+                        <CustomText style={globalStyles.titleText}>{item?.title}</CustomText>
+                        <CustomText style={globalStyles.titleText}>|</CustomText>
+                        <CustomText style={[globalStyles.titleText, { color: COLORS.GREEN }]}>{item?.status}</CustomText>
                     </View>
-                    <CustomText style={[styles.titleText, { fontSize: 15 }]}>{item?.amount}</CustomText>
+                    <CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>{item?.amount}</CustomText>
                 </View>
                 <View style={globalStyles.container}>
                     <View style={[globalStyles.container, { gap: 7 }]}>
                         <Icon name="clockcircle" size={15} color={COLORS.GREEN} />
-                        <CustomText style={styles.timeText}>{item?.time}</CustomText>
-                        <CustomText style={styles.timeText}>|</CustomText>
-                        <CustomText style={styles.timeText}>{item?.description}</CustomText>
+                        <CustomText style={globalStyles.timeText}>{item?.time}</CustomText>
+                        <CustomText style={globalStyles.timeText}>|</CustomText>
+                        <CustomText style={globalStyles.timeText}>{item?.description}</CustomText>
                     </View>
                     <View style={[globalStyles.container, { gap: 7 }]}>
-                        <CustomText style={[styles.timeText, { color: COLORS.GREEN }]}>{item?.change}</CustomText>
-                        <CustomText style={[styles.timeText, { color: COLORS.RED }]}>{item?.percentage}</CustomText>
+                        <CustomText style={[globalStyles.timeText, { color: COLORS.GREEN }]}>{item?.change}</CustomText>
+                        <CustomText style={[globalStyles.timeText, { color: COLORS.RED }]}>{item?.percentage}</CustomText>
                     </View>
                 </View>
             </CustomTouchableOpacity>
@@ -89,7 +89,7 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
             renderItem={renderItem}
             keyExtractor={item => item?.id}
             showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
+            // scrollEnabled={false}
         />
     );
 };
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: COLORS.GREY,
     },
-    titleText: { fontSize: 16, fontWeight: '700', lineHeight: 25 },
-    timeText: { fontSize: 14, fontWeight: '300', color: COLORS.DIM },
+    // titleText: { fontSize: 16, fontWeight: '700', lineHeight: 25 },
+    // timeText: { fontSize: 14, fontWeight: '300', color: COLORS.DIM },
 });
 
 export default ViewScreens;

@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet,} from 'react-native'
 import React from 'react'
 
-const CustomScrollView = ({ children, keyboardShouldPersistTaps, scrollViewRef, contentContainerStyle, showsHorizontalScrollIndicator = false, showsVerticalScrollIndicator = false, style }) => {
+const CustomScrollView = ({ children,horizontal=false,  keyboardShouldPersistTaps, scrollViewRef, contentContainerStyle, showsHorizontalScrollIndicator = false, showsVerticalScrollIndicator = false, style }) => {
   return (
     <ScrollView
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
@@ -10,6 +10,8 @@ const CustomScrollView = ({ children, keyboardShouldPersistTaps, scrollViewRef, 
       keyboardShouldPersistTaps={keyboardShouldPersistTaps ?? 'always'}
       style={style}
       ref={scrollViewRef}
+      horizontal={horizontal}
+
     >
       {children}
     </ScrollView>

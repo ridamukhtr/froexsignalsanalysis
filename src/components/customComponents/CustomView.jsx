@@ -7,18 +7,23 @@ import CustomTouchableOpacity from './CustomTouchableOpacity'
 import { BackIcon } from '../../../assets/svg'
 import { FONTS } from '../../styles/global-styles'
 import useThemeManager from '../../lib/customHooks/useThemeManager'
+import useNavigationManager from '../../lib/customHooks/useNavigationContainer'
+import Ioniicons from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Entypo'
 
-const CustomView = ({ children, style, addScroll, contentContainerStyle, scrollViewRef, showsHorizontalScrollIndicator, centered, title = false, showsVerticalScrollIndicator, showScreenHeader, showBackIcon = false, headerStyle, onPressBackIcon, right }) => {
+
+const CustomView = ({ children, style, showDrawer, contentContainerStyle, scrollViewRef, showsHorizontalScrollIndicator, centered, title = false, showsVerticalScrollIndicator, showScreenHeader, showBackIcon = false, headerStyle, onPressBackIcon, right }) => {
 
 
     const { bgColor } = useThemeManager();
-    
+    const { fnOpenDrawer, fnNavigateGoBack } = useNavigationManager();
+
     return (
         <>
-            {addScroll ?
+            {showDrawer ?
                 <KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
                     <CustomScrollView scrollViewRef={scrollViewRef} style={[styles.container(bgColor), style]} contentContainerStyle={contentContainerStyle} showsHorizontalScrollIndicator={showsHorizontalScrollIndicator} showsVerticalScrollIndicator={showsVerticalScrollIndicator}>
-                        {showBackIcon &&
+                        {showBackIcon ? (
                             <View style={[styles.headerContainer, headerStyle]}>
                                 <CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
                                     <BackIcon />
@@ -26,31 +31,50 @@ const CustomView = ({ children, style, addScroll, contentContainerStyle, scrollV
                                 <CustomText style={styles.titleContainer} >{title}</CustomText>
                                 {right}
                             </View>
+                        ) : (
+                            <View style={[styles.headerContainer, headerStyle]}>
+                                <CustomTouchableOpacity onPress={fnOpenDrawer}>
+                                    <Ioniicons name={"menu"} size={30} />
+                                </CustomTouchableOpacity>
+                                {right}
+                            </View>
+                        )
+
                         }
                         {children}
                     </CustomScrollView>
                 </KeyboardAvoidingView>
                 :
+
+
                 <KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
                     <View style={[styles.container(bgColor), style]}>
-                        {showBackIcon &&
-                            <View style={[centered ? styles.headerFullWidthContainer : styles.headerContainer, headerStyle]}>
+                        {showBackIcon ? (
+                            <View style={[styles.headerContainer, headerStyle]}>
                                 <CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
-                                    <BackIcon />
+                                    <Icon name={"chevron-left"} size={25} color={COLORS.WHITE} width={34} />
                                 </CustomTouchableOpacity>
-                                {centered ? (
-                                    <View style={{ width: '90%' }}>
-                                        {centered}
-                                    </View>
-                                ) : (
-                                    <>
-                                        <CustomText style={styles.titleContainer}>{title}</CustomText>
-                                        {right}
-                                    </>
-                                )}
+                                <View style={{ flex: 1 }} >
+
+                                    <CustomText style={styles.titleContainer} >{title}</CustomText>
+                                </View>
+
+                                {right}
                             </View>
+                        ) : (
+                            <View style={[styles.headerContainer, headerStyle]}>
+                                {/* <View style={styles.headerContainer} > */}
+                                <CustomTouchableOpacity onPress={fnOpenDrawer}>
+                                    <Ioniicons name={"menu"} size={30} />
+                                </CustomTouchableOpacity>
+                                {right}
+
+                            </View>
+                        )
+
                         }
                         {children}
+
                     </View>
                 </KeyboardAvoidingView>
 
@@ -71,7 +95,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-    headerContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", paddingTop: 52, paddingBottom: 24, },
+    headerContainer: { flexDirection: 'row', alignItems: "center", paddingTop: 30, paddingBottom: 15, },
     headerFullWidthContainer: { justifyContent: 'space-between', flexDirection: 'row', alignItems: "center", gap: 10, paddingTop: 52, paddingBottom: 16, paddingHorizontal: 10, },
-    titleContainer: { color: COLORS.PRIMARY, fontWeight: '500', fontSize: 18, fontFamily: FONTS.semi_bold },
+    titleContainer: { color: COLORS.WHITE, fontWeight: '500', fontSize: 18, fontFamily: FONTS.semi_bold },
 })

@@ -7,5 +7,6 @@ export const ROUTES = {
     screenCommodities: 'Commodities',
     screenIndices: 'Indices',
     screenCrypto: 'Crypto Currency',
+    screenHelp: 'Help',
 
 }
