@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { Appearance } from "react-native"
 import { changeTheme, selectedThemeSelector } from "../../redux/themeReducer"
+import { COLORS } from "../../styles/theme-styles"
+import CustomText from "../../components/customComponents/CustomText"
 
 
 export default function () {
@@ -17,12 +19,12 @@ export default function () {
     }, [])
 
 
-    const bgColor = currentTheme == 'dark' ? '#1A152B' : '#fff'
-    const textColor = currentTheme == 'dark' ? '#fff' : '#1A152B'
+    const bgColor = currentTheme === 'dark' ? COLORS.DARK_BLUE : COLORS.WHITE;
+    const textColor = currentTheme === 'dark' ? COLORS.WHITE : COLORS.BLACK;
     const heading = currentTheme == 'dark' ? 'white' : 'blue'
     const fnToggleTheme = () => {
         {
-            heading && <CustomText style={[styles.heading, headingStyle]}>
+            heading && <CustomText >
                 {heading}
             </CustomText>
         }

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
+import data from '../../assets/all_data.json'
 
 const IndicesScreen = () => {
     const handlePressItem = (item) => {
@@ -9,12 +10,12 @@ const IndicesScreen = () => {
     };
 
     return (
-        <CustomView addScroll={true}>
+        <>
             <ViewScreens
                 data={data}
                 onPressItem={handlePressItem}
             />
-        </CustomView>
+        </>
     )
 }
 

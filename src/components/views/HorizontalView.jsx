@@ -134,7 +134,7 @@ const HorizontalView = ({
     initialTab = '',
     onTabChange = () => { },
     customStyles,
-    variant = 'default', // 'default' or 'button'
+    variant,
 }) => {
     const [selectedTab, setSelectedTab] = useState(initialTab || tabs[0]);
 
@@ -181,9 +181,13 @@ const HorizontalView = ({
                                     />
                                 )}
                             </>
-                        ) : (
-                            <View style={[styles.activeTabText, selectedTab === tab ? styles.activeBg : null]} >
-
+                        ) : variant === 'button' ? (
+                            <View
+                                style={[
+                                    styles.activeTabText,
+                                    selectedTab === tab ? styles.activeBg : null,
+                                ]}
+                            >
                                 <Text
                                     style={[
                                         styles.tabText,
@@ -192,8 +196,10 @@ const HorizontalView = ({
                                 >
                                     {tab}
                                 </Text>
-
                             </View>
+                        ) : (
+                            // Fallback: No variant provided
+                            <Text style={styles.tabText}>{tab}</Text>
                         )}
                     </CustomTouchableOpacity>
                 ))}
@@ -233,7 +239,7 @@ const styles = StyleSheet.create({
     },
 
     // activeBtn: { paddingHorizontal: 10, paddingVertical: 2, borderRadius: 150 / 1 },
-    activeBg: { paddingHorizontal: 10, paddingVertical: 2, borderRadius: 150 / 1, backgroundColor: COLORS.DARK_BLUE, },
+    activeBg: { paddingHorizontal: 10, paddingVertical: 2, borderRadius: 150 / 1, backgroundColor: COLORS.PRIMARY, },
 });
 
 export default HorizontalView;

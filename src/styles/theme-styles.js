@@ -15,7 +15,7 @@ export const COLORS = {
     GREEN:"#0C9686",
     DIM_GRAY:'#1E3A8A0D',
     LIGHT_GRAY:'#37415166',
-    MED_GRAY:'#374151CC',
+    MED_GRAY:'#d7d7dd',
     PINK:'pink',
     GREY_TEXT:'#999999'
 };

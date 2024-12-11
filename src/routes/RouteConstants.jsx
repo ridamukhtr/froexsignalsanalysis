@@ -1,5 +1,7 @@
 export const ROUTES = {
     root: 'root',
+    bottomTabs:'bottomTabs',
+    drawer:"drawer",
     screenHome: 'Home',
     screenFavourite: 'Favourite',
     screenForex: 'Forex',

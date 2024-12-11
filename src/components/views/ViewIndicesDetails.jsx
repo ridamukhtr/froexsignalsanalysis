@@ -6,46 +6,57 @@ import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity'
 import { COLORS } from '../../styles/theme-styles'
 import Arrow from 'react-native-vector-icons/Entypo'
 import ArrowDown from 'react-native-vector-icons/Entypo'
+import useThemeManager from '../../lib/customHooks/useThemeManager'
+import { ClicktoNextIcon } from '../../../assets/svg'
+import AnimatedIcon from '../../../assets/svg/AnimatedIcon'
+import HorizontalView from './HorizontalView'
 
 
-const ViewIndicesDetails = () => {
-    
+const ViewIndicesDetails = ({ onPress }) => {
+
+    const tabs =["jfd", "nfm"]
+
+    const { textColor } = useThemeManager()
+
     return (
-        <View style={{  }} >
+        <View>
             <View style={globalStyles.container} >
-                <CustomText style={styles.title}>Moving Averages</CustomText>
+                <CustomText style={[styles.title, { color: textColor }]}>Moving Averages</CustomText>
                 <View style={styles.statusContainer}>
                     <CustomText style={styles.statusText}>Strong sell</CustomText>
                     <View style={styles.redDot} />
                 </View>
             </View>
 
-            <View style={globalStyles.container} >
-                <CustomTouchableOpacity style={styles.btnContainer} >
-                    <View style={[globalStyles.container, { gap: 20 }]} >
+            <CustomTouchableOpacity style={styles.btnContainer} onPress={onPress}>
+                <View style={[globalStyles.container, { justifyContent: "space-around", paddingBottom: 10 }]} >
+                    <View style={[globalStyles.container, { gap: 20, }]} >
                         <View style={[globalStyles.container, { gap: 5 }]}>
 
                             <Arrow name={"arrow-up"} size={25} color={COLORS.GREEN} />
 
-                            <CustomText>{"Buy"}</CustomText>
+                            <CustomText style={{ color: COLORS.WHITE }}>{"Buy"}</CustomText>
                         </View>
-                        <CustomText style={[globalStyles.titleText, { fontSize: 23 }]} >{"2"}</CustomText>
+                        <CustomText style={[globalStyles.titleText, { fontSize: 23, color: COLORS.WHITE }]} >{"2"}</CustomText>
                     </View>
-                </CustomTouchableOpacity>
-                <CustomTouchableOpacity style={styles.btnContainer} >
                     <View style={[globalStyles.container, { gap: 20 }]} >
                         <View style={[globalStyles.container, { gap: 5 }]}>
 
                             <ArrowDown name={"arrow-down"} size={25} color={COLORS.GREEN} />
 
 
-                            <CustomText>{"Buy"}</CustomText>
+                            <CustomText style={{ color: COLORS.WHITE }} >{"Sell"}</CustomText>
                         </View>
-                        <CustomText style={[globalStyles.titleText, { fontSize: 23 }]} >{"2"}</CustomText>
+                        <CustomText style={[globalStyles.titleText, { fontSize: 23, color: COLORS.WHITE }]} >{"2"}</CustomText>
                     </View>
-                </CustomTouchableOpacity>
 
-            </View>
+                </View>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingLeft:30 }} >
+                    <CustomText style={{ color: COLORS.YELLOW }}>{"Click to view details"}</CustomText>
+                    <AnimatedIcon direction="right" color={COLORS.YELLOW} size={24}/>
+                </View>
+            </CustomTouchableOpacity>
+            <HorizontalView tabs={tabs} variant={"button"}/>
         </View>
     )
 }
@@ -74,7 +85,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    btnContainer: { padding: 20, width: '48%', borderRadius: 10, borderWidth: 1, borderColor: COLORS.GREY, marginVertical: 20 }
+    btnContainer: { backgroundColor: COLORS.DARK_BLUE, padding: 20, borderRadius: 10, borderWidth: 1, borderColor: COLORS.GREY, marginVertical: 20, marginHorizontal: 30 }
 
 })
 

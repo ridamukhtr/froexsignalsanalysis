@@ -11,7 +11,7 @@ export const FONTS = {
 const globalStyles = StyleSheet.create({
     screenHeadingTxt : { fontSize: 24, lineHeight: 30, color: COLORS.textColor, fontFamily: FONTS.bold, textAlign: 'center' },
     container:{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-    timeText: { fontSize: 14, fontWeight: '300', color: COLORS.DIM },
+    timeText: { fontSize: 14, fontWeight: '300', color: COLORS.GREY_TEXT },
     titleText: { fontSize: 16, fontWeight: '700', lineHeight: 25 },
     screenDescTxt : { textAlign:'center' },
     defaultTxt : { fontSize: 16, lineHeight: 20, color: COLORS.WHITE, fontFamily: FONTS.regular },

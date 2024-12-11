@@ -6,11 +6,21 @@ import CryptoCurrencyScreen from '../screens/CryptoCurrencyScreen';
 import FavouriteScreen from '../screens/FavouriteScreen';
 import { COLORS } from '../styles/theme-styles';
 import HomeScreen from '../screens/HomeScreen';
+import useThemeManager from '../lib/customHooks/useThemeManager';
+import ComoditiesScreen from '../screens/ComoditiesScreen';
+import ForexScreen from '../screens/ForexScreen';
+import IndicesScreen from '../screens/IndicesScreen';
+import StockScreen from '../screens/StockScreen';
+import HelpScreen from '../screens/HelpScreen';
+import BottomNavigator from './BottomNavigator';
 
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
+
+    const { bgColor, textColor } = useThemeManager()
+
     return (
         <Drawer.Navigator
             screenOptions={{
@@ -19,14 +29,17 @@ const DrawerNavigator = () => {
                 drawerType: 'front',
                 swipeEnabled: false,
                 drawerItemStyle: { ...styles.drawerItem },
-                drawerActiveTintColor: COLORS.WHITE,
+                drawerActiveTintColor: textColor,
                 drawerInactiveTintColor: COLORS.DIM,
                 drawerActiveBackgroundColor: "transparent",
                 // drawerInactiveBackgroundColor: COLORS.NAV_BLUE,
-                drawerStyle: { width: '72%', backgroundColor:COLORS.DARK_BLUE },
+                drawerStyle: { width: '72%', backgroundColor: bgColor },
             }}>
-            <Drawer.Screen name={ROUTES.screenHome} component={HomeScreen} />
+
+            <Drawer.Screen name={ROUTES.screenHome} component={BottomNavigator} />
             <Drawer.Screen name={ROUTES.screenFavourite} component={FavouriteScreen} />
+            {/* <Drawer.Screen name={ROUTES.screenProfile} component={ProfileScreen} /> */}
+
         </Drawer.Navigator>
     );
 }
@@ -35,11 +48,11 @@ const styles = StyleSheet.create({
     drawerItem: {
         // borderColor: COLORS.NAV_BLUE,
         // borderWidth:2,
-        paddingHorizontal:0,
+        paddingHorizontal: 0,
         // marginTop:5
     },
     drawerActiveItem: {
-        borderColor: COLORS.NAV_BLUE, 
+        borderColor: COLORS.NAV_BLUE,
     },
 
 })

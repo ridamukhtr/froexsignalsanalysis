@@ -7,9 +7,12 @@ import { COLORS } from '../../styles/theme-styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Favourite from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useThemeManager from '../../lib/customHooks/useThemeManager';
 
 const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
     const [favorites, setFavorites] = useState([]);
+
+    const { bgColor, textColor } = useThemeManager()
 
     // Load favorites from AsyncStorage on mount
     useEffect(() => {
@@ -51,11 +54,17 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
             <CustomTouchableOpacity onPress={() => toggleFavorite(item.id)}>
-                <Favourite
+                {favorites.includes(item.id) ? (<Favourite
                     name="heart"
                     size={20}
-                    color={favorites.includes(item.id) ? COLORS.GREEN : COLORS.WHITE}
+                    color={COLORS.GREEN}
                 />
+                ) : (
+                    <Favourite
+                        name="hearto"
+                        color={COLORS.GREEN}
+                        size={20}
+                    />)}
             </CustomTouchableOpacity>
 
             <CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
@@ -89,7 +98,7 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
             renderItem={renderItem}
             keyExtractor={item => item?.id}
             showsVerticalScrollIndicator={false}
-            // scrollEnabled={false}
+        // scrollEnabled={false}
         />
     );
 };

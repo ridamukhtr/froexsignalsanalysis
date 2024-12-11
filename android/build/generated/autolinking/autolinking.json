@@ -197,6 +197,31 @@
         }
       }
     },
+    "react-native-share": {
+      "root": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-share",
+      "name": "react-native-share",
+      "platforms": {
+        "ios": {
+          "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-share\\RNShare.podspec",
+          "version": "12.0.3",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-share\\android",
+          "packageImportPath": "import cl.json.RNSharePackage;",
+          "packageInstance": "new RNSharePackage()",
+          "buildTypes": [],
+          "libraryName": "RNShareSpec",
+          "componentDescriptors": [],
+          "cmakeListsPath": "E:/remote/froexsignalsanalysis/node_modules/react-native-share/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
     "react-native-svg": {
       "root": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-svg",
       "name": "react-native-svg",

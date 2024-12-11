@@ -12,10 +12,8 @@ const FavouriteScreen = () => {
     };
 
     return (
-        <CustomView addScroll={true}>
-            <CustomText style={{marginTop:50}} >
-                Favourite screen
-            </CustomText>
+        <CustomView showBackIcon title={"Favourite Screen"} >
+           
             <ViewScreens
                 data={data}
                 onPressItem={handlePressItem}
