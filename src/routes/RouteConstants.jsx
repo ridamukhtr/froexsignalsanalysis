@@ -10,5 +10,6 @@ export const ROUTES = {
     screenIndices: 'Indices',
     screenCrypto: 'Crypto Currency',
     screenHelp: 'Help',
+    screenDetails: 'Details',
 
 }

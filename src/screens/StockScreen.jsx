@@ -4,12 +4,21 @@ import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
 import data from '../../assets/all_data.json'
 import CustomScrollView from '../components/customComponents/CustomScrollView';
+import useNavigationManager from '../lib/customHooks/useNavigationManager';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../routes/RouteConstants';
 
 const StockScreen = () => {
+    const navigation = useNavigation()
+
+    const fnNavigateToDetails = (item) => navigation.navigate(ROUTES.screenDetails, { item });
+
 
     const handlePressItem = (item) => {
+        fnNavigateToDetails(item); // Pass item data to details screen
         console.log('Item pressed:', item);
     };
+    
 
     return (
         <View  >

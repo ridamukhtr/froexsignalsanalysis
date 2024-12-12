@@ -12,6 +12,7 @@ export default function useNavigationManager() {
     const fnNavigateToForax=()=> navigation.navigate(ROUTES.screenForex);
     const fnNavigateToHelp=()=> navigation.navigate(ROUTES.screenHelp);
     const fnNavigateToCommodities=()=> navigation.navigate(ROUTES.screenCommodities);
+    const fnNavigateToDetails=()=> navigation.navigate(ROUTES.screenDetails);
     
 
 
@@ -31,6 +32,7 @@ export default function useNavigationManager() {
         fnNavigateToFavourite,
         fnNavigateToHome,
         fnNavigateToIndices,
+        fnNavigateToDetails,
 
         fnNavigateToRoot,
         fnOpenDrawer,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 import CustomText from '../customComponents/CustomText';
 import globalStyles from '../../styles/global-styles';
@@ -93,18 +93,25 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
     );
 
     return (
-        <FlatList
-            data={displayData}
-            renderItem={renderItem}
-            keyExtractor={item => item?.id}
-            showsVerticalScrollIndicator={false}
-        // scrollEnabled={false}
-        />
+        <SafeAreaView style={{  }}>
+
+            <FlatList
+                data={displayData}
+                renderItem={renderItem}
+                keyExtractor={item => item?.id}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: '55%' }} 
+            // scrollEnabled={false}
+            />
+        </SafeAreaView>
+
     );
 };
 
 const styles = StyleSheet.create({
     itemContainer: {
+        flex:1,
+        
         flexDirection: 'row',
         alignItems: 'center',
         gap: 12,

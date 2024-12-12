@@ -67,58 +67,7 @@
 // export default BottomNavigator;
 
 
-// import React from 'react';
-// import { View, Text } from 'react-native';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { NavigationContainer } from '@react-navigation/native';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
-// import HomeScreen from '../screens/HomeScreen';
-// import { ROUTES } from '../routes/RouteConstants';
-// import ComoditiesScreen from '../screens/ComoditiesScreen';
-// import CryptoCurrencyScreen from '../screens/CryptoCurrencyScreen';
-// import ForexScreen from '../screens/ForexScreen';
-// import IndicesScreen from '../screens/IndicesScreen';
-// import StockScreen from '../screens/StockScreen';
 
-// // Create Bottom Tab Navigator
-// const Tab = createBottomTabNavigator();
-
-// export default function App() {
-//     return (
-//         <NavigationContainer>
-//             <Tab.Navigator
-//                 screenOptions={({ route }) => ({
-//                     tabBarIcon: ({ focused, color, size }) => {
-//                         let iconName;
-
-//                         if (route.name === 'Home') {
-//                             iconName = focused ? 'home' : 'home-outlined';
-//                         } else if (route.name === 'Profile') {
-//                             iconName = focused ? 'person' : 'person-outline';
-//                         } else if (route.name === 'Settings') {
-//                             iconName = focused ? 'settings' : 'settings-outline';
-//                         }
-
-//                         return <Icon name={iconName} size={size} color={color} />;
-//                     },
-//                     tabBarActiveTintColor: 'blue',
-//                     tabBarInactiveTintColor: 'gray',
-//                     tabBarStyle: { backgroundColor: '#f9f9f9', paddingBottom: 5 },
-//                 })}
-//             >
-//                 <Tab.Screen name={ROUTES.screenHome} component={HomeScreen} />
-//                 <Tab.Screen name={ROUTES.screenCommodities} component={ComoditiesScreen} />
-//                 <Tab.Screen name={ROUTES.screenCrypto} component={CryptoCurrencyScreen} />
-//                 <Tab.Screen name={ROUTES.screenForex} component={ForexScreen} />
-//                 <Tab.Screen name={ROUTES.screenIndices} component={IndicesScreen} />
-//                 <Tab.Screen name={ROUTES.screenStock} component={StockScreen} />
-//             </Tab.Navigator>
-//         </NavigationContainer>
-//     );
-// }
-
-
-// src/navigation/BottomNavigator.js
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -132,46 +81,61 @@ import { ROUTES } from '../routes/RouteConstants';
 import DrawerNavigator from './DrawerNavigator';
 import { COLORS } from '../styles/theme-styles';
 import HelpScreen from '../screens/HelpScreen';
+import useThemeManager from '../lib/customHooks/useThemeManager';
+import FavouriteScreen from '../screens/FavouriteScreen';
+import DetailsScreen from '../screens/DetailsScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const StockStack = () => (
+    <Stack.Navigator>
+      <Stack.Screen name="Stock" component={HomeScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="Details" component={DetailsScreen} options={{ headerShown: false }}/>
+    </Stack.Navigator>
+  );
 
 const BottomNavigator = () => {
+
+    const { bgColor, textColor, currentTheme } = useThemeManager();
     return (
         <Tab.Navigator
             screenOptions={({ route, }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
+                tabBarIcon: () => {
                     let iconName;
 
                     switch (route.name) {
-                        case ROUTES.screenHome:
-                            iconName = focused ? 'home' : 'home-outline';
+                        case ROUTES.bottomTabs:
+                            iconName = 'bar-chart';
+                            break;
+                        case ROUTES.screenHelp:
+                            iconName = 'work';
                             break;
                         case ROUTES.screenCommodities:
-                            iconName = focused ? 'work' : 'work-outline';
+                            iconName = 'work';
                             break;
-                        case ROUTES.screenCrypto:
-                            iconName = focused ? 'currency-bitcoin' : 'currency-bitcoin-outline';
+                        case ROUTES.screenFavourite:
+                            iconName = 'work';
                             break;
-                        case ROUTES.screenForex:
-                            iconName = focused ? 'attach-money' : 'money-off';
-                            break;
-                        case ROUTES.screenIndices:
-                            iconName = focused ? 'bar-chart' : 'bar-chart-outline';
-                            break;
-                        case ROUTES.screenStock:
-                            iconName = focused ? 'business' : 'business-outline';
-                            break;
-                    }
 
-                    return <Icon name={iconName} size={size} color={color} />;
+                    }
+                    const iconColor = textColor
+                    const iconSize = 30
+
+                    return <Icon name={iconName} size={iconSize} color={iconColor} />;
                 },
-                tabBarActiveTintColor: 'blue',
-                tabBarInactiveTintColor: 'gray',
-                tabBarStyle: { backgroundColor: COLORS.NAV_BLUE,height:70, borderWidth:0, borderColor:"transparent", paddingBottom: 5, borderTopLeftRadius: 10,borderTopRightRadius:10 },
+              
+                tabBarActiveTintColor: textColor,
+                tabBarShowLabel: false,
+                tabBarStyle: {  paddingBottom: 60, paddingTop: 10, backgroundColor: currentTheme === 'dark' ? COLORS.NAV_BLUE : 'white', position: 'absolute', borderWidth: 0, borderColor: "transparent", borderTopLeftRadius: 20, borderTopRightRadius: 20, marginBottom: 0 },
             })}
         >
-            <Tab.Screen name={ROUTES.screenHome} component={HomeScreen} options={{ headerShown: false }}  />
-            <Tab.Screen name={ROUTES.screenHelp} component={HelpScreen} options={{ headerShown: false }}  />
+
+            <Tab.Screen name={ROUTES.bottomTabs} component={StockStack} options={{ headerShown: false }} />
+            <Tab.Screen name={ROUTES.screenHelp} component={HelpScreen} options={{ headerShown: false }} />
+            <Tab.Screen name={ROUTES.screenCommodities} component={ComoditiesScreen} options={{ headerShown: false }} />
+            <Tab.Screen name={ROUTES.screenFavourite} component={FavouriteScreen} options={{ headerShown: false }} />
 
         </Tab.Navigator>
     );

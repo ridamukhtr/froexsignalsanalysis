@@ -6,13 +6,15 @@ import { store } from './src/redux/store'
 import { Provider } from 'react-redux'
 import ViewTechnical from './src/components/views/ViewTechnical'
 import FavouriteScreen from './src/screens/FavouriteScreen'
+import useThemeManager from './src/lib/customHooks/useThemeManager'
+import { COLORS } from './src/styles/theme-styles'
 
 
 const App = () => {
   return (
     <Provider store={store}>
 
-      <View style={{ flex: 1 }} >
+      <View style={{ flex: 1,  backgroundColor: COLORS.NAV_BLUE, }} >
         <AppNavigator/>
         {/* <FavouriteScreen/> */}
         {/* <ViewTechnical/> */}

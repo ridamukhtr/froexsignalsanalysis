@@ -12,16 +12,15 @@ import AnimatedIcon from '../../../assets/svg/AnimatedIcon'
 import HorizontalView from './HorizontalView'
 
 
-const ViewIndicesDetails = ({ onPress }) => {
+const ViewIndicesDetails = ({ onPress, title }) => {
 
-    const tabs =["jfd", "nfm"]
 
     const { textColor } = useThemeManager()
 
     return (
         <View>
             <View style={globalStyles.container} >
-                <CustomText style={[styles.title, { color: textColor }]}>Moving Averages</CustomText>
+                <CustomText style={[styles.title, { color: textColor }]}>{title}</CustomText>
                 <View style={styles.statusContainer}>
                     <CustomText style={styles.statusText}>Strong sell</CustomText>
                     <View style={styles.redDot} />
@@ -56,7 +55,6 @@ const ViewIndicesDetails = ({ onPress }) => {
                     <AnimatedIcon direction="right" color={COLORS.YELLOW} size={24}/>
                 </View>
             </CustomTouchableOpacity>
-            <HorizontalView tabs={tabs} variant={"button"}/>
         </View>
     )
 }
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
         marginRight: 4,
     },
     title: {
-        color: '#ffffff',
+        color: COLORS.WHITE,
         fontSize: 16,
         fontWeight: 'bold',
     },

@@ -91,7 +91,7 @@ const CustomView = ({ children, style, showDrawer, contentContainerStyle, scroll
 export default CustomView
 
 const styles = StyleSheet.create({
-    container: (bgColor) => ({ flex: 1, backgroundColor: bgColor, paddingHorizontal: '4%', }),
+    container: (bgColor) => ({ flex: 1, backgroundColor: bgColor, paddingHorizontal: '4%',paddingBottom:100 }),
     flexContainer: {
         flex: 1,
         justifyContent: 'center',
