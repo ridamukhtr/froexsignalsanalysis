@@ -18,6 +18,6 @@ const CustomText = ({ children, onPress, numberOfLines, style }) => {
 export default CustomText
 
 const styles = StyleSheet.create({
-    defaultTxt: (textColor) => ({ fontSize: 16, lineHeight: 20, color: textColor, fontFamily: FONTS.regular }),
+    defaultTxt: (textColor) => ({ fontSize: 16, lineHeight: 20, color: textColor,  }),
 
 })

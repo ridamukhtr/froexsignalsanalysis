@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 import CustomText from '../customComponents/CustomText';
@@ -8,16 +8,17 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Favourite from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useThemeManager from '../../lib/customHooks/useThemeManager';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
     const [favorites, setFavorites] = useState([]);
 
-    const { bgColor, textColor } = useThemeManager()
-
-    // Load favorites from AsyncStorage on mount
-    useEffect(() => {
-        loadFavorites();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            loadFavorites();
+            return () => console.log('Cleanup when screen loses focus');
+        }, []) 
+    );
 
     const loadFavorites = async () => {
         try {
@@ -93,14 +94,14 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
     );
 
     return (
-        <SafeAreaView style={{  }}>
+        <SafeAreaView style={{}}>
 
             <FlatList
                 data={displayData}
                 renderItem={renderItem}
                 keyExtractor={item => item?.id}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: '55%' }} 
+                contentContainerStyle={{ paddingBottom: '55%' }}
             // scrollEnabled={false}
             />
         </SafeAreaView>
@@ -110,8 +111,8 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
 
 const styles = StyleSheet.create({
     itemContainer: {
-        flex:1,
-        
+        flex: 1,
+
         flexDirection: 'row',
         alignItems: 'center',
         gap: 12,
@@ -119,8 +120,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: COLORS.GREY,
     },
-    // titleText: { fontSize: 16, fontWeight: '700', lineHeight: 25 },
-    // timeText: { fontSize: 14, fontWeight: '300', color: COLORS.DIM },
 });
 
 export default ViewScreens;

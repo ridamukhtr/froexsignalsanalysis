@@ -35,14 +35,6 @@ const HomeScreen = () => {
         }, [])
     );
 
-    const ChartIcon = () => {
-        return (
-            <CustomTouchableOpacity  >
-                <Icon name={"linechart"} size={20} color={COLORS.WHITE} />
-            </CustomTouchableOpacity>
-        )
-    }
-
     return (
         <CustomView right={<CustomSearchField />} style={{ paddingBottom: 50 }} >
             <HorizontalView variant="default" tabs={tabs} onTabChange={(tab) => fnActiveBtn(tab)} />

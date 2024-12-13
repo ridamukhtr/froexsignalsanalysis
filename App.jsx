@@ -11,6 +11,7 @@ import { COLORS } from './src/styles/theme-styles'
 
 
 const App = () => {
+  // const appId = "ae8020dd-afb4-49c2-9ec5-a8003e99b36a"
   return (
     <Provider store={store}>
 

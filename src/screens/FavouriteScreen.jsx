@@ -3,9 +3,7 @@ import { StyleSheet } from 'react-native';
 import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
 import data from '../../assets/all_data.json'
-import CustomText from '../components/customComponents/CustomText';
-import CustomChart from '../components/customComponents/CustomChart';
-import HorizontalView from '../components/views/HorizontalView';
+import CustomSearchField from '../components/customComponents/CustomSearchField';
 
 const FavouriteScreen = () => {
 
@@ -16,17 +14,14 @@ const FavouriteScreen = () => {
     };
 
     return (
-        <CustomView showBackIcon title={"Favourite Screen"} >
-           
-            {/* <ViewScreens
+        <CustomView right={<CustomSearchField />} >
+
+            <ViewScreens
                 data={data}
                 onPressItem={handlePressItem}
                 isFavoriteScreen={true}
-                // onFavoriteChange={handleFavoriteChange}
-            /> */}
-
-            <HorizontalView tabs={tabs} variant={"button"}/>
-            <CustomChart/>
+            // onFavoriteChange={handleFavoriteChange}
+            />
         </CustomView>
     );
 };

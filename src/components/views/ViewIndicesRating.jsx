@@ -14,7 +14,7 @@ const ViewIndicesRating = () => {
         <View style={{ backgroundColor: COLORS.DARK_BLUE, padding: 20, }}>
             <View style={{ flexDirection: "row", gap: 12, alignItems: "center", }} >
                 <Arrow name={"arrow-up"} size={25} color={COLORS.GREEN} />
-                <CustomText style={styles.titleText(textColor)}>{"23,45.78"}</CustomText>
+                <CustomText style={styles.titleText}>{"23,45.78"}</CustomText>
                 <View style={{ flexDirection: "row", alignContent: "flex-end" }}>
 
                     <CustomText style={[globalStyles.timeText, { color: COLORS.GREEN, lineHeight: 20 }]}>{"+0.57"}</CustomText>
@@ -34,10 +34,10 @@ const ViewIndicesRating = () => {
 export default ViewIndicesRating
 
 const styles = StyleSheet.create({
-    titleText: (textColor) => ({
-        color: textColor,
+    titleText: {
+        color: COLORS.WHITE,
         fontSize: 25,
         lineHeight: 45,
         fontWeight: '600',
-    }),
+    },
 })

@@ -132,6 +132,30 @@
         }
       }
     },
+    "react-native-orientation-locker": {
+      "root": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-orientation-locker",
+      "name": "react-native-orientation-locker",
+      "platforms": {
+        "ios": {
+          "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-orientation-locker\\react-native-orientation-locker.podspec",
+          "version": "1.7.0",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-orientation-locker\\android",
+          "packageImportPath": "import org.wonday.orientation.OrientationPackage;",
+          "packageInstance": "new OrientationPackage()",
+          "buildTypes": [],
+          "componentDescriptors": [],
+          "cmakeListsPath": "E:/remote/froexsignalsanalysis/node_modules/react-native-orientation-locker/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
     "react-native-pager-view": {
       "root": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-pager-view",
       "name": "react-native-pager-view",

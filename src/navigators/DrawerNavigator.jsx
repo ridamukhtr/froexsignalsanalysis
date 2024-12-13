@@ -1,140 +1,75 @@
-import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { ROUTES } from '../routes/RouteConstants';
-import { StyleSheet } from 'react-native';
-import CryptoCurrencyScreen from '../screens/CryptoCurrencyScreen';
-import FavouriteScreen from '../screens/FavouriteScreen';
-import { COLORS } from '../styles/theme-styles';
-import HomeScreen from '../screens/HomeScreen';
-import useThemeManager from '../lib/customHooks/useThemeManager';
-import ComoditiesScreen from '../screens/ComoditiesScreen';
-import ForexScreen from '../screens/ForexScreen';
-import IndicesScreen from '../screens/IndicesScreen';
-import StockScreen from '../screens/StockScreen';
-import HelpScreen from '../screens/HelpScreen';
-import BottomNavigator from './BottomNavigator';
-
-
-const Drawer = createDrawerNavigator();
-
-const DrawerNavigator = () => {
-
-    const { bgColor, textColor } = useThemeManager()
-
-    return (
-        <Drawer.Navigator
-            screenOptions={{
-                headerShown: false,
-                drawerPosition: 'left',
-                drawerType: 'front',
-                swipeEnabled: false,
-                drawerItemStyle: { ...styles.drawerItem },
-                drawerActiveTintColor: textColor,
-                drawerInactiveTintColor: COLORS.DIM,
-                drawerActiveBackgroundColor: "transparent",
-                // drawerInactiveBackgroundColor: COLORS.NAV_BLUE,
-                drawerStyle: { width: '72%', backgroundColor: bgColor },
-            }}>
-
-            <Drawer.Screen name={ROUTES.screenHome} component={BottomNavigator} />
-            <Drawer.Screen name={ROUTES.screenFavourite} component={FavouriteScreen} />
-            {/* <Drawer.Screen name={ROUTES.screenProfile} component={ProfileScreen} /> */}
-
-        </Drawer.Navigator>
-    );
-}
-export default DrawerNavigator
-const styles = StyleSheet.create({
-    drawerItem: {
-        // borderColor: COLORS.NAV_BLUE,
-        // borderWidth:2,
-        paddingHorizontal: 0,
-        // marginTop:5
-    },
-    drawerActiveItem: {
-        borderColor: COLORS.NAV_BLUE,
-    },
-
-})
-
 // import React from 'react';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-// import { ROUTES } from '../routes/RouteConstants';
-// import CryptoCurrencyScreen from '../screens/CryptoCurrencyScreen';
+// import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+// import { View, StyleSheet } from 'react-native';
+// import { Share } from 'react-native';
 // import FavouriteScreen from '../screens/FavouriteScreen';
-// import HomeScreen from '../screens/HomeScreen';
+// import BottomNavigator from './BottomNavigator';
+// import { ROUTES } from '../routes/RouteConstants';
+// import useThemeManager from '../lib/customHooks/useThemeManager';
 // import { COLORS } from '../styles/theme-styles';
-// import { useNavigation } from '@react-navigation/native';
-// import Icon from 'react-native-vector-icons/AntDesign';
-// import ComoditiesScreen from '../screens/ComoditiesScreen';
-// import ForexScreen from '../screens/ForexScreen';
-// import IndicesScreen from '../screens/IndicesScreen';
-// import StockScreen from '../screens/StockScreen';
-// import ViewScreens from '../components/views/ViewScreens';
-
+// import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
+// import Theme from 'react-native-vector-icons/MaterialIcons';
+// import CustomText from '../components/customComponents/CustomText';
+// import CustomDropdown from '../components/customComponents/CustomDropdown';
 
 // const Drawer = createDrawerNavigator();
 
-// Custom Drawer Content
-// const CustomDrawerContent = (props) => {
-//     const navigation = useNavigation();
+// // Custom Drawer Content
+// function CustomDrawerContent(props) {
 
-//     const sections = [
-//         {
-//             title: "Tools",
-//             items: [
-//                 { name:ROUTES.screenHome, route: ROUTES.screenHome },
-//                 { name: ROUTES.screenCommodities, route: ROUTES.screenCommodities },
-//                 { name: ROUTES.screenCrypto, route: ROUTES.screenCrypto },
-//                 { name: ROUTES.screenForex, route: ROUTES.screenForex },
-//                 { name: ROUTES.screenIndices, route: ROUTES.screenIndices },
-//                 { name: ROUTES.screenStock, route: ROUTES.screenStock },
-//                 { name: ROUTES.screenFavourite, route: ROUTES.screenFavourite },
-//             ],
-//         },
-//         {
-//             title: "More",
-//             items: [
-//                 { name: ROUTES.screenFavourite, route: ROUTES.screenFavourite },
-//                 // { name: "Send Feedback", route: ROUTES.sendFeedback },
-//                 // { name: "Settings", route: ROUTES.settings },
-//             ],
-//         },
+//     const { bgColor, textColor, currentTheme } = useThemeManager();
+
+//     const fnShare = () => {
+//         Share.share({
+//             message: 'Your share message here',
+//         });
+//     };
+
+//     const items = [
+//         { label: 'Dark', },
+//         { label: 'Light', },
 //     ];
 
+
+//     const fnThemeChange = (selectedTheme) => {
+//         if (currentTheme !== selectedTheme.toLowerCase()) {
+//             fnToggleTheme();
+//         }
+//     };
+
 //     return (
-//         <View style={styles.drawerContainer}>
-//             {sections.map((section, index) => (
-//                 <View key={index}  >
-//                     <Text style={styles.sectionTitle}>{section.title}</Text>
-//                     {section.items.map((item, idx) => (
-//                         <View style={{ flexDirection: "row", alignItems: "center", gap: 15 }} >
-//                             <Icon
-//                                 name={item.icon}
-//                                 size={18}
-//                             // color={selectedTab === tab.name ? COLORS.WHITE : COLORS.DIM}
-//                             />
+//         <DrawerContentScrollView {...props}>
+//             <View style={{ backgroundColor: bgColor, paddingTop: 20, }}>
+//                 {/* Theme Toggle or Other Custom Content */}
+//                 <View style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "center", gap: 15, paddingHorizontal: 20, paddingTop: 20 }} >
 
-//                             <TouchableOpacity
-//                                 key={idx}
-//                                 onPress={() => {
-//                                     console.log("Navigating to:", item.route); // Debugging
-//                                     navigation.navigate(item.route);
-//                                 }}
-//                             >
 
-//                                 <Text style={styles.drawerItem}>{item.name}</Text>
-//                             </TouchableOpacity>
-//                         </View>
-//                     ))}
+//                     <CustomText>Themes</CustomText>
+//                     <CustomTouchableOpacity>
+//                         <CustomDropdown item={items} activeTheme={currentTheme === 'dark' ? 'Dark' : 'Light'} onPress={fnThemeChange} />
+//                     </CustomTouchableOpacity>
 //                 </View>
-//             ))}
-//         </View>
-//     );
-// };
+//                 <View style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "center", gap: 15, paddingHorizontal: 20, paddingTop: 20 }} >
 
-// const DrawerNavigator = () => {
+
+//                     <CustomText>Share</CustomText>
+//                     <CustomTouchableOpacity onPress={fnShare}>
+//                         <Theme name="share" size={30} color={textColor} />
+//                     </CustomTouchableOpacity>
+//                 </View>
+
+
+//                 {/* Default Drawer Items */}
+//                 <DrawerItemList {...props} />
+//             </View>
+//         </DrawerContentScrollView>
+//     );
+// }
+
+// // Drawer Navigator
+// export default function DrawerNavigator() {
+//     const { textColor, bgColor, currentTheme } = useThemeManager()
+
 //     return (
 //         <Drawer.Navigator
 //             drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -142,42 +77,183 @@ const styles = StyleSheet.create({
 //                 headerShown: false,
 //                 drawerPosition: 'left',
 //                 drawerType: 'front',
-//                 drawerStyle: {
-//                     width: '72%',
-//                     backgroundColor: COLORS.DARK_BLUE,
-//                 },
-//             }}
-//         >
-//             <Drawer.Screen name={ROUTES.screenHome} component={ViewScreens} />
-//             <Drawer.Screen name={ROUTES.screenCommodities} component={ComoditiesScreen} />
-//             <Drawer.Screen name={ROUTES.screenCrypto} component={CryptoCurrencyScreen} />
-//             <Drawer.Screen name={ROUTES.screenForex} component={ForexScreen} />
-//             <Drawer.Screen name={ROUTES.screenIndices} component={IndicesScreen} />
-//             <Drawer.Screen name={ROUTES.screenStock} component={StockScreen} />
-//             <Drawer.Screen name={ROUTES.screenFavourite} component={FavouriteScreen} />
+//                 swipeEnabled: false,
+//                 drawerItemStyle: { margin: 0, padding: 0 },
+//                 drawerActiveTintColor: textColor,
+//                 drawerInactiveTintColor: COLORS.DIM,
+//                 drawerActiveBackgroundColor: "transparent",
+//                 // drawerInactiveBackgroundColor: COLORS.NAV_BLUE,
+//                 drawerStyle: { width: '72%', backgroundColor: bgColor },
+//             }}>
 
+//             <Drawer.Screen
+//                 name={ROUTES.screenHome}
+//                 component={BottomNavigator}
+//                 options={{
+//                     drawerLabel: 'Home',
+//                     title: 'Home'
+//                 }}
+//             />
+//             <Drawer.Screen
+//                 name={ROUTES.screenFavourite}
+//                 component={FavouriteScreen}
+//                 options={{
+//                     drawerLabel: 'Favourites',
+//                     title: 'Favourites'
+//                 }}
+//             />
 //         </Drawer.Navigator>
 //     );
-// };
-
-// export default DrawerNavigator;
+// }
 
 // const styles = StyleSheet.create({
-//     drawerContainer: {
-//         flex: 1,
-//         backgroundColor: COLORS.DARK_BLUE,
-//         padding: 15,
-//     },
-//     sectionTitle: {
-//         color: COLORS.WHITE,
-//         fontSize: 18,
-//         fontWeight: 'bold',
-//         marginBottom: 10,
-//         marginTop: 20,
-//     },
 //     drawerItem: {
-//         color: COLORS.DIM,
-//         fontSize: 16,
-//         marginVertical: 10,
+//         // flexDirection: 'row',
+//         alignItems: 'center',
+//         padding: 20,
+//     },
+//     themeContainer: {
+//         // paddingVertical: 20,
+//         // paddingHorizontal: 15,
 //     },
 // });
+
+
+import React from 'react';
+import {
+    createDrawerNavigator,
+    DrawerContentScrollView,
+    DrawerItem,
+} from '@react-navigation/drawer';
+import { View, StyleSheet } from 'react-native';
+import { Share } from 'react-native';
+import BottomNavigator from './BottomNavigator';
+import { ROUTES } from '../routes/RouteConstants';
+import useThemeManager from '../lib/customHooks/useThemeManager';
+import { COLORS } from '../styles/theme-styles';
+import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
+import Theme from 'react-native-vector-icons/MaterialIcons';
+import CustomText from '../components/customComponents/CustomText';
+import CustomDropdown from '../components/customComponents/CustomDropdown';
+import globalStyles from '../styles/global-styles';
+import HelpScreen from '../screens/HelpScreen';
+import FavouriteScreen from '../screens/FavouriteScreen';
+
+const Drawer = createDrawerNavigator();
+
+// Custom Drawer Content
+function CustomDrawerContent(props) {
+    const { bgColor, textColor, currentTheme, fnToggleTheme } = useThemeManager();
+
+    const fnShare = () => {
+        Share.share({
+            message: 'Your share message here',
+        });
+    };
+
+    const items = [
+        { label: 'Dark' },
+        { label: 'Light' },
+    ];
+
+    const fnThemeChange = (selectedTheme) => {
+        if (currentTheme !== selectedTheme.toLowerCase()) {
+            fnToggleTheme();
+        }
+    };
+
+    return (
+        <DrawerContentScrollView {...props} contentContainerStyle={{ flexGrow: 1 }}>
+            <View style={{ backgroundColor: bgColor, flex: 1 }}>
+                {/* Default Drawer Items (Screens) */}
+                <DrawerItem
+                    label="Home"
+                    onPress={() => props.navigation.navigate(ROUTES.screenHome)}
+                    labelStyle={{ color: textColor }}
+                />
+                <DrawerItem
+                    label="Favourites"
+                    onPress={() => props.navigation.navigate(ROUTES.screenFavourite)}
+                    labelStyle={{ color: textColor }}
+                />
+
+                {/* Custom Content Section */}
+                <View style={styles.customSection}>
+                    {/* Theme Toggle */}
+                    <CustomText style={{fontWeight:"bold", fontSize:18}}>More</CustomText>
+                    <View style={[globalStyles.container, {}]}>
+                        <CustomText style={{ color: textColor }}>Themes</CustomText>
+                        <CustomTouchableOpacity>
+                            <CustomDropdown
+                                item={items}
+                                activeTheme={currentTheme === 'dark' ? 'Dark' : 'Light'}
+                                onPress={fnThemeChange}
+                            />
+                        </CustomTouchableOpacity>
+                    </View>
+
+                    {/* Share Button */}
+                    <View style={[globalStyles.container, {}]}>
+                        <CustomText style={{ color: textColor }}>Share</CustomText>
+                        <CustomTouchableOpacity onPress={fnShare}>
+                            <Theme name="share" size={25} color={textColor} />
+                        </CustomTouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        </DrawerContentScrollView>
+    );
+}
+
+// Drawer Navigator
+export default function DrawerNavigator() {
+    const { textColor, bgColor } = useThemeManager();
+
+    return (
+        <Drawer.Navigator
+            drawerContent={(props) => <CustomDrawerContent {...props} />}
+            screenOptions={{
+                headerShown: false,
+                drawerPosition: 'left',
+                drawerType: 'front',
+                swipeEnabled: true,
+                drawerItemStyle: { margin: 0, padding: 0 },
+                drawerActiveTintColor: textColor,
+                drawerInactiveTintColor: COLORS.DIM,
+                drawerStyle: { width: '72%', backgroundColor: bgColor },
+            }}
+        >
+            {/* The Drawer Screens */}
+            <Drawer.Screen
+                name={ROUTES.screenHome}
+                component={BottomNavigator}
+                options={{
+                    drawerLabel: () => null,
+                    title: 'Home',
+                }}
+            />
+            <Drawer.Screen
+                name={ROUTES.screenFavourite}
+                component={FavouriteScreen}
+                options={{
+                    drawerLabel: () => null, 
+                    title: 'Favourite',
+                }}
+            />
+        </Drawer.Navigator>
+    );
+}
+
+const styles = StyleSheet.create({
+    customSection: {
+        paddingVertical: 20,
+        gap:25,
+        paddingLeft: 20,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+});

@@ -1,10 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
 import data from '../../assets/all_data.json'
-import CustomScrollView from '../components/customComponents/CustomScrollView';
-import useNavigationManager from '../lib/customHooks/useNavigationManager';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../routes/RouteConstants';
 
@@ -15,7 +12,7 @@ const StockScreen = () => {
 
 
     const handlePressItem = (item) => {
-        fnNavigateToDetails(item); // Pass item data to details screen
+        fnNavigateToDetails(item.title); // Pass item data to details screen
         console.log('Item pressed:', item);
     };
     

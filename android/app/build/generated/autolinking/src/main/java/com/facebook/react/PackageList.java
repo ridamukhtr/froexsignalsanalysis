@@ -20,6 +20,8 @@ import com.shopify.reactnative.skia.RNSkiaPackage;
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-onesignal
 import com.onesignal.rnonesignalandroid.ReactNativeOneSignalPackage;
+// react-native-orientation-locker
+import org.wonday.orientation.OrientationPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
 // react-native-reanimated
@@ -84,6 +86,7 @@ public class PackageList {
       new RNSkiaPackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeOneSignalPackage(),
+      new OrientationPackage(),
       new PagerViewPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),

@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withRepeat,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, } from 'react-native-reanimated';
 
 const AnimatedIcon = ({ direction = "left", color = "#000", size = 25 }) => {
   const paths = {
@@ -19,11 +14,10 @@ const AnimatedIcon = ({ direction = "left", color = "#000", size = 25 }) => {
   const translation = useSharedValue(0);
 
   useEffect(() => {
-    // Animate the icon to move to and fro
     translation.value = withRepeat(
-      withTiming(10, { duration: 1000 }), // Move 10px right in 1 second
-      -1, // Repeat indefinitely
-      true // Alternate direction (to and fro)
+      withTiming(10, { duration: 1000 }), 
+      -1, 
+      true,
     );
   }, []);
 

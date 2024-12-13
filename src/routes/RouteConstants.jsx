@@ -11,5 +11,7 @@ export const ROUTES = {
     screenCrypto: 'Crypto Currency',
     screenHelp: 'Help',
     screenDetails: 'Details',
+    screenChart: 'Charts',
+    screenHistory: 'History',
 
 }

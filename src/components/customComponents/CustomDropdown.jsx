@@ -19,10 +19,10 @@ const CustomDropdown = ({ item, onPress, activeTheme }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.menuButton} onPress={toggleModal}>
+        <View style={{}}>
+            <CustomTouchableOpacity style={styles.menuButton} onPress={toggleModal}>
                 <DotsVerticalIcon name={"dots-three-vertical"} size={20} color={textColor} />
-            </TouchableOpacity>
+            </CustomTouchableOpacity>
 
             <Modal
                 visible={modalVisible}
@@ -56,52 +56,11 @@ const CustomDropdown = ({ item, onPress, activeTheme }) => {
     );
 };
 
-
-
-// const CustomDropdown = ({ item, onPress }) => {
-
-//     const [modalVisible, setModalVisible] = useState(false);
-//     const [selectedItemIndex, setSelectedItemIndex] = useState(null);
-
-//     const toggleModal = () => {
-//         setModalVisible(!modalVisible);
-//     };
-
-//     return (
-//         <View style={styles.container}>
-//             <TouchableOpacity style={styles.menuButton} onPress={toggleModal}>
-//                 <DotsVerticalIcon name={"dots-three-vertical"} size={20} />
-//             </TouchableOpacity>
-
-//             <Modal
-//                 visible={modalVisible}
-//                 transparent={true}
-//                 animationType="fade"
-//                 onBackdropPress={toggleModal}
-//                 onBackButtonPress={toggleModal}
-//             >
-//                 <CustomTouchableOpacity activeOpacity={1} style={styles.modalOverlay} >
-//                     <View style={styles.dropdown}>
-//                         {item?.map((item, index) => (
-//                             <CustomTouchableOpacity key={index} style={[styles.menuItemContainer, { backgroundColor: selectedItemIndex == index ? COLORS.DIM : COLORS.WHITE }]} onPress={onPress} >
-//                                 <View style={{ flexDirection: "row", justifyContent:"space-between" }}>
-//                                     <CustomText style={styles.menuItemText}>{item?.label}</CustomText>
-//                                     <Check name={"check"} size={20} color={COLORS.GREEN} />
-
-//                                 </View>
-//                             </CustomTouchableOpacity>
-//                         ))}
-//                     </View>
-//                 </CustomTouchableOpacity>
-//             </Modal>
-//         </View>
-//     );
-// };
-
 const styles = StyleSheet.create({
     modalOverlay: {
         position: 'absolute',
-        top: '11%',
+        top: '25%',
+        left: 60,
         alignSelf: 'flex-end',
         alignItems: 'flex-end',
     },

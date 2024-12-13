@@ -72,29 +72,44 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from '../screens/HomeScreen';
-import ComoditiesScreen from '../screens/ComoditiesScreen';
-import CryptoCurrencyScreen from '../screens/CryptoCurrencyScreen';
-import ForexScreen from '../screens/ForexScreen';
-import IndicesScreen from '../screens/IndicesScreen';
-import StockScreen from '../screens/StockScreen';
 import { ROUTES } from '../routes/RouteConstants';
-import DrawerNavigator from './DrawerNavigator';
 import { COLORS } from '../styles/theme-styles';
-import HelpScreen from '../screens/HelpScreen';
 import useThemeManager from '../lib/customHooks/useThemeManager';
 import FavouriteScreen from '../screens/FavouriteScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import ChartScreen from '../screens/ChartScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const StockStack = () => (
-    <Stack.Navigator>
-      <Stack.Screen name="Stock" component={HomeScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="Details" component={DetailsScreen} options={{ headerShown: false }}/>
+const StockStack = () => {
+    const { bgColor, textColor, currentTheme } = useThemeManager();
+
+   return( 
+    <Stack.Navigator
+        screenOptions={({ route }) => ({
+            tabBarStyle: route.name === ROUTES.screenChart 
+                ? { display: 'none' } 
+                : { 
+                    paddingBottom: 60, 
+                    paddingTop: 10, 
+                    backgroundColor: currentTheme === 'dark' ? COLORS.NAV_BLUE : 'white', 
+                    position: 'absolute', 
+                    borderWidth: 0, 
+                    borderColor: "transparent", 
+                    borderTopLeftRadius: 20, 
+                    borderTopRightRadius: 20, 
+                    marginBottom: 0 
+                }
+        })}
+    >
+        <Stack.Screen name={ROUTES.screenStock} component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name={ROUTES.screenDetails} component={DetailsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name={ROUTES.screenChart} component={ChartScreen} options={{ headerShown: false,  }} />
     </Stack.Navigator>
-  );
+)};
 
 const BottomNavigator = () => {
 
@@ -109,32 +124,27 @@ const BottomNavigator = () => {
                         case ROUTES.bottomTabs:
                             iconName = 'bar-chart';
                             break;
-                        case ROUTES.screenHelp:
-                            iconName = 'work';
-                            break;
-                        case ROUTES.screenCommodities:
-                            iconName = 'work';
+                        case ROUTES.screenHistory:
+                            iconName = 'calendar-month';
                             break;
                         case ROUTES.screenFavourite:
-                            iconName = 'work';
+                            iconName = 'favorite';
                             break;
-
                     }
                     const iconColor = textColor
                     const iconSize = 30
 
                     return <Icon name={iconName} size={iconSize} color={iconColor} />;
                 },
-              
+
                 tabBarActiveTintColor: textColor,
                 tabBarShowLabel: false,
-                tabBarStyle: {  paddingBottom: 60, paddingTop: 10, backgroundColor: currentTheme === 'dark' ? COLORS.NAV_BLUE : 'white', position: 'absolute', borderWidth: 0, borderColor: "transparent", borderTopLeftRadius: 20, borderTopRightRadius: 20, marginBottom: 0 },
+                tabBarStyle: { paddingBottom: 60, paddingTop: 10, backgroundColor: currentTheme === 'dark' ? COLORS.NAV_BLUE : 'white', position: 'absolute', borderWidth: 0, borderColor: "transparent", borderTopLeftRadius: 20, borderTopRightRadius: 20, marginBottom: 0 },
             })}
         >
 
-            <Tab.Screen name={ROUTES.bottomTabs} component={StockStack} options={{ headerShown: false }} />
-            <Tab.Screen name={ROUTES.screenHelp} component={HelpScreen} options={{ headerShown: false }} />
-            <Tab.Screen name={ROUTES.screenCommodities} component={ComoditiesScreen} options={{ headerShown: false }} />
+            <Tab.Screen name={ROUTES.bottomTabs} component={StockStack} options={{ headerShown: false, }} />
+            <Tab.Screen name={ROUTES.screenHistory} component={HistoryScreen} options={{ headerShown: false, }} />
             <Tab.Screen name={ROUTES.screenFavourite} component={FavouriteScreen} options={{ headerShown: false }} />
 
         </Tab.Navigator>

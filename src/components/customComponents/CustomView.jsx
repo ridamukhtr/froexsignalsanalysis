@@ -27,8 +27,7 @@ const CustomView = ({ children, style, showDrawer, contentContainerStyle, scroll
                         {showBackIcon ? (
                             <View style={[styles.headerContainer, headerStyle]}>
                                 <CustomTouchableOpacity onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
-                                    <AnimatedIcon direction="left" color={COLORS.YELLOW} size={24} />
-
+                                    <Icon name={"chevron-left"} size={20} color={textColor} />
                                 </CustomTouchableOpacity>
                                 <View style={{paddingLeft:20}}>
                                     <CustomText style={styles.titleContainer(textColor)} >{title}</CustomText>
@@ -55,9 +54,8 @@ const CustomView = ({ children, style, showDrawer, contentContainerStyle, scroll
                     <View style={[styles.container(bgColor), style]}>
                         {showBackIcon ? (
                             <View style={[styles.headerContainer, headerStyle]}>
-                                <CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
-                                    <AnimatedIcon direction="left" color={COLORS.YELLOW} size={24} />
-
+                                <CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>                                    
+                                    <Icon name={"chevron-left"} size={20} color={textColor} />
                                 </CustomTouchableOpacity>
                                 <View style={{ flex: 1, paddingLeft: 20 }} >
 
