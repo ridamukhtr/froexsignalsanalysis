@@ -4,7 +4,9 @@ import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
 import data from '../../assets/all_data.json'
 
-const CryptoCurrencyScreen = () => {
+const CryptoCurrencyScreen = ({data}) => {
+    const transformedData = data?.crypto ? Object.values(data.crypto) : [];
+
     const handlePressItem = (item) => {
         console.log('Item pressed:', item);
     };
@@ -12,7 +14,7 @@ const CryptoCurrencyScreen = () => {
     return (
         <>
             <ViewScreens
-                data={data}
+                data={transformedData}
                 onPressItem={handlePressItem}
             />
         </>

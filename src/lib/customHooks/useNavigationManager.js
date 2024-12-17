@@ -9,7 +9,7 @@ export default function useNavigationManager() {
     const fnNavigateToIndices=()=> navigation.navigate(ROUTES.screenIndices);
     const fnNavigateToStocks=()=> navigation.navigate(ROUTES.screenStock);
     const fnNavigateToCrypto=()=> navigation.navigate(ROUTES.screenCrypto);
-    const fnNavigateToForax=()=> navigation.navigate(ROUTES.screenForex);
+    const fnNavigateToForex=()=> navigation.navigate(ROUTES.screenForex);
     const fnNavigateToHelp=()=> navigation.navigate(ROUTES.screenHelp);
     const fnNavigateToCommodities=()=> navigation.navigate(ROUTES.screenCommodities);
     const fnNavigateToDetails=()=> navigation.navigate(ROUTES.screenDetails);
@@ -27,7 +27,7 @@ export default function useNavigationManager() {
         fnNavigateToHelp,
         fnNavigateToCommodities,
         fnNavigateToCrypto,
-        fnNavigateToForax,
+        fnNavigateToForex,
         fnNavigateToStocks,
         fnNavigateToFavourite,
         fnNavigateToHome,

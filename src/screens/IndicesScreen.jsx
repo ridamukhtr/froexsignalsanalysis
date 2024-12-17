@@ -4,7 +4,9 @@ import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
 import data from '../../assets/all_data.json'
 
-const IndicesScreen = () => {
+const IndicesScreen = ({data}) => {
+    const transformedData = data?.index ? Object.values(data.index) : [];
+
     const handlePressItem = (item) => {
         console.log('Item pressed:', item);
     };
@@ -12,7 +14,7 @@ const IndicesScreen = () => {
     return (
         <>
             <ViewScreens
-                data={data}
+                data={transformedData}
                 onPressItem={handlePressItem}
             />
         </>

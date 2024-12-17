@@ -2,6 +2,12 @@
 <resources>
     <integer name="react_native_dev_server_port">8081</integer>
     <string name="app_name">forex_signals_analysis</string>
+    <string name="gcm_defaultSenderId" translatable="false">72201509759</string>
+    <string name="google_api_key" translatable="false">AIzaSyD2n1QTsa9TrOmvGViZ6ghOdDBnZH8Cf00</string>
+    <string name="google_app_id" translatable="false">1:72201509759:android:29ed8511e95ef5d8f0984a</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD2n1QTsa9TrOmvGViZ6ghOdDBnZH8Cf00</string>
+    <string name="google_storage_bucket" translatable="false">forex-signal-analysis.firebasestorage.app</string>
+    <string name="project_id" translatable="false">forex-signal-analysis</string>
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>

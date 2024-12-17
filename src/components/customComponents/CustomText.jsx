@@ -4,11 +4,11 @@ import globalStyles, { FONTS } from '../../styles/global-styles'
 import useThemeManager from '../../lib/customHooks/useThemeManager'
 import { COLORS } from '../../styles/theme-styles'
 
-const CustomText = ({ children, onPress, numberOfLines, style }) => {
+const CustomText = ({ children, onPress, numberOfLines, style, ellipsizeMode }) => {
 
     const { textColor } = useThemeManager();
     return (
-        <Text onPress={onPress} style={[styles.defaultTxt(textColor), style]} numberOfLines={numberOfLines}>
+        <Text onPress={onPress} style={[styles.defaultTxt(textColor), style]} numberOfLines={numberOfLines} ellipsizeMode="tail">
             {children}
 
         </Text>

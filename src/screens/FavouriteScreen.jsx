@@ -7,8 +7,6 @@ import CustomSearchField from '../components/customComponents/CustomSearchField'
 
 const FavouriteScreen = () => {
 
-    const tabs = ["5min", "15min", "30min", "1Hour", "4Hours", "5Hours", "1Day", "1Week"];
-
     const handlePressItem = (item) => {
         console.log('Item pressed:', item);
     };

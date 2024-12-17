@@ -5,7 +5,9 @@ import ViewScreens from '../components/views/ViewScreens';
 import data from '../../assets/all_data.json'
 import CustomText from '../components/customComponents/CustomText';
 
-const ComoditiesScreen = () => {
+const ComoditiesScreen = ({ data }) => {
+
+    const transformedData = data?.commo ? Object.values(data.commo) : [];
     const handlePressItem = (item) => {
         console.log('Item pressed:', item);
     };
@@ -13,7 +15,7 @@ const ComoditiesScreen = () => {
     return (
         <>
             <ViewScreens
-                data={data}
+                data={transformedData}
                 onPressItem={handlePressItem}
             />
         </>

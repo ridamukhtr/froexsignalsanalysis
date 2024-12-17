@@ -10,6 +10,7 @@ export const COLORS = {
     NAV_BLUE:"#211C37",
     SEARCH_BLUE:"#312E43",
     LIGHT_RED:"#DE4C4C",
+    BLUE:"#06A9F2",
     GREY : "#374151",
     DIM : "#9d96b5",
     GREEN:"#0C9686",

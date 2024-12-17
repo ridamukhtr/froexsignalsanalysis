@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.forex_signals_analysis.app-mergeDebugResources-56:/values-v16/values-v16.xml",
+            "outputFile": "com.forex_signals_analysis.app-mergeDebugResources-60:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\0c02aa65ff8b11d5022566d0302b25e2\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\444ae3e40e2b43d3188cf28e0b4dc278\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\fc0370241be7757e90e94ada59fc88b1\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,6 +20,16 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\9e4da798630cd57361cb6093dccc086b\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
                     }
                 }
             ]

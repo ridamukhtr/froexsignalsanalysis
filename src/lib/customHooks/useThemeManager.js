@@ -3,7 +3,6 @@ import { useEffect } from "react"
 import { Appearance } from "react-native"
 import { changeTheme, selectedThemeSelector } from "../../redux/themeReducer"
 import { COLORS } from "../../styles/theme-styles"
-import CustomText from "../../components/customComponents/CustomText"
 
 
 export default function () {
@@ -23,11 +22,7 @@ export default function () {
     const textColor = currentTheme === 'dark' ? COLORS.WHITE : COLORS.BLACK;
     const heading = currentTheme == 'dark' ? 'white' : 'blue'
     const fnToggleTheme = () => {
-        {
-            heading && <CustomText >
-                {heading}
-            </CustomText>
-        }
+      
         const newTheme = currentTheme == 'dark' ? 'light' : 'dark'
 
         dispatch(changeTheme(newTheme))

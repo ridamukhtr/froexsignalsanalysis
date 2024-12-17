@@ -5,14 +5,14 @@ import data from '../../assets/all_data.json'
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../routes/RouteConstants';
 
-const StockScreen = () => {
+const StockScreen = ({data}) => {
     const navigation = useNavigation()
+    const transformedData = data?.stock ? Object.values(data.stock) : [];
 
     const fnNavigateToDetails = (item) => navigation.navigate(ROUTES.screenDetails, { item });
 
-
     const handlePressItem = (item) => {
-        fnNavigateToDetails(item.title); // Pass item data to details screen
+        fnNavigateToDetails(item.title); 
         console.log('Item pressed:', item);
     };
     
@@ -20,7 +20,7 @@ const StockScreen = () => {
     return (
         <View  >
             <ViewScreens
-                data={data}
+                data={transformedData}
                 onPressItem={handlePressItem}
             />
         </View>

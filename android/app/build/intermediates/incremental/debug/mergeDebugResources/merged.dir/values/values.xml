@@ -1619,6 +1619,11 @@
     <string name="fallback_menu_item_open_in_browser">Open in browser</string>
     <string name="fallback_menu_item_share_link">Share link</string>
     <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
+    <string name="gcm_defaultSenderId" translatable="false">72201509759</string>
+    <string name="google_api_key" translatable="false">AIzaSyD2n1QTsa9TrOmvGViZ6ghOdDBnZH8Cf00</string>
+    <string name="google_app_id" translatable="false">1:72201509759:android:29ed8511e95ef5d8f0984a</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD2n1QTsa9TrOmvGViZ6ghOdDBnZH8Cf00</string>
+    <string name="google_storage_bucket" translatable="false">forex-signal-analysis.firebasestorage.app</string>
     <string description="heading to a page or section" name="header_description">Heading</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string description="Content description for an icon that appears in the title area of a dialog" name="icon_content_description">Dialog Icon</string>
@@ -1716,6 +1721,7 @@
     <string name="permission_not_available_open_settings_option">Settings</string>
     <string name="permission_not_available_title">%s Not Available</string>
     <string description="displays the progress status for tasks that take a long time" name="progressbar_description">Progress Bar</string>
+    <string name="project_id" translatable="false">forex-signal-analysis</string>
     <string description="a group of radio buttons" name="radiogroup_description">Radio Group</string>
     <string description="an interactive element inside a tablist" name="rn_tab_description">Tab</string>
     <string description="controls the scrolling of content within a viewing area" name="scrollbar_description">Scroll Bar</string>

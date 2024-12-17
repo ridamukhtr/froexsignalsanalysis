@@ -15,7 +15,7 @@ const useActiveTab = (initialTab) => {
     }, [initialTab])
   );
 
-  return { activeTab, fnActiveTab };
+  return { activeTab, setActiveTab, fnActiveTab };
 };
 
 export default useActiveTab;

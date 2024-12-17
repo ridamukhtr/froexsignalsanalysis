@@ -1,51 +1,67 @@
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, X } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import CustomView from '../components/customComponents/CustomView';
 import CustomSearchField from '../components/customComponents/CustomSearchField';
-import Icon from 'react-native-vector-icons/AntDesign'
-import { COLORS } from '../styles/theme-styles';
-import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
 import HorizontalView from '../components/views/HorizontalView';
-import { useFocusEffect } from '@react-navigation/native';
 import StockScreen from './StockScreen';
 import CryptoCurrencyScreen from './CryptoCurrencyScreen';
 import ForexScreen from './ForexScreen';
 import ComoditiesScreen from './ComoditiesScreen';
 import IndicesScreen from './IndicesScreen';
 import useActiveTab from '../lib/customHooks/useActiveTab';
+import { useGetMarketDataQuery } from '../redux/storeApis';
 
+const timeMap = {
+    300: '5min',
+    900: '15min',
+    1800: '30min',
+    3600: '1Hour',
+    14400: '4Hours',
+    18000: '5Hours',
+    86400: '1Day',
+    604800: '1Week',
+};
 
 const HomeScreen = () => {
+    const tabs = ['Stocks', 'Forex', 'Commodities', 'Indices', 'Crypto Currency'];
 
-    const tabs = ["Stocks", "Forax", "Commodities", "Indices", "Crypto Currency", ];
-    const timeTabs = ["5min", "15min", "30min", "1Hour", "4Hours", "5Hours", "1Day", "1Week"];
+    const { activeTab: activeScreen, fnActiveTab: setActiveScreen } = useActiveTab('Stocks');
+    const [activeTime, setActiveTime] = useState('3600');
 
-    const [activeBtn, setActiveBtn] = useState('Stocks');
-
-    const { activeTab, fnActiveTab } = useActiveTab("30min")
-
-    const fnActiveBtn = (tab) => {
-        setActiveBtn(tab);
-        console.log(`Active Tab: ${tab}`);
-    };
-
-    useFocusEffect(
-        useCallback(() => {
-            setActiveBtn('Stocks');
-        }, [])
-    );
+    const { data, error, isLoading } = useGetMarketDataQuery({
+        type: activeScreen.toLowerCase(),
+        time: activeTime,
+    });
 
     return (
-        <CustomView right={<CustomSearchField />} style={{ paddingBottom: 50 }} >
-            <HorizontalView variant="default" tabs={tabs} onTabChange={(tab) => fnActiveBtn(tab)} />
-            <HorizontalView variant='button' onTabChange={(tab) => fnActiveTab(tab)} initialTab={activeTab} tabs={timeTabs} containerStyle={{ paddingHorizontal: 20 }} />
+        <CustomView right={<CustomSearchField />} style={{ paddingBottom: 50 }}>
+            {/* Horizontal Tabs for Screens */}
+            <HorizontalView
+                variant="default"
+                tabs={tabs}
+                initialTab={activeScreen}
+                onTabChange={(tab) => setActiveScreen(tab)}
+            />
 
-            {activeBtn === 'Stocks' && <StockScreen />}
-            {activeBtn === 'Crypto Currency' && <CryptoCurrencyScreen />}
-            {activeBtn === 'Forax' && <ForexScreen />}
-            {activeBtn === 'Commodities' && <ComoditiesScreen />}
-            {activeBtn === 'Indices' && <IndicesScreen />}
+            {/* Horizontal Tabs for Time Intervals */}
+            <HorizontalView
+                variant="button"
+                tabs={Object.values(timeMap)}
+                initialTab={timeMap[activeTime]}
+                onTabChange={(selectedLabel) => {
+                    const selectedTime = Object.keys(timeMap).find(
+                        (key) => timeMap[key] === selectedLabel
+                    );
+                    setActiveTime(selectedTime);
+                }}
+                containerStyle={{ paddingHorizontal: 20 }}
+            />
 
+            {activeScreen === 'Stocks' && <StockScreen data={data} />}
+            {activeScreen === 'Crypto Currency' && <CryptoCurrencyScreen data={data} />}
+            {activeScreen === 'Forex' && <ForexScreen data={data} />}
+            {activeScreen === 'Commodities' && <ComoditiesScreen data={data} />}
+            {activeScreen === 'Indices' && <IndicesScreen data={data} />}
 
         </CustomView>
     );
