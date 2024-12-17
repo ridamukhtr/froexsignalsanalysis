@@ -8,42 +8,52 @@ import Favourite from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
-const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
+const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false }) => {
+
     const [favorites, setFavorites] = useState([]);
+    const [isFavItem, setIsFavItem] = useState([])
 
     useEffect(() => {
+        const loadFavorites = async () => {
+            try {
+                const storedFavorites = await AsyncStorage.getItem('favorites');
+                if (storedFavorites) {
+                    setFavorites(JSON.parse(storedFavorites));
+                }
+            } catch (error) {
+                console.error('Error loading favorites:', error);
+            }
+        };
+
         loadFavorites();
     }, []);
 
-    const loadFavorites = async () => {
-        try {
-            const storedFavorites = await AsyncStorage.getItem('favorites');
-            if (storedFavorites) {
-                setFavorites(JSON.parse(storedFavorites));
-            }
-        } catch (error) {
-            console.error('Error loading favorites:', error);
-        }
-    };
-
+    // Toggle favorite and update AsyncStorage
     const toggleFavorite = async (itemId) => {
-        let updatedFavorites;
-
-        if (favorites.includes(itemId)) {
-            // Remove from favorites
-            updatedFavorites = favorites.filter(id => id !== itemId);
-        } else {
-            // Add to favorites
-            updatedFavorites = [...favorites, itemId];
-        }
-
         try {
-            await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            let updatedFavorites;
+
+            // Check if item is already in favorites
+            const isItemFavorite = favorites.includes(itemId);
+
+            if (isItemFavorite) {
+                // Remove item from favorites
+                updatedFavorites = favorites.filter((id) => id !== itemId);
+            } else {
+                // Add item to favorites
+                updatedFavorites = [...favorites, itemId];
+            }
+
+            // Update state
             setFavorites(updatedFavorites);
+
+            // Save to AsyncStorage
+            await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
         } catch (error) {
-            console.error('Error saving favorites:', error);
+            console.error('Error toggling favorite:', error);
         }
     };
+
 
     // useFocusEffect(
     //     useCallback(() => {
@@ -52,13 +62,55 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
     //     }, [])
     // );
 
-    // const displayData = isFavoriteScreen
-    //     ? data.filter(item => favorites.includes(item?.id))
-    //     : data;
+    // const loadFavorites = async () => {
+    //     try {
+    //         const storedFavorites = await AsyncStorage.getItem('favorites');
+    //         if (storedFavorites) {
+    //             setFavorites(JSON.parse(storedFavorites));
+    //         }
+    //     } catch (error) {
+    //         console.error('Error loading favorites:', error);
+    //     }
+    // };
+
+
+    // const toggleFavorite = async (itemId) => {
+    //     console.log(itemId);
+
+    //     const isItemExistFav = isFavItem?.find((item) => item == itemId)
+
+    //     if (isItemExistFav) {
+    //         const updatedFav = isFavItem?.filter((item) => item != itemId);
+    //         setIsFavItem(updatedFav);
+    //     } else {
+    //         setIsFavItem((pre) => [...pre, itemId])
+    //     }
+
+    //     // let updatedFavorites;
+
+    //     // if (favorites?.includes(itemId)) {
+    //     //     // Remove from favorites
+    //     //     updatedFavorites = favorites?.filter(id => id !== itemId);
+    //     // } else {
+    //     //     // Add to favorites
+    //     //     updatedFavorites = [...favorites, itemId];
+    //     // }
+
+    //     // try {
+    //     //     await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    //     //     setFavorites(updatedFavorites);
+    //     // } catch (error) {
+    //     //     console.error('Error saving favorites:', error);
+    //     // }
+    // };
+
+
+
+    const displayData = isFavoriteScreen
+        ? data?.filter(item => favorites?.includes(item?.page_id))
+        : data;
 
     const renderItem = ({ item }) => {
-
-        const isFavorite = favorites.includes(item.page_id);
 
         const getMaSummaryColor = (summary) => {
             switch (summary.toLowerCase()) {
@@ -78,8 +130,13 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
         const maSummaryColor = getMaSummaryColor(item.ma_summery);
         return (
             <View style={styles.itemContainer}>
-                <CustomTouchableOpacity onPress={() => toggleFavorite(item.page_id)}>
-                    {isFavorite  ? (<Favourite
+                <CustomTouchableOpacity onPress={() => toggleFavorite(item?.page_id)}>
+                    {favorites.includes(item?.page_id) ? (
+                        <Favourite name="heart" size={20} color={COLORS.GREEN} />
+                    ) : (
+                        <Favourite name="hearto" color={COLORS.GREEN} size={20} />
+                    )}
+                    {/* {isFavItem?.find((fav) => fav == item?.page_id) ? (<Favourite
                         name="heart"
                         size={20}
                         color={COLORS.GREEN}
@@ -89,26 +146,26 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false }) => {
                             name="hearto"
                             color={COLORS.GREEN}
                             size={20}
-                        />)}
+                        />)} */}
                 </CustomTouchableOpacity>
 
                 <CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
                     <View style={globalStyles.container}>
                         <View style={[globalStyles.container, { gap: 7 }]}>
-                            <CustomText style={globalStyles.titleText}>{item.symbol}</CustomText>
+                            <CustomText style={globalStyles.titleText}>{item?.symbol}</CustomText>
                             <CustomText style={globalStyles.titleText}>|</CustomText>
-                            <CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item.ma_summery}</CustomText>
+                            <CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
                         </View>
-                        <CustomText style={[globalStyles.titleText, { fontSize: 15, color: maSummaryColor }]}>{`Price: ${item.price}`}</CustomText>
+                        <CustomText style={[globalStyles.titleText, { fontSize: 15, color: maSummaryColor }]}>{`Price: ${item?.price}`}</CustomText>
                     </View>
                     <View style={globalStyles.container}>
                         <View style={[globalStyles.container, { gap: 7 }]}>
                             <CustomText style={[globalStyles.timeText, { maxWidth: '95%' }]} numberOfLines={1} ellipsizeMode={"tail"} >{item?.symbol2}</CustomText>
                         </View>
                         <View style={[globalStyles.container, { gap: 4 }]}>
-                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item.summaryChange}</CustomText>
+                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChange}</CustomText>
                             <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{"("}</CustomText>
-                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item.summaryChangeP}{"%"}</CustomText>
+                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChangeP}{"%"}</CustomText>
                             <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{")"}</CustomText>
                         </View>
                     </View>
