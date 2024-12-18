@@ -49,7 +49,7 @@ Thumbs.db
 *.wmv
 
 # iOS
-# ios/Pods/
+ios/Pods/
 
 # Android
 # android/.gradle/
