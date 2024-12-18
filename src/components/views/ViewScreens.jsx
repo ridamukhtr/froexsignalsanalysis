@@ -34,11 +34,11 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
             let updatedFavorites;
 
             // Check if item is already in favorites
-            const isItemFavorite = favorites.includes(itemId);
+            const isItemFavorite = favorites?.includes(itemId);
 
             if (isItemFavorite) {
                 // Remove item from favorites
-                updatedFavorites = favorites.filter((id) => id !== itemId);
+                updatedFavorites = favorites?.filter((id) => id !== itemId);
             } else {
                 // Add item to favorites
                 updatedFavorites = [...favorites, itemId];
@@ -53,56 +53,6 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
             console.error('Error toggling favorite:', error);
         }
     };
-
-
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         loadFavorites();
-    //         return () => console.log('Cleanup when screen loses focus');
-    //     }, [])
-    // );
-
-    // const loadFavorites = async () => {
-    //     try {
-    //         const storedFavorites = await AsyncStorage.getItem('favorites');
-    //         if (storedFavorites) {
-    //             setFavorites(JSON.parse(storedFavorites));
-    //         }
-    //     } catch (error) {
-    //         console.error('Error loading favorites:', error);
-    //     }
-    // };
-
-
-    // const toggleFavorite = async (itemId) => {
-    //     console.log(itemId);
-
-    //     const isItemExistFav = isFavItem?.find((item) => item == itemId)
-
-    //     if (isItemExistFav) {
-    //         const updatedFav = isFavItem?.filter((item) => item != itemId);
-    //         setIsFavItem(updatedFav);
-    //     } else {
-    //         setIsFavItem((pre) => [...pre, itemId])
-    //     }
-
-    //     // let updatedFavorites;
-
-    //     // if (favorites?.includes(itemId)) {
-    //     //     // Remove from favorites
-    //     //     updatedFavorites = favorites?.filter(id => id !== itemId);
-    //     // } else {
-    //     //     // Add to favorites
-    //     //     updatedFavorites = [...favorites, itemId];
-    //     // }
-
-    //     // try {
-    //     //     await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    //     //     setFavorites(updatedFavorites);
-    //     // } catch (error) {
-    //     //     console.error('Error saving favorites:', error);
-    //     // }
-    // };
 
 
 
@@ -177,7 +127,7 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
     return (
         <SafeAreaView style={{}}>
             <FlatList
-                data={data}
+                data={displayData}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.page_id.toString()}
                 showsVerticalScrollIndicator={false}

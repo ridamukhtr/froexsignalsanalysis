@@ -63,7 +63,7 @@ const HomeScreen = () => {
             {activeScreen === 'Forex' && <ForexScreen data={data} />}
             {activeScreen === 'Commodities' && <ComoditiesScreen data={data} />}
             {activeScreen === 'Indices' && <IndicesScreen data={data} />}
-            {activeScreen === 'Favourite' && <FavouriteScreen data={data} />}
+            {activeScreen === 'Favourite' && <FavouriteScreen  allData={data} />}
 
         </CustomView>
     );
