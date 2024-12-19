@@ -6,7 +6,7 @@ import useThemeManager from '../../lib/customHooks/useThemeManager'
 import { COLORS } from '../../styles/theme-styles'
 import globalStyles from '../../styles/global-styles'
 
-const AdvanceReport = () => {
+const AdvanceReport = ({ reportData }) => {
     const tabs = ["5min", "15min", "30min", "1Hour", "4Hours", "5Hours", "1Day", "1Week"];
 
     const { textColor, bgColor } = useThemeManager()
@@ -21,7 +21,7 @@ const AdvanceReport = () => {
                 <View style={styles.boxContent}>
 
                     <CustomText>{"Update:"}</CustomText>
-                    <CustomText>{"1 min ago"}</CustomText>
+                    <CustomText>{reportData?.change_at}</CustomText>
                 </View>
                 {/* <View style={{alignItems:"center", flexDirection:"row", gap:20}}> */}
 
@@ -34,7 +34,7 @@ const AdvanceReport = () => {
 
                     <CustomText>{"Summary:"}</CustomText>
                     <View style={styles.btn(textColor)}>
-                        <CustomText style={{ color: "#07639D" }} >{"Neutral"}</CustomText>
+                        <CustomText style={{ color: "#07639D" }} >{reportData?.summary}</CustomText>
                     </View>
                 </View>
             </View>

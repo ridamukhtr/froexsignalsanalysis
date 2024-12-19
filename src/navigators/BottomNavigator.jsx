@@ -85,6 +85,14 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const StockStack = () => {
+
+    const hideTabBar = () => {
+        const parent = navigation.getParent();
+        parent?.setOptions({
+          tabBarStyle: { display: 'none' },
+        });
+      };
+
     const { bgColor, textColor, currentTheme } = useThemeManager();
 
    return( 

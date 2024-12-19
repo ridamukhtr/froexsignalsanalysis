@@ -4,9 +4,6 @@ import AppNavigator from './src/navigators/AppNavigator'
 import HomeScreen from './src/screens/HomeScreen'
 import { store } from './src/redux/store'
 import { Provider } from 'react-redux'
-import ViewTechnical from './src/components/views/ViewTechnical'
-import FavouriteScreen from './src/screens/FavouriteScreen'
-import useThemeManager from './src/lib/customHooks/useThemeManager'
 import { COLORS } from './src/styles/theme-styles'
 
 

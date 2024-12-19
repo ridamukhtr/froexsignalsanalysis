@@ -7,6 +7,7 @@ import { COLORS } from '../../styles/theme-styles';
 import Favourite from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
 
 const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false }) => {
 
@@ -62,22 +63,9 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
 
     const renderItem = ({ item }) => {
 
-        const getMaSummaryColor = (summary) => {
-            switch (summary.toLowerCase()) {
-                case 'strong buy':
-                case 'buy':
-                    return COLORS.GREEN;
-                case 'neutral':
-                    return COLORS.BLUE;
-                case 'sell':
-                case 'strong sell':
-                    return COLORS.RED;
-                default:
-                    return COLORS.BLACK;
-            }
-        };
-
-        const maSummaryColor = getMaSummaryColor(item.ma_summery);
+        const { getMaSummaryColor } = useCommonFunctions();
+        
+        const maSummaryColor = getMaSummaryColor(item?.ma_summery);
         return (
             <View style={styles.itemContainer}>
                 <CustomTouchableOpacity onPress={() => toggleFavorite(item?.page_id)}>
@@ -99,7 +87,7 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
                         />)} */}
                 </CustomTouchableOpacity>
 
-                <CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
+                <CustomTouchableOpacity style={{ flex: 1 }}  onPress={() => onPressItem?.(item)}>
                     <View style={globalStyles.container}>
                         <View style={[globalStyles.container, { gap: 7 }]}>
                             <CustomText style={globalStyles.titleText}>{item?.symbol}</CustomText>
@@ -129,7 +117,7 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
             <FlatList
                 data={displayData}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.page_id.toString()}
+                keyExtractor={(item) => item?.page_id?.toString()}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: '55%' }}
             />
@@ -141,7 +129,6 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
 const styles = StyleSheet.create({
     itemContainer: {
         flex: 1,
-
         flexDirection: 'row',
         alignItems: 'center',
         gap: 12,
