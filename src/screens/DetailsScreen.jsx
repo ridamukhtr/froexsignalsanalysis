@@ -12,6 +12,8 @@ import CustomTouchableOpacity from '../components/customComponents/CustomTouchab
 import { ROUTES } from '../routes/RouteConstants'
 import CustomScrollView from '../components/customComponents/CustomScrollView'
 import SignalSummery from '../components/views/SignalSummery'
+import time_map from '../../assets/time_map'
+import CustomText from '../components/customComponents/CustomText'
 
 const DetailsScreen = ({ itemId }) => {
     const navigation = useNavigation();
@@ -23,6 +25,8 @@ const DetailsScreen = ({ itemId }) => {
     const route = useRoute();
     const { item } = route.params;
     const [detailData, setDetailData] = useState(null);
+    const [timeData, setTimeData] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedMsgId, setSelectedMsgId] = useState(null);
@@ -36,10 +40,12 @@ const DetailsScreen = ({ itemId }) => {
         try {
             setLoading(true);
             const response = await fetch(`https://massyart.com/ringsignal/inv/api_data?id=${item?.page_id}`);
+
             const data = await response?.json();
 
             if (data?.all?.length > 0) {
                 const relevantData = data?.all?.find(item => item?.page_id === item?.page_id);
+
                 if (relevantData) {
                     setDetailData(relevantData);
                 } else {
@@ -47,6 +53,21 @@ const DetailsScreen = ({ itemId }) => {
                     setError('No matching item found');
                 }
             }
+
+            const timeIntervals = ['5m', '15m', '30m', '1h', '4h', '5h', '1d', '1w'];
+
+            const timeData = timeIntervals?.map(interval => ({
+                time: interval,
+                maBuy: data?.average?.ma?.buy?.[interval] || 0,
+                maSell: data?.average?.ma?.sell?.[interval] || 0,
+                maSignal: data?.average?.ma?.signal?.[interval] || 0,
+                tecBuy: data?.average?.tec?.buy?.[interval] || 0,
+                tecSell: data?.average?.tec?.sell?.[interval] || 0,
+                tecSignal: data?.average?.tec?.signal?.[interval] || 0,
+            }));
+
+            setTimeData(timeData);
+
         } catch (err) {
             console.error('Error fetching data:', err);
             setError(err?.message);
@@ -54,6 +75,48 @@ const DetailsScreen = ({ itemId }) => {
             setLoading(false);
         }
     };
+
+
+    // const fetchDetailData = async () => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await fetch(`https://massyart.com/ringsignal/inv/api_data?id=${item?.page_id}`);
+    //         const data = await response?.json();
+
+    //         console.log('Fetched data:', data);
+
+    //         if (data?.all?.length > 0) {
+    //             const relevantData = data?.all?.find(el => el?.page_id === item?.page_id);
+
+    //             if (relevantData) {
+    //                 setDetailData(relevantData);
+    //             } else {
+    //                 console.log('No matching item found');
+    //                 setError('No matching item found');
+    //             }
+    //         }
+
+    //         const timeIntervals = ['5m', '15m', '30m', '1h', '4h', '5h', '1d', '1w'];
+
+    //         const timeData = timeIntervals?.map(interval => ({
+    //             time: interval,
+    //             maBuy: data?.average?.ma?.buy?.[interval] || null,
+    //             maSell: data?.average?.ma?.sell?.[interval] || null,
+    //             maSignal: data?.average?.ma?.signal?.[interval] || null,
+    //             tecBuy: data?.average?.tec?.buy?.[interval] || null,
+    //             tecSell: data?.average?.tec?.sell?.[interval] || null,
+    //             tecSignal: data?.average?.tec?.signal?.[interval] || null,
+    //         }));
+
+    //         setTimeData(timeData);
+
+    //     } catch (err) {
+    //         console.error('Error fetching data:', err);
+    //         setError(err?.message);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     const parseActiveFromTime = (activeFrom) => {
         try {
@@ -84,6 +147,21 @@ const DetailsScreen = ({ itemId }) => {
         )
     }
 
+    const maData = timeData?.map(item => ({
+        time: item?.time,
+        maBuy: item?.maBuy ?? 0,
+        maSell: item?.maSell ?? 0,
+        maSignal: item?.maSignal ?? 0,
+    })) || [];
+
+    const tecData = timeData?.map(item => ({
+        time: item?.time,
+        tecBuy: item?.tecBuy ?? 0,
+        tecSell: item?.tecSell ?? 0,
+        tecSignal: item?.tecSignal ?? 0,
+    })) || [];
+
+
     return (
         <CustomView showBackIcon title={item?.symbol} right={<ChartIcon />} >
 
@@ -104,16 +182,12 @@ const DetailsScreen = ({ itemId }) => {
                     updateTime={detailData?.update_time}
                 />
 
-                <ViewIndicesDetails onPress={() => fnOnPress()} title={"Moving Averages"} />
+                <ViewModalData title={"Moving Averages Lines"} timeData={maData} />
+                <View style={{ marginVertical: 15, }}>
 
-                <CustomModal isVisible={isModalVisible} setIsVisible={setModalVisible} showBackIcon={true}>
-                    <View style={{ backgroundColor: COLORS.DARK_BLUE, }}>
+                    <ViewModalData title={"Technical Indicators"} timeData={tecData} />
+                </View>
 
-                        {/* <ViewModalData title={"Moving Average Lines"} msgId={selectedMsgId} data={selectedData}
-                            maBuy={item?.maBuy}
-                            tiBuy={detailData?.tiBuy} /> */}
-                    </View>
-                </CustomModal>
             </CustomScrollView>
         </CustomView>
     )

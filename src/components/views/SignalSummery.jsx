@@ -17,7 +17,7 @@ const SignalSummery = ({ symbol, maSummary, ago, updateTime, ma_summery }) => {
 
     return (
 
-        <View style={{ paddingVertical: 20 }}>
+        <View style={{ marginVertical: 15 }}>
             <CustomText style={[globalStyles.titleText,]}>
                 {'Signal Summary'}
             </CustomText>
