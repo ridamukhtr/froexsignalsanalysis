@@ -4,7 +4,6 @@ import CustomText from '../customComponents/CustomText';
 import { COLORS } from '../../styles/theme-styles';
 import Icon from 'react-native-vector-icons/Fontisto';
 import Arrow from 'react-native-vector-icons/Entypo';
-import time_map from '../../../assets/time_map';
 import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
 import globalStyles from '../../styles/global-styles';
 
@@ -12,8 +11,8 @@ const ViewModalData = ({ title, timeData }) => {
     const { getMaSummaryColor } = useCommonFunctions();
 
     return (
-        <View>
-            <View style={{ marginVertical: 15 }}>
+        <View style={{ marginVertical: 15, }}>
+            <View style={{ marginVertical: 10 }}>
                 <CustomText style={[globalStyles.titleText, { fontSize: 20 }]}>{title}</CustomText>
             </View>
 
@@ -36,9 +35,10 @@ const ViewModalData = ({ title, timeData }) => {
 
                 {timeData?.map((item, index) => {
 
-                    const buyValue = item?.maBuy || item?.tecBuy;
-                    const sellValue = item?.maSell || item?.tecSell;
-                    const signalValue = item?.maSignal || item?.tecSignal;
+                    const buyValue = item?.maBuy || item?.tecBuy || 0;
+                    const sellValue = item?.maSell || item?.tecSell || 0;
+                    const signalValue = item?.maSignal || item?.tecSignal || 'no data';
+
                     const maSummaryColor = getMaSummaryColor(signalValue);
 
                     return (

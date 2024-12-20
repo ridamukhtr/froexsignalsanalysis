@@ -9,7 +9,7 @@ const forexSignalapi = createApi({
   endpoints: (builder) => ({
     getMarketData: builder.query({ query: ({ type, time }) => `/api_data?type=${type}&time=${time}`, providesTags: () => [TAG_TYPES.marketData] }),
     getInnerScreenData: builder.query({ query: ({ id, msg_id }) => `/api_data?id=${id}&msg_id=${msg_id}`, providesTags: () => [TAG_TYPES.innerScreenData], }),
-    getDetailsPageReport: builder.query({ query: (msg_id) => `/app_details_pp?msg_id=${msg_id}`, providesTags: () => [TAG_TYPES.detailsReport] }),
+    getDetailsAdvanceReport: builder.query({ query: (msg_id) => `/app_details_pp?msg_id=${msg_id}`, providesTags: () => [TAG_TYPES.detailsReport] }),
     fetchData: builder.query({
       query: (id) => `api_data?id=${id}`,
   }),
@@ -17,6 +17,6 @@ const forexSignalapi = createApi({
 
 });
 
-export const { useGetMarketDataQuery, useGetInnerScreenDataQuery, useGetDetailsPageReportQuery, useFetchDataQuery } = forexSignalapi;
+export const { useGetMarketDataQuery, useGetInnerScreenDataQuery, useGetDetailsAdvanceReportQuery, useFetchDataQuery } = forexSignalapi;
 
 export default forexSignalapi;

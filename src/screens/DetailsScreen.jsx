@@ -1,10 +1,8 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomView from '../components/customComponents/CustomView'
-import ViewIndicesDetails from '../components/views/ViewIndicesDetails'
 import ViewIndicesRating from '../components/views/ViewIndicesRating'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import CustomModal from '../components/customComponents/CustomModal'
 import ViewModalData from '../components/views/ViewModalData'
 import { COLORS } from '../styles/theme-styles'
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -12,28 +10,24 @@ import CustomTouchableOpacity from '../components/customComponents/CustomTouchab
 import { ROUTES } from '../routes/RouteConstants'
 import CustomScrollView from '../components/customComponents/CustomScrollView'
 import SignalSummery from '../components/views/SignalSummery'
-import time_map from '../../assets/time_map'
-import CustomText from '../components/customComponents/CustomText'
 
 const DetailsScreen = ({ itemId }) => {
     const navigation = useNavigation();
 
-    const [isModalVisible, setModalVisible] = useState(false);
-
     const fnNavigateToDetails = () => navigation.navigate(ROUTES?.screenChart);
 
     const route = useRoute();
-    const { item } = route.params;
+    const { item } = route?.params;
+
     const [detailData, setDetailData] = useState(null);
     const [timeData, setTimeData] = useState([]);
-
+    const [apiData, setApiData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedMsgId, setSelectedMsgId] = useState(null);
-    const [selectedData, setSelectedData] = useState(null);
 
     useEffect(() => {
         fetchDetailData();
+        // fetchApiData();
     }, []);
 
     const fetchDetailData = async () => {
@@ -45,10 +39,10 @@ const DetailsScreen = ({ itemId }) => {
 
             if (data?.all?.length > 0) {
                 const relevantData = data?.all?.find(item => item?.page_id === item?.page_id);
-
                 if (relevantData) {
                     setDetailData(relevantData);
-                } else {
+                }
+                else {
                     console.log('No matching item found');
                     setError('No matching item found');
                 }
@@ -77,50 +71,11 @@ const DetailsScreen = ({ itemId }) => {
     };
 
 
-    // const fetchDetailData = async () => {
-    //     try {
-    //         setLoading(true);
-    //         const response = await fetch(`https://massyart.com/ringsignal/inv/api_data?id=${item?.page_id}`);
-    //         const data = await response?.json();
+    const parseActiveFromTime = async (activeFrom) => {
 
-    //         console.log('Fetched data:', data);
-
-    //         if (data?.all?.length > 0) {
-    //             const relevantData = data?.all?.find(el => el?.page_id === item?.page_id);
-
-    //             if (relevantData) {
-    //                 setDetailData(relevantData);
-    //             } else {
-    //                 console.log('No matching item found');
-    //                 setError('No matching item found');
-    //             }
-    //         }
-
-    //         const timeIntervals = ['5m', '15m', '30m', '1h', '4h', '5h', '1d', '1w'];
-
-    //         const timeData = timeIntervals?.map(interval => ({
-    //             time: interval,
-    //             maBuy: data?.average?.ma?.buy?.[interval] || null,
-    //             maSell: data?.average?.ma?.sell?.[interval] || null,
-    //             maSignal: data?.average?.ma?.signal?.[interval] || null,
-    //             tecBuy: data?.average?.tec?.buy?.[interval] || null,
-    //             tecSell: data?.average?.tec?.sell?.[interval] || null,
-    //             tecSignal: data?.average?.tec?.signal?.[interval] || null,
-    //         }));
-
-    //         setTimeData(timeData);
-
-    //     } catch (err) {
-    //         console.error('Error fetching data:', err);
-    //         setError(err?.message);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
-    const parseActiveFromTime = (activeFrom) => {
         try {
-            const parsedData = JSON?.parse(activeFrom);
+
+            const parsedData = await JSON?.parse(activeFrom);
             return parsedData?.ma?.time || null;
         } catch (error) {
             console.error('Error parsing active_from:', error);
@@ -133,10 +88,6 @@ const DetailsScreen = ({ itemId }) => {
     const handlePressItem = () => {
         fnNavigateToDetails();
         console.log('Item pressed:',);
-    };
-    const fnOnPress = () => {
-        console.log("Button pressed inside modal!");
-        setModalVisible(true);
     };
 
     const ChartIcon = () => {
@@ -183,10 +134,10 @@ const DetailsScreen = ({ itemId }) => {
                 />
 
                 <ViewModalData title={"Moving Averages Lines"} timeData={maData} />
-                <View style={{ marginVertical: 15, }}>
 
-                    <ViewModalData title={"Technical Indicators"} timeData={tecData} />
-                </View>
+                <ViewModalData title={"Technical Indicators"} timeData={tecData} />
+
+                {/* <AdvanceReport /> */}
 
             </CustomScrollView>
         </CustomView>
