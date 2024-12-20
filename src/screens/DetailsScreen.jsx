@@ -1,8 +1,10 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomView from '../components/customComponents/CustomView'
+import ViewIndicesDetails from '../components/views/ViewIndicesDetails'
 import ViewIndicesRating from '../components/views/ViewIndicesRating'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import CustomModal from '../components/customComponents/CustomModal'
 import ViewModalData from '../components/views/ViewModalData'
 import { COLORS } from '../styles/theme-styles'
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -10,6 +12,9 @@ import CustomTouchableOpacity from '../components/customComponents/CustomTouchab
 import { ROUTES } from '../routes/RouteConstants'
 import CustomScrollView from '../components/customComponents/CustomScrollView'
 import SignalSummery from '../components/views/SignalSummery'
+import time_map from '../../assets/time_map'
+import CustomText from '../components/customComponents/CustomText'
+import AdvanceReport from '../components/views/AdvanceReport'
 
 const DetailsScreen = ({ itemId }) => {
     const navigation = useNavigation();
@@ -21,13 +26,13 @@ const DetailsScreen = ({ itemId }) => {
 
     const [detailData, setDetailData] = useState(null);
     const [timeData, setTimeData] = useState([]);
-    const [apiData, setApiData] = useState(null);
+    const [apiData, setApiData] = useState(null); // New state to hold the fetched API data
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchDetailData();
-        // fetchApiData();
+        fetchApiData();
     }, []);
 
     const fetchDetailData = async () => {
@@ -70,12 +75,25 @@ const DetailsScreen = ({ itemId }) => {
         }
     };
 
-
-    const parseActiveFromTime = async (activeFrom) => {
-
+    const fetchApiData = async () => {
         try {
+            const response = await fetch(`https://massyart.com/ringsignal/inv/app_details_pp?msg_id=1`);
+            const data = await response?.json();
+            const { summary, change_at } = data?.pp?.overall || {}; // Extract summary and change_at
+            setApiData({ summary, change_at }); // Store it in state
+        } catch (err) {
+            console.error('Error fetching API data:', err);
+            setError(err?.message);
+        }
+    };
 
-            const parsedData = await JSON?.parse(activeFrom);
+console.log("api", apiData);
+
+    const parseActiveFromTime = (activeFrom) => {
+        console.log("active", activeFrom);
+        
+        try {
+            const parsedData = JSON?.parse(activeFrom);
             return parsedData?.ma?.time || null;
         } catch (error) {
             console.error('Error parsing active_from:', error);
@@ -137,7 +155,7 @@ const DetailsScreen = ({ itemId }) => {
 
                 <ViewModalData title={"Technical Indicators"} timeData={tecData} />
 
-                {/* <AdvanceReport /> */}
+                <AdvanceReport />
 
             </CustomScrollView>
         </CustomView>
