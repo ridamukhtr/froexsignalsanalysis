@@ -10,71 +10,65 @@ import { useFocusEffect } from '@react-navigation/native';
 import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
 
 const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false }) => {
+	const [favorites, setFavorites] = useState([]);
+	const [isFavItem, setIsFavItem] = useState([]);
 
-    const [favorites, setFavorites] = useState([]);
-    const [isFavItem, setIsFavItem] = useState([])
+	useEffect(() => {
+		const loadFavorites = async () => {
+			try {
+				const storedFavorites = await AsyncStorage.getItem('favorites');
+				if (storedFavorites) {
+					setFavorites(JSON.parse(storedFavorites));
+				}
+			} catch (error) {
+				console.error('Error loading favorites:', error);
+			}
+		};
 
-    useEffect(() => {
-        const loadFavorites = async () => {
-            try {
-                const storedFavorites = await AsyncStorage.getItem('favorites');
-                if (storedFavorites) {
-                    setFavorites(JSON.parse(storedFavorites));
-                }
-            } catch (error) {
-                console.error('Error loading favorites:', error);
-            }
-        };
+		loadFavorites();
+	}, []);
 
-        loadFavorites();
-    }, []);
+	// Toggle favorite and update AsyncStorage
+	const toggleFavorite = async itemId => {
+		try {
+			let updatedFavorites;
 
-    // Toggle favorite and update AsyncStorage
-    const toggleFavorite = async (itemId) => {
-        try {
-            let updatedFavorites;
+			// Check if item is already in favorites
+			const isItemFavorite = favorites?.includes(itemId);
 
-            // Check if item is already in favorites
-            const isItemFavorite = favorites?.includes(itemId);
+			if (isItemFavorite) {
+				// Remove item from favorites
+				updatedFavorites = favorites?.filter(id => id !== itemId);
+			} else {
+				// Add item to favorites
+				updatedFavorites = [...favorites, itemId];
+			}
 
-            if (isItemFavorite) {
-                // Remove item from favorites
-                updatedFavorites = favorites?.filter((id) => id !== itemId);
-            } else {
-                // Add item to favorites
-                updatedFavorites = [...favorites, itemId];
-            }
+			// Update state
+			setFavorites(updatedFavorites);
 
-            // Update state
-            setFavorites(updatedFavorites);
+			// Save to AsyncStorage
+			await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+		} catch (error) {
+			console.error('Error toggling favorite:', error);
+		}
+	};
 
-            // Save to AsyncStorage
-            await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-        } catch (error) {
-            console.error('Error toggling favorite:', error);
-        }
-    };
+	const displayData = isFavoriteScreen ? data?.filter(item => favorites?.includes(item?.page_id)) : data;
 
+	const renderItem = ({ item }) => {
+		const { getMaSummaryColor } = useCommonFunctions();
 
-
-    const displayData = isFavoriteScreen
-        ? data?.filter(item => favorites?.includes(item?.page_id))
-        : data;
-
-    const renderItem = ({ item }) => {
-
-        const { getMaSummaryColor } = useCommonFunctions();
-        
-        const maSummaryColor = getMaSummaryColor(item?.ma_summery);
-        return (
-            <View style={styles.itemContainer}>
-                <CustomTouchableOpacity onPress={() => toggleFavorite(item?.page_id)}>
-                    {favorites.includes(item?.page_id) ? (
-                        <Favourite name="heart" size={20} color={COLORS.GREEN} />
-                    ) : (
-                        <Favourite name="hearto" color={COLORS.GREEN} size={20} />
-                    )}
-                    {/* {isFavItem?.find((fav) => fav == item?.page_id) ? (<Favourite
+		const maSummaryColor = getMaSummaryColor(item?.ma_summery);
+		return (
+			<View style={styles.itemContainer}>
+				<CustomTouchableOpacity onPress={() => toggleFavorite(item?.page_id)}>
+					{favorites.includes(item?.page_id) ? (
+						<Favourite name="heart" size={20} color={COLORS.GREEN} />
+					) : (
+						<Favourite name="hearto" color={COLORS.GREEN} size={20} />
+					)}
+					{/* {isFavItem?.find((fav) => fav == item?.page_id) ? (<Favourite
                         name="heart"
                         size={20}
                         color={COLORS.GREEN}
@@ -85,57 +79,61 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
                             color={COLORS.GREEN}
                             size={20}
                         />)} */}
-                </CustomTouchableOpacity>
+				</CustomTouchableOpacity>
 
-                <CustomTouchableOpacity style={{ flex: 1 }}  onPress={() => onPressItem?.(item)}>
-                    <View style={globalStyles.container}>
-                        <View style={[globalStyles.container, { gap: 7 }]}>
-                            <CustomText style={globalStyles.titleText}>{item?.symbol}</CustomText>
-                            <CustomText style={globalStyles.titleText}>|</CustomText>
-                            <CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
-                        </View>
-                        <CustomText style={[globalStyles.titleText, { fontSize: 15, color: maSummaryColor }]}>{`Price: ${item?.price}`}</CustomText>
-                    </View>
-                    <View style={globalStyles.container}>
-                        <View style={[globalStyles.container, { gap: 7 }]}>
-                            <CustomText style={[globalStyles.timeText, { maxWidth: '95%' }]} numberOfLines={1} ellipsizeMode={"tail"} >{item?.symbol2}</CustomText>
-                        </View>
-                        <View style={[globalStyles.container, { gap: 4 }]}>
-                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChange}</CustomText>
-                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{"("}</CustomText>
-                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChangeP}{"%"}</CustomText>
-                            <CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{")"}</CustomText>
-                        </View>
-                    </View>
-                </CustomTouchableOpacity>
-            </View>
-        )
-    }
+				<CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
+					<View style={globalStyles.container}>
+						<View style={[globalStyles.container, { gap: 7 }]}>
+							<CustomText style={globalStyles.titleText}>{item?.symbol}</CustomText>
+							<CustomText style={globalStyles.titleText}>|</CustomText>
+							<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
+						</View>
+						<CustomText style={[globalStyles.titleText, { fontSize: 15, color: maSummaryColor }]}>{`Price: ${item?.price}`}</CustomText>
+					</View>
+					<View style={globalStyles.container}>
+						<View style={[globalStyles.container, { gap: 7 }]}>
+							<CustomText style={[globalStyles.timeText, { maxWidth: '95%' }]} numberOfLines={1} ellipsizeMode={'tail'}>
+								{item?.symbol2}
+							</CustomText>
+						</View>
+						<View style={[globalStyles.container, { gap: 4 }]}>
+							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChange}</CustomText>
+							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{'('}</CustomText>
+							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>
+								{item?.summaryChangeP}
+								{'%'}
+							</CustomText>
+							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{')'}</CustomText>
+						</View>
+					</View>
+				</CustomTouchableOpacity>
+			</View>
+		);
+	};
 
-    return (
-        <SafeAreaView style={{}}>
-            <FlatList
-                data={displayData}
-                renderItem={renderItem}
-                keyExtractor={(item) => item?.page_id?.toString()}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: '55%' }}
-            />
-        </SafeAreaView>
-
-    );
+	return (
+		<SafeAreaView style={{}}>
+			<FlatList
+				data={displayData}
+				renderItem={renderItem}
+				keyExtractor={item => item?.page_id?.toString()}
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{ paddingBottom: '55%' }}
+			/>
+		</SafeAreaView>
+	);
 };
 
 const styles = StyleSheet.create({
-    itemContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
-        paddingVertical: 14,
-        borderBottomWidth: 1,
-        borderColor: COLORS.GREY,
-    },
+	itemContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center',
+		gap: 12,
+		paddingVertical: 14,
+		borderBottomWidth: 1,
+		borderColor: COLORS.GREY
+	}
 });
 
 export default ViewScreens;
