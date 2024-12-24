@@ -4,10 +4,10 @@ import { COLORS, SCREEN_HEIGHT } from "./theme-styles";
 const globalStyles = StyleSheet.create({
     screenHeadingTxt: { fontSize: 24, lineHeight: 30, color: COLORS.textColor, textAlign: 'center' },
     container: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-    timeText: { fontSize: 14, fontWeight: '300', color: COLORS.GREY_TEXT },
-    titleText: { fontSize: 16, fontWeight: '700', lineHeight: 25 },
+    timeText: { fontSize: 15, fontWeight: '300', color: COLORS.GREY_TEXT },
+    titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 25 },
     screenDescTxt: { textAlign: 'center' },
-    defaultTxt: { fontSize: 16, lineHeight: 20, color: COLORS.WHITE, },
+    defaultTxt: { fontSize: 14, lineHeight: 20, color: COLORS.WHITE, },
     cardContainer: { borderRadius: 20, backgroundColor: COLORS.WHITE, borderColor: '#3741510D', borderWidth: 1, padding: 20, width: "99%", gap: 20, position: 'relative', },
     searchContainer: {
         flexDirection: 'row',

@@ -825,9 +825,9 @@
     "ios": {
       "sourceDir": "E:\\remote\\froexsignalsanalysis\\ios",
       "xcodeProject": {
-        "name": "forex_signals_analysis.xcodeproj",
+        "name": "forex_signals_analysis.xcworkspace",
         "path": ".",
-        "isWorkspace": false
+        "isWorkspace": true
       },
       "assets": []
     },
