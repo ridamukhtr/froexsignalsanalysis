@@ -1,56 +1,54 @@
-import { StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import ViewScreens from '../components/views/ViewScreens';
+// import packages
+import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+// import routes
 import { ROUTES } from '../routes/RouteConstants';
+// import components
+import ViewScreens from '../components/views/ViewScreens';
+// import store
 import { useGetInnerScreenDataQuery } from '../redux/storeApis';
 
 const CryptoCurrencyScreen = ({ data }) => {
-    const navigation = useNavigation();
+	const navigation = useNavigation();
 
-    const transformedData = data?.crypto ? Object?.values(data.crypto) : [];
+	const [selectedItem, setSelectedItem] = useState(null);
 
-    const [selectedItem, setSelectedItem] = useState(null);
+	const transformedData = data?.crypto ? Object?.values(data.crypto) : [];
 
-    const { data: detailData, isLoading } = useGetInnerScreenDataQuery(
-        {
-            id: selectedItem?.id,
-            msg_id: selectedItem?.msg_id
-        },
-        {
-            skip: !selectedItem,
-            enabled: !!selectedItem
-        }
-    );
+	const { data: detailData } = useGetInnerScreenDataQuery(
+		{
+			id: selectedItem?.id,
+			msg_id: selectedItem?.msg_id
+		},
+		{
+			skip: !selectedItem,
+			enabled: !!selectedItem
+		}
+	);
 
-    useEffect(() => {
-        if (detailData && selectedItem) {
-            const params = {
-                id: selectedItem?.id,
-                msg_id: selectedItem?.msg_id,
-                item: selectedItem,
-                detailData
-            };
+	useEffect(() => {
+		if (detailData && selectedItem) {
+			const params = {
+				id: selectedItem?.id,
+				msg_id: selectedItem?.msg_id,
+				item: selectedItem,
+				detailData
+			};
 
-            navigation.navigate(ROUTES.screenDetails, { item: selectedItem, params });
-            setSelectedItem(null);
-        }
-    }, [detailData, selectedItem, navigation]);
+			navigation.navigate(ROUTES.screenDetails, { item: selectedItem, params });
+			setSelectedItem(null);
+		}
+	}, [detailData, selectedItem, navigation]);
 
-    const handlePressItem = (item) => {
-        setSelectedItem(item);
-        console.log('Item pressed:', item);
-    };
-    return (
-        <>
-            <ViewScreens
-                data={transformedData}
-                onPressItem={handlePressItem}
-            />
-        </>
-    )
-}
+	const handlePressItem = item => {
+		setSelectedItem(item);
+		console.log('Item pressed:', item);
+	};
 
-export default CryptoCurrencyScreen
+	return <ViewScreens data={transformedData} onPressItem={handlePressItem} />;
+};
 
-const styles = StyleSheet.create({})
+export default CryptoCurrencyScreen;
+
+const styles = StyleSheet.create({});

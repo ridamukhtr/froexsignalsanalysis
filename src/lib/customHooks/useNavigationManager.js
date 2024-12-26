@@ -1,42 +1,42 @@
-import { useNavigation } from "@react-navigation/native"; 
-import { ROUTES } from "../../routes/RouteConstants";
+// import packages
+import { useNavigation } from '@react-navigation/native';
+// import routes
+import { ROUTES } from '../../routes/RouteConstants';
 
 export default function useNavigationManager() {
-    const navigation = useNavigation();
+	const navigation = useNavigation();
 
-    const fnNavigateToHome =()=> navigation.navigate(ROUTES.screenHome);
-    const fnNavigateToFavourite =()=> navigation.navigate(ROUTES.screenFavourite);
-    const fnNavigateToIndices=()=> navigation.navigate(ROUTES.screenIndices);
-    const fnNavigateToStocks=()=> navigation.navigate(ROUTES.screenStock);
-    const fnNavigateToCrypto=()=> navigation.navigate(ROUTES.screenCrypto);
-    const fnNavigateToForex=()=> navigation.navigate(ROUTES.screenForex);
-    const fnNavigateToHelp=()=> navigation.navigate(ROUTES.screenHelp);
-    const fnNavigateToCommodities=()=> navigation.navigate(ROUTES.screenCommodities);
-    const fnNavigateToDetails=()=> navigation.navigate(ROUTES.screenDetails);
-    
+	const fnNavigateToHome = () => navigation.navigate(ROUTES.screenHome);
+	const fnNavigateToFavourite = () => navigation.navigate(ROUTES.screenFavourite);
+	const fnNavigateToIndices = () => navigation.navigate(ROUTES.screenIndices);
+	const fnNavigateToStocks = () => navigation.navigate(ROUTES.screenStock);
+	const fnNavigateToCrypto = () => navigation.navigate(ROUTES.screenCrypto);
+	const fnNavigateToForex = () => navigation.navigate(ROUTES.screenForex);
+	const fnNavigateToHelp = () => navigation.navigate(ROUTES.screenHelp);
+	const fnNavigateToCommodities = () => navigation.navigate(ROUTES.screenCommodities);
+	const fnNavigateToDetails = () => navigation.navigate(ROUTES.screenDetails);
 
+	const fnNavigateToRoot = () => navigation.navigate('Root');
 
-    const fnNavigateToRoot = () => navigation.navigate('Root');
+	const fnOpenDrawer = () => navigation.openDrawer();
+	const fnCloseDrawer = () => navigation.closeDrawer();
 
-    const fnOpenDrawer =()=> navigation.openDrawer();
-    const fnCloseDrawer =()=> navigation.closeDrawer();
+	const fnNavigateGoBack = () => navigation.goBack();
 
-    const fnNavigateGoBack = () => navigation.goBack();
+	return {
+		fnNavigateToHelp,
+		fnNavigateToCommodities,
+		fnNavigateToCrypto,
+		fnNavigateToForex,
+		fnNavigateToStocks,
+		fnNavigateToFavourite,
+		fnNavigateToHome,
+		fnNavigateToIndices,
+		fnNavigateToDetails,
 
-    return {
-        fnNavigateToHelp,
-        fnNavigateToCommodities,
-        fnNavigateToCrypto,
-        fnNavigateToForex,
-        fnNavigateToStocks,
-        fnNavigateToFavourite,
-        fnNavigateToHome,
-        fnNavigateToIndices,
-        fnNavigateToDetails,
-
-        fnNavigateToRoot,
-        fnOpenDrawer,
-        fnCloseDrawer,
-        fnNavigateGoBack,
-    };
+		fnNavigateToRoot,
+		fnOpenDrawer,
+		fnCloseDrawer,
+		fnNavigateGoBack
+	};
 }

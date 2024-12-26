@@ -1,15 +1,19 @@
+// import packeges
 import React, { useEffect, useState } from 'react';
-import ViewScreens from '../components/views/ViewScreens';
 import { useNavigation } from '@react-navigation/native';
+// import screens
+import ViewScreens from '../components/views/ViewScreens';
+// import routes
 import { ROUTES } from '../routes/RouteConstants';
+// import store
 import { useGetInnerScreenDataQuery } from '../redux/storeApis';
 
 const ComoditiesScreen = ({ data }) => {
 	const navigation = useNavigation();
 
-	const transformedData = data?.commo ? Object?.values(data?.commo) : [];
-
 	const [selectedItem, setSelectedItem] = useState(null);
+
+	const transformedData = data?.commo ? Object?.values(data?.commo) : [];
 
 	const { data: detailData } = useGetInnerScreenDataQuery(
 		{

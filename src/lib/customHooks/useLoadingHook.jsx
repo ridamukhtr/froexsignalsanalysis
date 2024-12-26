@@ -1,23 +1,25 @@
-import { useDispatch, useSelector } from "react-redux"
-import { resetLoaderRequset, selectedIsLoading, setIsLoading } from "../../redux/LoaderReducer"
+// import routes
+import { useDispatch, useSelector } from 'react-redux';
+// import reducer
+import { resetLoaderRequset, selectedIsLoading, setIsLoading } from '../../redux/LoaderReducer';
 
 const useLoadingHooks = () => {
-    const dispatch = useDispatch()
-    const setLoading = useSelector(selectedIsLoading)
+	const dispatch = useDispatch();
+	const setLoading = useSelector(selectedIsLoading);
 
-    const showLoader = () => {
-        dispatch(setIsLoading(true))
-    };
+	const showLoader = () => {
+		dispatch(setIsLoading(true));
+	};
 
-    const hideLoader = () => {
-        dispatch(setIsLoading(false))
-    };
+	const hideLoader = () => {
+		dispatch(setIsLoading(false));
+	};
 
-    const resetLoader = () => {
-        dispatch(resetLoaderRequset());
-    };
-    
-    return { setLoading, showLoader, hideLoader, resetLoader }
-}
+	const resetLoader = () => {
+		dispatch(resetLoaderRequset());
+	};
 
-export default useLoadingHooks
+	return { setLoading, showLoader, hideLoader, resetLoader };
+};
+
+export default useLoadingHooks;
