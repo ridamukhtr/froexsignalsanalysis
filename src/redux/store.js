@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import themeReducer from './themeReducer';
-import forexSignalapi from './storeApis'; 
+import LoaderReducer from './LoaderReducer';
+import forexSignalapi from './storeApis';
 
 export const store = configureStore({
     reducer: {
+        LoaderReducer,
         themeReducer,
         [forexSignalapi.reducerPath]: forexSignalapi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(forexSignalapi.middleware), 
+        getDefaultMiddleware().concat(forexSignalapi.middleware),
 });

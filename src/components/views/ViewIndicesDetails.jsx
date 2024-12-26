@@ -1,16 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import CustomText from '../customComponents/CustomText'
 import globalStyles from '../../styles/global-styles'
-import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity'
 import { COLORS } from '../../styles/theme-styles'
-import Arrow from 'react-native-vector-icons/Entypo'
-import ArrowDown from 'react-native-vector-icons/Entypo'
 import useThemeManager from '../../lib/customHooks/useThemeManager'
-import { ClicktoNextIcon } from '../../../assets/svg'
-import AnimatedIcon from '../../../assets/svg/AnimatedIcon'
-import HorizontalView from './HorizontalView'
-
 
 const ViewIndicesDetails = ({ onPress, title }) => {
 
@@ -18,43 +11,20 @@ const ViewIndicesDetails = ({ onPress, title }) => {
     const { textColor } = useThemeManager()
 
     return (
-        <View>
-            <View style={globalStyles.container} >
-                <CustomText style={[styles.title, { color: textColor }]}>{title}</CustomText>
-                <View style={styles.statusContainer}>
-                    <CustomText style={styles.statusText}>Strong sell</CustomText>
-                    <View style={styles.redDot} />
+        <View style={globalStyles.cardContainer}>
+            <CustomText style={{ position: 'absolute', top: -10, left: 10, paddingHorizontal: 5 }}>{"Fibonssi"}</CustomText>
+            <View style={{ gap: 6 }} >
+                <CustomText>{"Pivots"}</CustomText>
+                <View style={{ width: "auto", borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                    <CustomText>{"1.8437"}</CustomText>
                 </View>
             </View>
-
-            <CustomTouchableOpacity style={styles.btnContainer} onPress={onPress}>
-                <View style={[globalStyles.container, { justifyContent: "space-around", paddingBottom: 10 }]} >
-                    <View style={[globalStyles.container, { gap: 20, }]} >
-                        <View style={[globalStyles.container, { gap: 5 }]}>
-
-                            <Arrow name={"arrow-up"} size={25} color={COLORS.GREEN} />
-
-                            <CustomText style={{ color: COLORS.WHITE }}>{"Buy"}</CustomText>
-                        </View>
-                        <CustomText style={[globalStyles.titleText, { fontSize: 23, color: COLORS.WHITE }]} >{"2"}</CustomText>
-                    </View>
-                    <View style={[globalStyles.container, { gap: 20 }]} >
-                        <View style={[globalStyles.container, { gap: 5 }]}>
-
-                            <ArrowDown name={"arrow-down"} size={25} color={COLORS.GREEN} />
-
-
-                            <CustomText style={{ color: COLORS.WHITE }} >{"Sell"}</CustomText>
-                        </View>
-                        <CustomText style={[globalStyles.titleText, { fontSize: 23, color: COLORS.WHITE }]} >{"2"}</CustomText>
-                    </View>
-
-                </View>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingLeft:30 }} >
-                    <CustomText style={{ color: COLORS.YELLOW }}>{"Click to view details"}</CustomText>
-                    <AnimatedIcon direction="right" color={COLORS.YELLOW} size={24}/>
-                </View>
-            </CustomTouchableOpacity>
+            <CustomText>{"R1"}</CustomText>
+            <CustomText>{"R2"}</CustomText>
+            <CustomText>{"R3"}</CustomText>
+            <CustomText>{"S1"}</CustomText>
+            <CustomText>{"S2"}</CustomText>
+            <CustomText>{"S3"}</CustomText>
         </View>
     )
 }
