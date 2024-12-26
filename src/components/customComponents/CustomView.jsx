@@ -10,7 +10,6 @@ import useThemeManager from '../../lib/customHooks/useThemeManager'
 import useNavigationManager from '../../lib/customHooks/useNavigationManager'
 import Ioniicons from 'react-native-vector-icons/Ionicons'
 import Icon from 'react-native-vector-icons/Entypo'
-import AnimatedIcon from '../../../assets/svg/AnimatedIcon'
 
 
 const CustomView = ({ children, style, showDrawer, contentContainerStyle, scrollViewRef, showsHorizontalScrollIndicator, centered, title = false, showsVerticalScrollIndicator, showScreenHeader, showBackIcon = false, headerStyle, onPressBackIcon, right }) => {

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { COLORS, SCREEN_HEIGHT } from "./theme-styles";
+import { COLORS } from "./theme-styles";
 
 const globalStyles = StyleSheet.create({
     screenHeadingTxt: { fontSize: 24, lineHeight: 30, color: COLORS.textColor, textAlign: 'center' },
@@ -8,7 +8,7 @@ const globalStyles = StyleSheet.create({
     titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 25 },
     screenDescTxt: { textAlign: 'center' },
     defaultTxt: { fontSize: 14, lineHeight: 20, color: COLORS.WHITE, },
-    cardContainer: { borderRadius: 20, backgroundColor: COLORS.WHITE, borderColor: '#3741510D', borderWidth: 1, padding: 20, width: "99%", gap: 20, position: 'relative', },
+    cardContainer: { borderRadius: 10, borderColor: COLORS.GREY, borderWidth: 1, paddingVertical: 15, paddingHorizontal: 10, position: 'relative', },
     searchContainer: {
         flexDirection: 'row',
         alignItems: 'center',

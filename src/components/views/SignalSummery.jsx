@@ -6,14 +6,14 @@ import Arrow from 'react-native-vector-icons/Entypo'
 import Icon from 'react-native-vector-icons/Fontisto'
 import useCommonFunctions from '../../lib/customHooks/useCommonFunctions'
 
-const SignalSummery = ({ maSummary, time, ago, activeTime, ma_summery }) => {
+const SignalSummery = ({ maSummary, time, ago, activeTime, ma_summery, }) => {
 
     const { getMaSummaryColor } = useCommonFunctions();
 
     const maSummaryColor = getMaSummaryColor(ma_summery);
 
     return (
-        <View style={styles.container} >
+        <View  style={styles.container} >
 
             <View style={{ width: "18%" }}>
                 <CustomText>{time}</CustomText>
