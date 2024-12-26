@@ -8,28 +8,29 @@ import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
 import globalStyles from '../../styles/global-styles';
 
 const ViewModalData = ({ title, timeData }) => {
+    
     const { getMaSummaryColor } = useCommonFunctions();
 
     return (
         <View style={{ marginVertical: 15, }}>
             <View style={{ marginVertical: 10 }}>
-                <CustomText style={[globalStyles.titleText, { fontSize: 20 }]}>{title}</CustomText>
+                <CustomText style={[globalStyles.titleText, { fontSize: 16 }]}>{title}</CustomText>
             </View>
 
             <View >
 
                 <View style={styles.headerRow}>
                     <View style={styles.timeColumn}>
-                        <CustomText style={globalStyles.titleText}>Time</CustomText>
+                        <CustomText  style={[globalStyles.titleText, { fontSize: 14 }]}>Time</CustomText>
                     </View>
                     <View style={styles.valueColumn}>
-                        <CustomText style={globalStyles.titleText}>Buy</CustomText>
+                        <CustomText  style={[globalStyles.titleText, { fontSize: 14 }]}>Buy</CustomText>
                     </View>
                     <View style={styles.valueColumn}>
-                        <CustomText style={globalStyles.titleText}>Sell</CustomText>
+                        <CustomText  style={[globalStyles.titleText, { fontSize: 14 }]}>Sell</CustomText>
                     </View>
                     <View style={styles.signalColumn}>
-                        <CustomText style={globalStyles.titleText}>Summary</CustomText>
+                        <CustomText  style={[globalStyles.titleText, { fontSize: 14 }]}>Summary</CustomText>
                     </View>
                 </View>
 
@@ -44,25 +45,25 @@ const ViewModalData = ({ title, timeData }) => {
                     return (
                         <View key={index} style={styles.headerRow}>
                             <View style={styles.timeColumn}>
-                                <CustomText style={globalStyles?.titleText}>{item?.time}</CustomText>
+                                <CustomText >{item?.time}</CustomText>
                             </View>
 
                             <View style={styles.valueColumn}>
-                                <CustomText >{buyValue}</CustomText>
+                                <CustomText >{buyValue}{"%"}</CustomText>
                             </View>
                             <View style={styles.valueColumn}>
-                                <CustomText >{sellValue}</CustomText>
+                                <CustomText >{sellValue}{"%"}</CustomText>
                             </View>
 
-                            <View style={[styles.valueColumn, { width: '25%' }]}>
+                            <View style={[styles.valueColumn, { width: '20%' }]}>
                                 {maSummaryColor === COLORS.RED && (
-                                    <Arrow name="arrow-down" size={25} color={COLORS.RED} />
+                                    <Arrow name="arrow-down" size={20} color={COLORS.RED} />
                                 )}
                                 {maSummaryColor === COLORS.GREEN && (
-                                    <Arrow name="arrow-up" size={25} color={COLORS.GREEN} />
+                                    <Arrow name="arrow-up" size={20} color={COLORS.GREEN} />
                                 )}
                                 {maSummaryColor === COLORS.BLUE && (
-                                    <Icon name="arrow-h" size={25} color={COLORS.BLUE} />
+                                    <Icon name="arrow-h" size={20} color={COLORS.BLUE} />
                                 )}
                             </View>
                         </View>

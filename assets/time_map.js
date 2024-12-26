@@ -10,5 +10,3 @@ const time_map = {
 };
 
 export default time_map;
-
-// export default timeMap =()=>{}

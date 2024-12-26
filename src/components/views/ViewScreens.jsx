@@ -64,37 +64,40 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
 			<View style={styles.itemContainer}>
 				<CustomTouchableOpacity onPress={() => toggleFavorite(item?.page_id)}>
 					{favorites.includes(item?.page_id) ? (
-						<Favourite name="heart" size={20} color={COLORS.GREEN} />
+						<Favourite name="heart" size={17} color={COLORS.GREEN} />
 					) : (
-						<Favourite name="hearto" color={COLORS.GREEN} size={20} />
+						<Favourite name="hearto" color={COLORS.GREEN} size={17} />
 					)}
 					{/* {isFavItem?.find((fav) => fav == item?.page_id) ? (<Favourite
                         name="heart"
-                        size={20}
+                        size={17}
                         color={COLORS.GREEN}
                     />
                     ) : (
                         <Favourite
                             name="hearto"
                             color={COLORS.GREEN}
-                            size={20}
+                            size={17}
                         />)} */}
 				</CustomTouchableOpacity>
 
 				<CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
 					<View style={globalStyles.container}>
 						<View style={[globalStyles.container, { gap: 7 }]}>
-							<CustomText style={globalStyles.titleText}>{item?.symbol}</CustomText>
+							{/* <View style= {{ width: 130,}}> */}
+
+							<CustomText style={globalStyles.titleText} numberOfLines={1}>
+								{item?.symbol}
+							</CustomText>
+							{/* </View>  */}
 							<CustomText style={globalStyles.titleText}>|</CustomText>
 							<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
 						</View>
-						<CustomText style={[globalStyles.titleText, { fontSize: 15, color: maSummaryColor }]}>{`Price: ${item?.price}`}</CustomText>
+						<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{`Price: ${item?.price}`}</CustomText>
 					</View>
 					<View style={globalStyles.container}>
-						<View style={[globalStyles.container, { gap: 7 }]}>
-							<CustomText style={[globalStyles.timeText, { maxWidth: '95%' }]} numberOfLines={1} ellipsizeMode={'tail'}>
-								{item?.symbol2}
-							</CustomText>
+						<View style={[globalStyles.container, { fontSize: 10, gap: 7, width: '60%' }]}>
+							<CustomText style={[globalStyles.timeText]}>{item?.symbol2}</CustomText>
 						</View>
 						<View style={[globalStyles.container, { gap: 4 }]}>
 							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChange}</CustomText>

@@ -8,7 +8,7 @@ const CustomText = ({ children, onPress, numberOfLines, style, ellipsizeMode }) 
 
     const { textColor } = useThemeManager();
     return (
-        <Text onPress={onPress} style={[styles.defaultTxt(textColor), style]} numberOfLines={numberOfLines} ellipsizeMode="tail">
+        <Text allowFontScaling={false} onPress={onPress} style={[styles.defaultTxt(textColor), style]} numberOfLines={numberOfLines} ellipsizeMode="tail">
             {children}
 
         </Text>
