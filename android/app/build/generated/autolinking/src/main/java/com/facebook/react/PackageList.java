@@ -16,6 +16,8 @@ import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @shopify/react-native-skia
 import com.shopify.reactnative.skia.RNSkiaPackage;
+// lottie-react-native
+import com.airbnb.android.react.lottie.LottiePackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-onesignal
@@ -84,6 +86,7 @@ public class PackageList {
       new AsyncStoragePackage(),
       new RNCMaskedViewPackage(),
       new RNSkiaPackage(),
+      new LottiePackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeOneSignalPackage(),
       new OrientationPackage(),
