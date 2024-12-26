@@ -1,18 +1,22 @@
-import { StyleSheet, TextInput, View } from 'react-native';
+// import packages
 import React, { useRef, useState } from 'react';
-import globalStyles from '../../styles/global-styles';
-import { COLORS } from '../../styles/theme-styles';
-import CustomTouchableOpacity from './CustomTouchableOpacity';
 import Icon from 'react-native-vector-icons/Entypo';
+import { StyleSheet, TextInput, View } from 'react-native';
+// import styles
+import { COLORS } from '../../styles/theme-styles';
+import globalStyles from '../../styles/global-styles';
+// import components
+import CustomTouchableOpacity from './CustomTouchableOpacity';
 
 const CustomSearchField = ({ onSearch }) => {
-	const [isSearchActive, setIsSearchActive] = useState(false);
-	const [searchText, setSearchText] = useState('');
 	const inputRef = useRef(null);
+
+	const [searchText, setSearchText] = useState('');
+	const [isSearchActive, setIsSearchActive] = useState(false);
 
 	const fnSearchTextChange = text => {
 		setSearchText(text);
-		// Add onSearch logic here if needed
+		// Add onSearch logic here
 	};
 
 	const fnClearSearch = () => {
@@ -28,11 +32,11 @@ const CustomSearchField = ({ onSearch }) => {
 		<View style={[globalStyles.searchContainer, styles.container]}>
 			<TextInput
 				ref={inputRef}
-				style={[globalStyles.searchInput, styles.input]}
-				placeholder="Search..."
 				value={searchText}
+				placeholder="Search..."
 				onChangeText={fnSearchTextChange}
 				onFocus={() => setIsSearchActive(true)}
+				style={[globalStyles.searchInput, styles.input]}
 				onBlur={() => {
 					if (!searchText) {
 						setIsSearchActive(false);
@@ -51,15 +55,7 @@ const CustomSearchField = ({ onSearch }) => {
 export default CustomSearchField;
 
 const styles = StyleSheet.create({
-	container: {
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
-	input: {
-		height: 30,
-		lineHeight: 30
-	},
-	clearButton: {
-		padding: 5
-	}
+	container: { flexDirection: 'row', alignItems: 'center' },
+	input: { height: 30, lineHeight: 30 },
+	clearButton: { padding: 5 }
 });

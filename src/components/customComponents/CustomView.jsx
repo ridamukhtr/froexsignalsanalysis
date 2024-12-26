@@ -21,10 +21,8 @@ const CustomView = ({
 	contentContainerStyle,
 	scrollViewRef,
 	showsHorizontalScrollIndicator,
-	centered,
 	title = false,
 	showsVerticalScrollIndicator,
-	showScreenHeader,
 	showBackIcon = false,
 	headerStyle,
 	onPressBackIcon,
@@ -34,66 +32,64 @@ const CustomView = ({
 	const { fnOpenDrawer, fnNavigateGoBack } = useNavigationManager();
 
 	return (
-		<>
-			<SafeAreaView style={styles.safeArea(bgColor)}>
-				{showDrawer ? (
-					<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
-						<CustomScrollView
-							scrollViewRef={scrollViewRef}
-							style={[styles.container(bgColor), style]}
-							contentContainerStyle={contentContainerStyle}
-							showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
-							showsVerticalScrollIndicator={showsVerticalScrollIndicator}
-						>
-							{showBackIcon ? (
-								<View style={[styles.headerContainer, headerStyle]}>
-									<CustomTouchableOpacity onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
-										<Icon name={'chevron-left'} size={20} color={textColor} />
-									</CustomTouchableOpacity>
-									<View style={{ paddingLeft: 20 }}>
-										<CustomText style={styles.titleContainer(textColor)}>{title}</CustomText>
-									</View>
-									{right}
+		<SafeAreaView style={styles.safeArea(bgColor)}>
+			{showDrawer ? (
+				<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
+					<CustomScrollView
+						scrollViewRef={scrollViewRef}
+						style={[styles.container(bgColor), style]}
+						contentContainerStyle={contentContainerStyle}
+						showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
+						showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+					>
+						{showBackIcon ? (
+							<View style={[styles.headerContainer, headerStyle]}>
+								<CustomTouchableOpacity onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
+									<Icon name={'chevron-left'} size={20} color={textColor} />
+								</CustomTouchableOpacity>
+								<View style={{ paddingLeft: 20 }}>
+									<CustomText style={styles.titleContainer(textColor)}>{title}</CustomText>
 								</View>
-							) : (
-								<View style={[styles.headerContainer, headerStyle]}>
-									<CustomTouchableOpacity onPress={fnOpenDrawer}>
-										<Ioniicons name={'menu'} size={30} />
-									</CustomTouchableOpacity>
-									{right}
+								{right}
+							</View>
+						) : (
+							<View style={[styles.headerContainer, headerStyle]}>
+								<CustomTouchableOpacity onPress={fnOpenDrawer}>
+									<Ioniicons name={'menu'} size={30} />
+								</CustomTouchableOpacity>
+								{right}
+							</View>
+						)}
+						{children}
+					</CustomScrollView>
+				</KeyboardAvoidingView>
+			) : (
+				<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
+					<View style={[styles.container(bgColor), style]}>
+						{showBackIcon ? (
+							<View style={[styles.headerContainer, headerStyle]}>
+								<CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
+									<Icon name={'chevron-left'} size={20} color={textColor} />
+								</CustomTouchableOpacity>
+								<View style={{ flex: 1, paddingLeft: 20 }}>
+									<CustomText style={styles.titleContainer(textColor)}>{title}</CustomText>
 								</View>
-							)}
-							{children}
-						</CustomScrollView>
-					</KeyboardAvoidingView>
-				) : (
-					<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
-						<View style={[styles.container(bgColor), style]}>
-							{showBackIcon ? (
-								<View style={[styles.headerContainer, headerStyle]}>
-									<CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
-										<Icon name={'chevron-left'} size={20} color={textColor} />
-									</CustomTouchableOpacity>
-									<View style={{ flex: 1, paddingLeft: 20 }}>
-										<CustomText style={styles.titleContainer(textColor)}>{title}</CustomText>
-									</View>
 
-									{right}
-								</View>
-							) : (
-								<View style={[styles.headerContainer, headerStyle]}>
-									<CustomTouchableOpacity onPress={fnOpenDrawer}>
-										<Ioniicons name={'menu'} size={30} color={textColor} />
-									</CustomTouchableOpacity>
-									{right}
-								</View>
-							)}
-							{children}
-						</View>
-					</KeyboardAvoidingView>
-				)}
-			</SafeAreaView>
-		</>
+								{right}
+							</View>
+						) : (
+							<View style={[styles.headerContainer, headerStyle]}>
+								<CustomTouchableOpacity onPress={fnOpenDrawer}>
+									<Ioniicons name={'menu'} size={30} color={textColor} />
+								</CustomTouchableOpacity>
+								{right}
+							</View>
+						)}
+						{children}
+					</View>
+				</KeyboardAvoidingView>
+			)}
+		</SafeAreaView>
 	);
 };
 

@@ -1,12 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
-import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
-import CustomText from '../customComponents/CustomText';
-import globalStyles from '../../styles/global-styles';
-import { COLORS } from '../../styles/theme-styles';
+// import packages
+import React, { useEffect, useState } from 'react';
 import Favourite from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+// import styling
+import { COLORS } from '../../styles/theme-styles';
+import globalStyles from '../../styles/global-styles';
+// import components
+import CustomText from '../customComponents/CustomText';
+import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
+// import hooks
 import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
 
 const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false }) => {
