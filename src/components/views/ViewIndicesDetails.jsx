@@ -11,21 +11,59 @@ const ViewIndicesDetails = ({ onPress, title }) => {
     const { textColor } = useThemeManager()
 
     return (
-        <View style={globalStyles.cardContainer}>
-            <CustomText style={{ position: 'absolute', top: -10, left: 10, paddingHorizontal: 5 }}>{"Fibonssi"}</CustomText>
-            <View style={{ gap: 6 }} >
-                <CustomText>{"Pivots"}</CustomText>
-                <View style={{ width: "auto", borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                    <CustomText>{"1.8437"}</CustomText>
+        <>
+            {/* <CustomText>Pivot Points</CustomText> */}
+            <View style={[globalStyles.cardContainer, { gap: 12, marginTop: 15 }]}>
+                <CustomText style={{ position: 'absolute', top: -10, left: 10, paddingHorizontal: 5, fontWeight: "bold" }}>{"Fibonssi"}</CustomText>
+                <View style={{ gap: 6, }} >
+                    <CustomText>{"Pivots"}</CustomText>
+                    <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                        <CustomText style={{ textAlign: 'center' }} >{"1.8437"}</CustomText>
+                    </View>
                 </View>
+                <View style={globalStyles.container}>
+                    <View style={{ gap: 3, }} >
+                        <CustomText style={{ left: 5 }}>{"R1"}</CustomText>
+                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                            <CustomText>{"1.8437"}</CustomText>
+                        </View>
+                    </View>
+                    <View style={{ gap: 3, }} >
+                        <CustomText style={{ left: 5 }}>{"R2"}</CustomText>
+                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                            <CustomText>{"1.843877"}</CustomText>
+                        </View>
+                    </View>
+                    <View style={{ gap: 3, }} >
+                        <CustomText style={{ left: 5 }}>{"R3"}</CustomText>
+                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                            <CustomText>{"1.8437"}</CustomText>
+                        </View>
+                    </View>
+                </View>
+                <View style={globalStyles.container}>
+                    <View style={{ gap: 3, }} >
+                        <CustomText style={{ left: 5 }}>{"S1"}</CustomText>
+                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                            <CustomText>{"1.8437"}</CustomText>
+                        </View>
+                    </View>
+                    <View style={{ gap: 3, }} >
+                        <CustomText style={{ left: 5 }}>{"S2"}</CustomText>
+                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                            <CustomText>{"1.8437"}</CustomText>
+                        </View>
+                    </View>
+                    <View style={{ gap: 3, }} >
+                        <CustomText style={{ left: 5 }}>{"S3"}</CustomText>
+                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
+                            <CustomText>{"1.843787778"}</CustomText>
+                        </View>
+                    </View>
+                </View>
+
             </View>
-            <CustomText>{"R1"}</CustomText>
-            <CustomText>{"R2"}</CustomText>
-            <CustomText>{"R3"}</CustomText>
-            <CustomText>{"S1"}</CustomText>
-            <CustomText>{"S2"}</CustomText>
-            <CustomText>{"S3"}</CustomText>
-        </View>
+        </>
     )
 }
 

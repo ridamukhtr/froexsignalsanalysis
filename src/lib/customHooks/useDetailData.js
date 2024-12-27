@@ -16,6 +16,11 @@ const useDetailsScreen = (item) => {
     const [refreshing, setRefreshing] = useState(false);
     const [advanceReportData, setAdvanceReportData] = useState(null);
 
+    useEffect(() => {
+        fetchDetailData();
+        fetchAdvanceReport();
+    }, [item]);
+
     const getUserCountry = async () => {
         try {
             const response = await fetch('https://ipapi.co/json/');
@@ -122,11 +127,6 @@ const useDetailsScreen = (item) => {
         await fetchAdvanceReport();
         setRefreshing(false);
     };
-
-    useEffect(() => {
-        fetchDetailData();
-        fetchAdvanceReport();
-    }, [item]);
 
     return {
         detailData,
