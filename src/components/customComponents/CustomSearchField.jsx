@@ -55,7 +55,7 @@ const CustomSearchField = ({ onSearch }) => {
 export default CustomSearchField;
 
 const styles = StyleSheet.create({
-	container: { flexDirection: 'row', alignItems: 'center' },
-	input: { height: 30, lineHeight: 30 },
-	clearButton: { padding: 5 }
+	container: { flexDirection: 'row', alignItems: 'center' }
+	// input: { height: 30, lineHeight: 30 },
+	// clearButton: { padding: 5 }
 });

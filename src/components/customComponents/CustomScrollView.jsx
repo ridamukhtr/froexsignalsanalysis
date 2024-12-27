@@ -4,10 +4,11 @@ import { ScrollView, StyleSheet } from 'react-native';
 
 const CustomScrollView = ({
 	children,
-	horizontal = false,
-	keyboardShouldPersistTaps,
 	scrollViewRef,
+	refreshControl,
+	horizontal = false,
 	contentContainerStyle,
+	keyboardShouldPersistTaps,
 	showsHorizontalScrollIndicator = false,
 	showsVerticalScrollIndicator = false,
 	style
@@ -21,6 +22,7 @@ const CustomScrollView = ({
 			style={style}
 			ref={scrollViewRef}
 			horizontal={horizontal}
+			refreshControl={refreshControl}
 		>
 			{children}
 		</ScrollView>

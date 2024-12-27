@@ -8,7 +8,7 @@ import { ROUTES } from '../routes/RouteConstants';
 // import store
 import { useGetInnerScreenDataQuery } from '../redux/storeApis';
 
-const ComoditiesScreen = ({ data }) => {
+const ComoditiesScreen = ({ data, refreshControlProps }) => {
 	const navigation = useNavigation();
 
 	const [selectedItem, setSelectedItem] = useState(null);
@@ -45,7 +45,7 @@ const ComoditiesScreen = ({ data }) => {
 		console.log('Item pressed:', item);
 	};
 
-	return <ViewScreens data={transformedData} onPressItem={handlePressItem} />;
+	return <ViewScreens data={transformedData} onPressItem={handlePressItem} refreshControlProps={refreshControlProps} />;
 };
 
 export default ComoditiesScreen;

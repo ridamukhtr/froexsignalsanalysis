@@ -1,5 +1,6 @@
 export const ROUTES = {
 	root: 'root',
+	splashScreen: 'splashScreen',
 	bottomTabs: 'bottomTabs',
 	drawer: 'drawer',
 	screenHome: 'Home',

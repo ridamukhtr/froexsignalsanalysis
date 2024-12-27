@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Favourite from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
 // import styling
 import { COLORS } from '../../styles/theme-styles';
 import globalStyles from '../../styles/global-styles';
@@ -11,10 +11,14 @@ import CustomText from '../customComponents/CustomText';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 // import hooks
 import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
+import { Loader } from '../loader/Loader';
+import useThemeManager from '../../lib/customHooks/useThemeManager';
 
-const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false }) => {
+const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false, refreshControlProps }) => {
 	const [favorites, setFavorites] = useState([]);
 	const [isFavItem, setIsFavItem] = useState([]);
+
+	const { bgColor } = useThemeManager()
 
 	useEffect(() => {
 		const loadFavorites = async () => {
@@ -125,6 +129,23 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false })
 				keyExtractor={item => item?.page_id?.toString()}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: '55%' }}
+				refreshControl={
+					refreshControlProps ? (
+						<RefreshControl
+							refreshing={false}
+							onRefresh={refreshControlProps?.onRefresh}
+							progressBackgroundColor="transparent"
+							style={{ display: 'none', position: "absolute", top: 0, }}
+						/>
+					) : null
+				}
+				ListHeaderComponent={
+					refreshControlProps?.isRefreshing ? (
+						<View style={{ color: bgColor }}>
+							<Loader loaderStyle={{}} />
+						</View>
+					) : null
+				}
 			/>
 		</SafeAreaView>
 	);
@@ -140,6 +161,12 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderColor: COLORS.GREY
 	}
+	// loaderContainer: {
+	// 	alignItems: 'center',
+	// 	justifyContent: 'center',
+	// 	top: 30,
+	// 	marginVertical: 10
+	// }
 });
 
 export default ViewScreens;

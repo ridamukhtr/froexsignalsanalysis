@@ -9,7 +9,7 @@ import { ROUTES } from '../routes/RouteConstants';
 // import store
 import { useGetInnerScreenDataQuery } from '../redux/storeApis';
 
-const IndicesScreen = ({ data }) => {
+const IndicesScreen = ({ data, refreshControlProps }) => {
 	const navigation = useNavigation();
 
 	const [selectedItem, setSelectedItem] = useState(null);
@@ -46,7 +46,7 @@ const IndicesScreen = ({ data }) => {
 		console.log('Item pressed:', item);
 	};
 
-	return <ViewScreens data={transformedData} onPressItem={handlePressItem} />;
+	return <ViewScreens data={transformedData} onPressItem={handlePressItem} refreshControlProps={refreshControlProps} />;
 };
 
 export default IndicesScreen;

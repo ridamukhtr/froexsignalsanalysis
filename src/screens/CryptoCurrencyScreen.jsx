@@ -9,7 +9,7 @@ import ViewScreens from '../components/views/ViewScreens';
 // import store
 import { useGetInnerScreenDataQuery } from '../redux/storeApis';
 
-const CryptoCurrencyScreen = ({ data }) => {
+const CryptoCurrencyScreen = ({ data, refreshControlProps }) => {
 	const navigation = useNavigation();
 
 	const [selectedItem, setSelectedItem] = useState(null);
@@ -46,7 +46,7 @@ const CryptoCurrencyScreen = ({ data }) => {
 		console.log('Item pressed:', item);
 	};
 
-	return <ViewScreens data={transformedData} onPressItem={handlePressItem} />;
+	return <ViewScreens data={transformedData} onPressItem={handlePressItem} refreshControlProps={refreshControlProps} />;
 };
 
 export default CryptoCurrencyScreen;
