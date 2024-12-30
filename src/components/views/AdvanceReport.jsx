@@ -1,67 +1,73 @@
+// import packages
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import CustomText from '../customComponents/CustomText';
+// import components
 import HorizontalView from './HorizontalView';
-import useThemeManager from '../../lib/customHooks/useThemeManager';
-import { COLORS } from '../../styles/theme-styles';
-import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 import ViewIndicesDetails from './ViewIndicesDetails';
+import CustomText from '../customComponents/CustomText';
+import TechnicalIndicatorView from './TechnicalIndicatorView';
+import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
+// import hooks
+import useThemeManager from '../../lib/customHooks/useThemeManager';
+import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
+// import styling
+import { COLORS } from '../../styles/theme-styles';
+// import assets
+import time_map from '../../../assets/time_map';
 
-const AdvanceReport = ({ additionalData, selectedTime }) => {
+const AdvanceReport = ({ advanceDetail, selectedTime, onTabChange }) => {
+
+    const tabs = Object?.values(time_map);
+    const selectedTimeLabel = selectedTime && time_map[selectedTime] ? time_map[selectedTime] : 'Unknown Time';
+
     const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+
+    const { textColor, bgColor } = useThemeManager();
+
+    const { getMaSummaryColor } = useCommonFunctions();
+
+    const maSummaryColor = getMaSummaryColor(advanceDetail?.summary);
 
     const fnDetailsVisibility = () => {
         setIsDetailsVisible(prevState => !prevState);
     };
 
-    const { textColor, bgColor } = useThemeManager();
-
     return (
-        <View style={{ marginVertical: 15 }}>
+        <View style={{ marginTop: 15 }}>
             <CustomText style={[styles.title, { fontSize: 16, color: textColor }]}>{'Advance Report for Professionals'}</CustomText>
 
-            {/* <HorizontalView tabs={tabs} variant={"button"} onTabChange={''}  initialTab={selectedTime} /> */}
+            <HorizontalView tabs={tabs} variant={"button"} onTabChange={onTabChange} initialTab={time_map[selectedTime]} />
             <View style={styles.boxContainer}>
                 <View style={{ paddingHorizontal: 10, paddingVertical: 20 }}>
                     <View style={styles.boxContent}>
                         <CustomText style={{ fontWeight: 'bold' }}>{'Updated Time'}</CustomText>
-                        {/* <CustomText>{"change_at"}</CustomText> */}
                     </View>
-                    {/* <View style={{alignItems:"center", flexDirection:"row", gap:20}}> */}
 
                     <CustomText style={{ fontSize: 13 }}>{'Dec 12, 2024 01:12 PM (PST)'}</CustomText>
                     <CustomText style={{ fontSize: 13 }}>{'Dec 12, 2024 08:12 AM (UTC)'}</CustomText>
 
-                    {/* </View> */}
-
-                    <View style={[styles.boxContent, { marginTop: 15 }]}>
+                    <View style={[styles.boxContent, { marginTop: 10 }]}>
                         <CustomText style={{ fontWeight: 'bold' }}>{'Summary :'}</CustomText>
-                        <View style={styles.btn(textColor)}>
-                            <CustomText style={{ color: '#07639D' }}> {'summary'}</CustomText>
+                        <View style={styles.btn}>
+                            <CustomText style={{ color: maSummaryColor }}>{advanceDetail?.summary}</CustomText>
                         </View>
                     </View>
                 </View>
-                <CustomTouchableOpacity
-                    onPress={fnDetailsVisibility}
-                    style={{
-                        alignItems: 'center',
-                        paddingVertical: 10,
-                        borderBottomRightRadius: 10,
-                        borderBottomLeftRadius: 10,
-                        backgroundColor: '#CD8049'
-                    }}
-                >
-                    <CustomText style={{ fontSize: 18 }}>{'View Details'}</CustomText>
+
+                <CustomTouchableOpacity onPress={fnDetailsVisibility} style={[styles.btnContainer, { backgroundColor: textColor }]}>
+                    <CustomText style={{ fontSize: 18, color: "#FFA628" }}>{'View Details'}</CustomText>
                 </CustomTouchableOpacity>
+
+                {isDetailsVisible && (
+                    <View style={{ paddingVertical: 15 }}>
+                        <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10 }} >  {` Pivot Points (${selectedTimeLabel}) `}</CustomText>
+                        <ViewIndicesDetails pivotData={advanceDetail?.pivot_point} />
+                        <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10, paddingTop: 15 }} >Technical Indicators</CustomText>
+                        <TechnicalIndicatorView />
+
+                    </View>
+                )}
             </View>
-            {isDetailsVisible && (
-                <>
-                    <CustomText>Pivot Points</CustomText>
-                    <ViewIndicesDetails />
-                    <ViewIndicesDetails />
-                    <ViewIndicesDetails />
-                </>
-            )}
         </View>
     );
 };
@@ -69,9 +75,10 @@ const AdvanceReport = ({ additionalData, selectedTime }) => {
 export default AdvanceReport;
 
 const styles = StyleSheet.create({
-    boxContainer: { borderTopColor: COLORS.GREY, borderWidth: 1, borderColor: COLORS.GREY, borderRadius: 10, marginVertical: 15 },
+    boxContainer: { borderTopColor: COLORS.GREY, borderWidth: 1, borderColor: COLORS.GREY, borderRadius: 3, marginVertical: 15 },
     boxContent: { alignItems: 'center', flexDirection: 'row', gap: 20 },
-    btn: textColor => ({ backgroundColor: textColor, paddingVertical: 3, paddingHorizontal: 10, borderRadius: 150 / 1 }),
+    btnContainer: { alignItems: 'center', paddingVertical: 10, borderBottomRightRadius: 3, borderBottomLeftRadius: 3, },
+    btn: { backgroundColor: COLORS.MED_GRAY, paddingVertical: 3, paddingHorizontal: 10, borderRadius: 150 / 1 },
 
     title: {
         color: COLORS.WHITE,
@@ -79,114 +86,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
-
-// import React, { useEffect, useState } from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-// import CustomText from '../customComponents/CustomText';
-// import HorizontalView from './HorizontalView';
-// import useThemeManager from '../../lib/customHooks/useThemeManager';
-// import { COLORS } from '../../styles/theme-styles';
-// import time_map from '../../../assets/time_map';
-
-// const AdvanceReport = ({ selectedTime }) => {
-//     const [additionalData, setAdditionalData] = useState(null);  // Store fetched data
-//     const [error, setError] = useState(null);  // To store errors if any
-
-//     const tabs = ["5min", "15min", "30min", "1Hour", "4Hours", "5Hours", "1Day", "1Week"];
-
-//     const { textColor, bgColor } = useThemeManager();
-
-//     // Function to fetch data based on time interval
-//     const fetchApiData = async (selectedTime) => {
-//         try {
-//             const timeInSeconds = Object.keys(time_map).find(key => time_map[key] === selectedTime);
-
-//             if (timeInSeconds) {
-//                 const response = await fetch(`https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${timeInSeconds}`);
-//                 const data = await response?.json();
-//                 const { summary, change_at } = data?.pp?.overall || {};  // Extract summary and change_at
-//                 setAdditionalData({ summary, change_at });
-//             } else {
-//                 console.log('Invalid time interval selected');
-//             }
-//         } catch (err) {
-//             console.error('Error fetching API data:', err);
-//             setError(err?.message);
-//         }
-//     };
-
-//     // Fetch data whenever selectedTime changes
-//     useEffect(() => {
-//         if (selectedTime) {
-//             fetchApiData(selectedTime);
-//         }
-//     }, [selectedTime]);
-
-//     return (
-//         <View style={{ marginVertical: 20 }}>
-//             <CustomText style={[styles.title, { fontSize: 16, color: textColor }]}>
-//                 {"Advance Report for Professionals"}
-//             </CustomText>
-
-//             {/* Horizontal tabs to select time interval */}
-//             <HorizontalView
-//                 tabs={tabs}
-//                 variant={"button"}
-//                 onTabChange={(newTime) => fetchApiData(newTime)}  // Trigger data fetch when tab changes
-//                 initialTab={selectedTime}
-//             />
-
-//             <View style={styles.boxContainer}>
-//                 <View style={styles.boxContent}>
-//                     <CustomText>{"Update:"}</CustomText>
-//                     {/* Displaying the time when the data was last updated */}
-//                     <CustomText>{additionalData?.change_at || "Loading..."}</CustomText>
-//                 </View>
-
-//                 <CustomText style={{ fontSize: 12 }}>
-//                     {"Dec 12, 2024 01:12 PM (Pakistan Standard Time)"}
-//                 </CustomText>
-//                 <CustomText style={{ fontSize: 12 }}>
-//                     {"Dec 12, 2024 08:12 AM (UTC)"}
-//                 </CustomText>
-
-//                 <View style={[styles.boxContent, { marginTop: 15 }]}>
-//                     <CustomText>{"Summary:"}</CustomText>
-//                     <View style={styles.btn(textColor)}>
-//                         <CustomText style={{ color: "#07639D" }}>
-//                             {additionalData?.summary || "Loading..."}
-//                         </CustomText>
-//                     </View>
-//                 </View>
-//             </View>
-//         </View>
-//     );
-// };
-
-// export default AdvanceReport;
-
-// const styles = StyleSheet.create({
-//     boxContainer: {
-//         borderTopColor: COLORS.GREY,
-//         borderTopWidth: 1,
-//         borderBottomColor: COLORS.GREY,
-//         borderBottomWidth: 1,
-//         paddingVertical: 20,
-//     },
-//     boxContent: {
-//         alignItems: "center",
-//         flexDirection: "row",
-//         gap: 20,
-//     },
-//     btn: (textColor) => ({
-//         backgroundColor: textColor,
-//         paddingVertical: 3,
-//         paddingHorizontal: 10,
-//         borderRadius: 150 / 1,
-//     }),
-//     title: {
-//         color: COLORS.WHITE,
-//         fontSize: 16,
-//         fontWeight: 'bold',
-//     },
-// });

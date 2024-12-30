@@ -5,8 +5,11 @@ import moment from 'moment-timezone';
 import time_map from '../../../assets/time_map';
 //  import hook
 import useLoadingHooks from './useLoadingHook';
+import { useGetDetailsAdvanceReportQuery } from '../../redux/storeApis';
 
-const useDetailsScreen = (item) => {
+const useDetailsScreen = (item, period) => {
+    const { msg_id, type } = item;
+
     const { showLoader, hideLoader } = useLoadingHooks();
 
     const [error, setError] = useState(null);
@@ -20,6 +23,14 @@ const useDetailsScreen = (item) => {
         fetchDetailData();
         fetchAdvanceReport();
     }, [item]);
+
+    // const { data: advanceReportData, isLoading } = useGetDetailsAdvanceReportQuery({
+    //     msg_id,
+    //     period,
+    //     type,
+    // });
+
+    // console.log('API Response:', advanceReportData);
 
     const getUserCountry = async () => {
         try {
@@ -105,10 +116,12 @@ const useDetailsScreen = (item) => {
         showLoader();
         try {
             const response = await fetch(
-                `https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${item?.msg_id}`
+                `https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${msg_id}&period=${period}&type=${type}`
             );
             if (response?.ok) {
                 const data = await response.json();
+                console.log("adva", data);
+
                 const { summary, change_at } = data?.pp?.overall || {};
                 setAdvanceReportData({ summary, change_at });
             } else {

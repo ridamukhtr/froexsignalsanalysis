@@ -50,10 +50,10 @@ const HomeScreen = () => {
 
 					<HorizontalView
 						variant="button"
-						tabs={Object.values(time_map)}
+						tabs={Object?.values(time_map)}
 						initialTab={time_map[activeTime]}
 						onTabChange={selectedLabel => {
-							const selectedTime = Object?.keys(time_map).find(key => time_map[key] === selectedLabel);
+							const selectedTime = Object?.keys(time_map)?.find(key => time_map[key] === selectedLabel);
 							setActiveTime(selectedTime);
 						}}
 						containerStyle={{ paddingHorizontal: 20 }}

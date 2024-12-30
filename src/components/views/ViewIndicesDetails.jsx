@@ -1,96 +1,56 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import CustomText from '../customComponents/CustomText'
-import globalStyles from '../../styles/global-styles'
-import { COLORS } from '../../styles/theme-styles'
-import useThemeManager from '../../lib/customHooks/useThemeManager'
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import CustomText from '../customComponents/CustomText';
+import globalStyles from '../../styles/global-styles';
+import { COLORS } from '../../styles/theme-styles';
+import useThemeManager from '../../lib/customHooks/useThemeManager';
 
-const ViewIndicesDetails = ({ onPress, title }) => {
+const ViewIndicesDetails = ({ pivotData }) => {
+    const { textColor, bgColor } = useThemeManager();
 
-
-    const { textColor } = useThemeManager()
+    if (!pivotData) {
+        return <CustomText>No Pivot Points Data Available</CustomText>;
+    }
 
     return (
         <>
-            {/* <CustomText>Pivot Points</CustomText> */}
-            <View style={[globalStyles.cardContainer, { gap: 12, marginTop: 15 }]}>
-                <CustomText style={{ position: 'absolute', top: -10, left: 10, paddingHorizontal: 5, fontWeight: "bold" }}>{"Fibonssi"}</CustomText>
-                <View style={{ gap: 6, }} >
-                    <CustomText>{"Pivots"}</CustomText>
-                    <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                        <CustomText style={{ textAlign: 'center' }} >{"1.8437"}</CustomText>
-                    </View>
-                </View>
-                <View style={globalStyles.container}>
-                    <View style={{ gap: 3, }} >
-                        <CustomText style={{ left: 5 }}>{"R1"}</CustomText>
-                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                            <CustomText>{"1.8437"}</CustomText>
-                        </View>
-                    </View>
-                    <View style={{ gap: 3, }} >
-                        <CustomText style={{ left: 5 }}>{"R2"}</CustomText>
-                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                            <CustomText>{"1.843877"}</CustomText>
-                        </View>
-                    </View>
-                    <View style={{ gap: 3, }} >
-                        <CustomText style={{ left: 5 }}>{"R3"}</CustomText>
-                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                            <CustomText>{"1.8437"}</CustomText>
-                        </View>
-                    </View>
-                </View>
-                <View style={globalStyles.container}>
-                    <View style={{ gap: 3, }} >
-                        <CustomText style={{ left: 5 }}>{"S1"}</CustomText>
-                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                            <CustomText>{"1.8437"}</CustomText>
-                        </View>
-                    </View>
-                    <View style={{ gap: 3, }} >
-                        <CustomText style={{ left: 5 }}>{"S2"}</CustomText>
-                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                            <CustomText>{"1.8437"}</CustomText>
-                        </View>
-                    </View>
-                    <View style={{ gap: 3, }} >
-                        <CustomText style={{ left: 5 }}>{"S3"}</CustomText>
-                        <View style={{ borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }} >
-                            <CustomText>{"1.843787778"}</CustomText>
-                        </View>
-                    </View>
-                </View>
+            {Object?.entries(pivotData)?.map(([name, values], index) => (
+                <View key={index} style={[globalStyles.cardContainer, { gap: 12, marginTop: 15, marginHorizontal: 10 }]}>
+                    <CustomText style={[styles.mainHeading, { backgroundColor: bgColor }]}>
+                        {name?.charAt(0)?.toUpperCase() + name?.slice(1)}
+                    </CustomText>
 
-            </View>
+                    {Object?.entries(values)?.length > 0 && (
+                        <View>
+                            <CustomText style={{ left: 5 }}>{Object?.keys(values)[0]}</CustomText>
+                            <View style={styles.firstRow}>
+                                <CustomText>{Object?.values(values)?.[0]}</CustomText>
+                            </View>
+                        </View>
+                    )}
+
+                    <View style={styles.valueContainer}>
+                        {Object?.entries(values)?.slice(1)?.map(([key, value], idx) => (
+                            <View key={idx} style={{ width: '30%', }}>
+                                <CustomText style={{ left: 5 }}>{key}</CustomText>
+                                <View style={styles.numContainer} >
+                                    <CustomText>{Number(value)?.toFixed(2)}</CustomText>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
+
+                </View>
+            ))}
         </>
-    )
-}
+    );
+};
 
-export default ViewIndicesDetails
+export default ViewIndicesDetails;
 
 const styles = StyleSheet.create({
-    redDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: 'red',
-    },
-    statusContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    statusText: {
-        color: 'red',
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginRight: 4,
-    },
-    title: {
-        color: COLORS.WHITE,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    btnContainer: { backgroundColor: COLORS.DARK_BLUE, padding: 20, borderRadius: 10, borderWidth: 1, borderColor: COLORS.GREY, marginVertical: 20, marginHorizontal: 30 }
-
-})
+    mainHeading: { position: 'absolute', top: -10, left: 10, paddingHorizontal: 5, fontWeight: 'bold' },
+    firstRow: { alignSelf: 'flex-start', borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 },
+    valueContainer: { gap: 16, flexWrap: 'wrap', flexDirection: 'row' },
+    numContainer: { borderColor: COLORS.GREY, borderWidth: 1, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 7 }
+});

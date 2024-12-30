@@ -14,7 +14,7 @@ const StockScreen = ({ data, refreshControlProps }) => {
 
 	const [selectedItem, setSelectedItem] = useState(null);
 
-	const transformedData = data?.stock ? Object.values(data.stock) : [];
+	const transformedData = data?.stock ? Object.values(data?.stock) : [];
 
 	const { data: detailData, isLoading } = useGetInnerScreenDataQuery(
 		{
@@ -30,8 +30,8 @@ const StockScreen = ({ data, refreshControlProps }) => {
 	useEffect(() => {
 		if (detailData && selectedItem) {
 			const params = {
-				id: selectedItem.id,
-				msg_id: selectedItem.msg_id,
+				id: selectedItem?.id,
+				msg_id: selectedItem?.msg_id,
 				item: selectedItem,
 				detailData
 			};

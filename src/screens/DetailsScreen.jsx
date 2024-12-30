@@ -1,6 +1,6 @@
 //  import packages
 import { StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 //  import components
@@ -23,6 +23,9 @@ import { RefreshControl } from 'react-native-gesture-handler';
 // import hook
 import useThemeManager from '../lib/customHooks/useThemeManager';
 import useDetailsScreen from '../lib/customHooks/useDetailData';
+import { useGetDetailsAdvanceReportQuery } from '../redux/storeApis';
+import time_map from '../../assets/time_map';
+import useLoadingHooks from '../lib/customHooks/useLoadingHook';
 
 const DetailsScreen = ({ itemId }) => {
 	const navigation = useNavigation();
@@ -32,8 +35,69 @@ const DetailsScreen = ({ itemId }) => {
 	const route = useRoute();
 	const { item } = route?.params;
 
+	const [selectedTime, setSelectedTime] = useState(1800);
+	const [advanceReportData, setAdvanceReportData] = useState(null);
+	const [error, setError] = useState(null);
+
 	const { bgColor, textColor } = useThemeManager();
-	const { advanceReportData, allSignals, detailData, onRefresh, refreshing, timeData, activeFromTime } = useDetailsScreen(item);
+	const { allSignals, detailData, onRefresh, refreshing, timeData, activeFromTime } = useDetailsScreen(item);
+	const { showLoader, hideLoader } = useLoadingHooks();
+
+	const fetchAdvanceReport = async (item, type, period) => {
+		console.log("item---->>", item);
+		console.log("type---->>", type);
+		console.log("selectedTime (period)---->>", period);
+		showLoader();
+		try {
+			const response = await fetch(
+				`https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${item?.msg_id}&period=${period}&type=${'stock'}`
+			);
+			console.log("response", response);
+
+			const data = await response.json();
+			console.log("data", data);
+
+			// if (data?.pp?.overall) {
+			// 	const { summary } = data?.pp?.overall;
+			// 	setAdvanceReportData({ summary });
+			// } else {
+			// 	console.log("No data found for overall in the response");
+			// }
+
+			if (data?.pp) {
+				const { pivot_point, overall } = data.pp;
+				setAdvanceReportData({ pivot_point, summary: overall?.summary });
+			} else {
+				console.log("No data found in the response");
+			}
+
+		} catch (err) {
+			console.error('Error fetching advance report:', err.message);
+			setError(err?.message);
+		}
+		finally {
+			hideLoader();
+		}
+	};
+
+	useEffect(() => {
+		if (item?.msg_id, selectedTime) {
+			fetchAdvanceReport(item, item?.type, selectedTime);
+		}
+	}, [item, selectedTime]);
+
+	console.log("advancee", advanceReportData);
+	console.log("msg_id", item?.msg_id);
+
+	const onTabChange = (newTab) => {
+		const selectedPeriod = Object?.keys(time_map)?.find(key => time_map[key] === newTab);
+		if (selectedPeriod) {
+			setSelectedTime(parseInt(selectedPeriod, 10)); // Update the selectedTime state
+		}
+	};
+
+
+
 
 	const handlePressItem = () => {
 		fnNavigateToDetails();
@@ -123,7 +187,7 @@ const DetailsScreen = ({ itemId }) => {
 
 						<ViewModalData title={'Technical Indicators'} timeData={tecData} />
 
-						<AdvanceReport key={item?.msg_id} />
+						<AdvanceReport advanceDetail={advanceReportData} onTabChange={onTabChange} selectedTime={selectedTime} />
 					</CustomScrollView>
 				</>
 			)}
