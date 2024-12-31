@@ -10,9 +10,9 @@ import globalStyles from '../../styles/global-styles';
 import CustomText from '../customComponents/CustomText';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 // import hooks
-import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
 import { Loader } from '../loader/Loader';
-import useThemeManager from '../../lib/customHooks/useThemeManager';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
+import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
 
 const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false, refreshControlProps }) => {
 	const [favorites, setFavorites] = useState([]);
@@ -89,22 +89,21 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false, r
 				</CustomTouchableOpacity>
 
 				<CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
-					<View style={globalStyles.container}>
-						<View style={[globalStyles.container, { gap: 7 }]}>
-							{/* <View style= {{ width: 130,}}> */}
+					{/* <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}> */}
+					<View style={[globalStyles.container, { gap: 7 }]}>
 
-							<CustomText style={globalStyles.titleText} numberOfLines={1}>
-								{item?.symbol}
-							</CustomText>
-							{/* </View>  */}
-							<CustomText style={globalStyles.titleText}>|</CustomText>
-							<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
-						</View>
-						<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{`Price: ${item?.price}`}</CustomText>
+						<CustomText style={globalStyles.titleText} numberOfLines={1}>
+							{item?.symbol}
+						</CustomText>
+						{/* <CustomText style={globalStyles.titleText}>|</CustomText> */}
+						{/* <CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText> */}
+						{/* </View> */}
+						<CustomText style={[globalStyles.titleText, { color: COLORS.WHITE }]}>{` ${item?.price}`}</CustomText>
 					</View>
 					<View style={globalStyles.container}>
-						<View style={[globalStyles.container, { fontSize: 10, gap: 7, width: '60%' }]}>
-							<CustomText style={[globalStyles.timeText]}>{item?.symbol2}</CustomText>
+						<View style={[globalStyles.container, { fontSize: 10, gap: 7, }]}>
+							<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
+							{/* <CustomText style={[globalStyles.timeText]}>{item?.symbol2}</CustomText> */}
 						</View>
 						<View style={[globalStyles.container, { gap: 4 }]}>
 							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChange}</CustomText>

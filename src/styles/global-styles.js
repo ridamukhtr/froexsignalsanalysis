@@ -6,6 +6,7 @@ const globalStyles = StyleSheet.create({
 	container: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
 	timeText: { fontSize: 15, fontWeight: '300', color: COLORS.GREY_TEXT },
 	titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 25 },
+	text: { fontSize: 11, },
 	screenDescTxt: { textAlign: 'center' },
 	defaultTxt: { fontSize: 14, lineHeight: 20, color: COLORS.WHITE },
 	cardContainer: {

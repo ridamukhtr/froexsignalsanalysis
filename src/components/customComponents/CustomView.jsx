@@ -11,8 +11,8 @@ import CustomTouchableOpacity from './CustomTouchableOpacity';
 // @import styles
 import { IS_IOS } from '../../styles/theme-styles';
 // @import hooks
-import useThemeManager from '../../lib/customHooks/useThemeManager';
 import useNavigationManager from '../../lib/customHooks/useNavigationManager';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 const CustomView = ({
 	children,

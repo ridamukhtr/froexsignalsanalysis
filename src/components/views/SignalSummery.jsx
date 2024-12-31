@@ -8,7 +8,7 @@ import { COLORS } from '../../styles/theme-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
 // import hooks
-import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
+import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
 
 const SignalSummery = ({ maSummary, time, ago, activeTime, ma_summery }) => {
 	const { getMaSummaryColor } = useCommonFunctions();

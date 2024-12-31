@@ -4,7 +4,8 @@ import React from 'react';
 import LottieView from 'lottie-react-native';
 // import assets
 import loading from '../../animations/loading.json';
-import useThemeManager from '../../lib/customHooks/useThemeManager';
+// import hook
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 export const Loader = ({ loop, loaderStyle }) => {
 	const { bgColor } = useThemeManager();

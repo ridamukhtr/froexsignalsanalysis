@@ -14,7 +14,7 @@ import { COLORS } from '../styles/theme-styles';
 // import route
 import { ROUTES } from '../routes/RouteConstants';
 // import hooks
-import useThemeManager from '../lib/customHooks/useThemeManager';
+import { useThemeManager } from '../lib/customHooks/useThemeManager';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,16 +36,16 @@ const StockStack = () => {
 					route.name === ROUTES.screenChart
 						? { display: 'none' }
 						: {
-								paddingBottom: 60,
-								paddingTop: 10,
-								backgroundColor: currentTheme === 'dark' ? COLORS.NAV_BLUE : 'white',
-								position: 'absolute',
-								borderWidth: 0,
-								borderColor: 'transparent',
-								borderTopLeftRadius: 20,
-								borderTopRightRadius: 20,
-								marginBottom: 0
-						  }
+							paddingBottom: 60,
+							paddingTop: 10,
+							backgroundColor: currentTheme === 'dark' ? COLORS.NAV_BLUE : 'white',
+							position: 'absolute',
+							borderWidth: 0,
+							borderColor: 'transparent',
+							borderTopLeftRadius: 20,
+							borderTopRightRadius: 20,
+							marginBottom: 0
+						}
 			})}
 		>
 			<Stack.Screen name={ROUTES.screenStock} component={HomeScreen} options={{ headerShown: false }} />

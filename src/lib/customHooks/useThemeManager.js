@@ -7,7 +7,7 @@ import { COLORS } from '../../styles/theme-styles';
 // import reducer
 import { changeTheme, selectedThemeSelector } from '../../redux/themeReducer';
 
-export default function () {
+export function useThemeManager() {
 	const dispatch = useDispatch();
 	const currentTheme = useSelector(selectedThemeSelector);
 

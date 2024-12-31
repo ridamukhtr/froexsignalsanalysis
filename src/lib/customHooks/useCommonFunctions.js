@@ -1,7 +1,9 @@
 // import styling
 import { COLORS } from '../../styles/theme-styles';
+import useThemeManager from './useThemeManager';
 
-export default function useCommonFunctions() {
+export function useCommonFunctions() {
+	// const { textColor } = useThemeManager();
 	const getMaSummaryColor = summary => {
 		switch (summary?.toLowerCase()) {
 			case 'strong buy':
@@ -13,7 +15,8 @@ export default function useCommonFunctions() {
 			case 'strong sell':
 				return COLORS.RED;
 			default:
-				return COLORS.WHITE;
+				return COLORS.BLACK;
+			// return textColor;
 		}
 	};
 

@@ -21,16 +21,8 @@ const useDetailsScreen = (item, period) => {
 
     useEffect(() => {
         fetchDetailData();
-        fetchAdvanceReport();
+        // fetchAdvanceReport();
     }, [item]);
-
-    // const { data: advanceReportData, isLoading } = useGetDetailsAdvanceReportQuery({
-    //     msg_id,
-    //     period,
-    //     type,
-    // });
-
-    // console.log('API Response:', advanceReportData);
 
     const getUserCountry = async () => {
         try {
@@ -112,38 +104,16 @@ const useDetailsScreen = (item, period) => {
 
     const activeFromTime = activeFrom(detailData?.update_time);
 
-    const fetchAdvanceReport = async () => {
-        showLoader();
-        try {
-            const response = await fetch(
-                `https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${msg_id}&period=${period}&type=${type}`
-            );
-            if (response?.ok) {
-                const data = await response.json();
-                console.log("adva", data);
-
-                const { summary, change_at } = data?.pp?.overall || {};
-                setAdvanceReportData({ summary, change_at });
-            } else {
-                throw new Error(`API call failed with status: ${response?.status}`);
-            }
-        } catch (err) {
-            setError(err?.message);
-        } finally {
-            hideLoader();
-        }
-    };
-
     const onRefresh = async () => {
         setRefreshing(true);
         await fetchDetailData();
-        await fetchAdvanceReport();
+        // await fetchAdvanceReport();
         setRefreshing(false);
     };
 
     return {
         detailData,
-        advanceReportData,
+        // advanceReportData,
         allSignals,
         timeData,
         error,

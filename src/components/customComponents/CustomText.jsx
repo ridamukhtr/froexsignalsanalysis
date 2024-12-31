@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 // import Hooks
-import useThemeManager from '../../lib/customHooks/useThemeManager';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 const CustomText = ({ children, onPress, numberOfLines, style, ellipsizeMode }) => {
 	const { textColor } = useThemeManager();

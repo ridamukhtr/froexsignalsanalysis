@@ -8,14 +8,14 @@ import CustomText from '../customComponents/CustomText';
 import TechnicalIndicatorView from './TechnicalIndicatorView';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 // import hooks
-import useThemeManager from '../../lib/customHooks/useThemeManager';
-import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
+import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
 // import styling
 import { COLORS } from '../../styles/theme-styles';
 // import assets
 import time_map from '../../../assets/time_map';
 
-const AdvanceReport = ({ advanceDetail, selectedTime, onTabChange }) => {
+const AdvanceReport = ({ advanceDetail, info, selectedTime, onTabChange, indicators }) => {
 
     const tabs = Object?.values(time_map);
     const selectedTimeLabel = selectedTime && time_map[selectedTime] ? time_map[selectedTime] : 'Unknown Time';
@@ -44,7 +44,7 @@ const AdvanceReport = ({ advanceDetail, selectedTime, onTabChange }) => {
                     </View>
 
                     <CustomText style={{ fontSize: 13 }}>{'Dec 12, 2024 01:12 PM (PST)'}</CustomText>
-                    <CustomText style={{ fontSize: 13 }}>{'Dec 12, 2024 08:12 AM (UTC)'}</CustomText>
+                    <CustomText style={{ fontSize: 13 }}>{info?.update_time}</CustomText>
 
                     <View style={[styles.boxContent, { marginTop: 10 }]}>
                         <CustomText style={{ fontWeight: 'bold' }}>{'Summary :'}</CustomText>
@@ -54,16 +54,16 @@ const AdvanceReport = ({ advanceDetail, selectedTime, onTabChange }) => {
                     </View>
                 </View>
 
-                <CustomTouchableOpacity onPress={fnDetailsVisibility} style={[styles.btnContainer, { backgroundColor: textColor }]}>
-                    <CustomText style={{ fontSize: 18, color: "#FFA628" }}>{'View Details'}</CustomText>
+                <CustomTouchableOpacity onPress={fnDetailsVisibility} style={[styles.btnContainer, { backgroundColor: "#784611" }]}>
+                    <CustomText style={{ fontSize: 18, color: "white" }}>{'View Details'}</CustomText>
                 </CustomTouchableOpacity>
 
                 {isDetailsVisible && (
                     <View style={{ paddingVertical: 15 }}>
                         <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10 }} >  {` Pivot Points (${selectedTimeLabel}) `}</CustomText>
                         <ViewIndicesDetails pivotData={advanceDetail?.pivot_point} />
-                        <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10, paddingTop: 15 }} >Technical Indicators</CustomText>
-                        <TechnicalIndicatorView />
+                        <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10, paddingTop: 15 }} >  {`Technical Indicators (${selectedTimeLabel}) `}</CustomText>
+                        <TechnicalIndicatorView indicators={indicators} />
 
                     </View>
                 )}

@@ -10,7 +10,7 @@ import CustomText from './CustomText';
 // import styles
 import { COLORS } from '../../styles/theme-styles';
 // import hooks
-import useThemeManager from '../../lib/customHooks/useThemeManager';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 const CustomDropdown = ({ item, onPress, activeTheme }) => {
 	const [modalVisible, setModalVisible] = useState(false);

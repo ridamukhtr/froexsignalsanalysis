@@ -9,7 +9,7 @@ import BottomNavigator from './BottomNavigator';
 // import route
 import { ROUTES } from '../routes/RouteConstants';
 // import hooks
-import useThemeManager from '../lib/customHooks/useThemeManager';
+import { useThemeManager } from '../lib/customHooks/useThemeManager';
 // import styling
 import { COLORS } from '../styles/theme-styles';
 import globalStyles from '../styles/global-styles';

@@ -3,7 +3,7 @@ import React from 'react';
 import CustomText from '../customComponents/CustomText';
 import globalStyles from '../../styles/global-styles';
 import { COLORS } from '../../styles/theme-styles';
-import useThemeManager from '../../lib/customHooks/useThemeManager';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 const ViewIndicesDetails = ({ pivotData }) => {
     const { textColor, bgColor } = useThemeManager();

@@ -9,7 +9,7 @@ import globalStyles from '../../styles/global-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
 // import hooks
-import useCommonFunctions from '../../lib/customHooks/useCommonFunctions';
+import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
 
 const ViewModalData = ({ title, timeData }) => {
 	const { getMaSummaryColor } = useCommonFunctions();
