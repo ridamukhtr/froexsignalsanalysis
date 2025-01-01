@@ -11,8 +11,8 @@ import CustomTouchableOpacity from './CustomTouchableOpacity';
 // @import styles
 import { IS_IOS } from '../../styles/theme-styles';
 // @import hooks
-import useNavigationManager from '../../lib/customHooks/useNavigationManager';
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
+import useNavigationManager from '../../lib/customHooks/useNavigationManager';
 
 const CustomView = ({
 	children,
@@ -28,7 +28,8 @@ const CustomView = ({
 	onPressBackIcon,
 	right
 }) => {
-	const { bgColor, textColor } = useThemeManager();
+
+	const { bgColor, textColor, iconColor } = useThemeManager();
 	const { fnOpenDrawer, fnNavigateGoBack } = useNavigationManager();
 
 	return (
@@ -37,7 +38,7 @@ const CustomView = ({
 				<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
 					<CustomScrollView
 						scrollViewRef={scrollViewRef}
-						style={[styles.container(bgColor), style]}
+						style={[styles.container, style, { backgroundColor: bgColor }]}
 						contentContainerStyle={contentContainerStyle}
 						showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
 						showsVerticalScrollIndicator={showsVerticalScrollIndicator}
@@ -58,14 +59,38 @@ const CustomView = ({
 									<Ioniicons name={'menu'} size={30} />
 								</CustomTouchableOpacity>
 								{right}
+								{isSearchVisible ? (
+									<View style={globalStyles.searchContainer}>
+										<TextInput
+											style={globalStyles.searchInput}
+											placeholder="Search..."
+											value={searchText}
+											onChangeText={handleSearchTextChange}
+											autoFocus
+										/>
+										<TouchableOpacity style={{ padding: 5, }} activeOpacity={0.7} onPress={handleClearSearch}>
+											<Icon name={"cross"} size={20} color={COLORS.WHITE} style={styles.searchIconInside} />
+										</TouchableOpacity>
+									</View>
+								) : (
+									<CustomText style={styles.titleContainer}>{title}</CustomText>
+								)}
+
+								{!isSearchVisible && (
+									<TouchableOpacity onPress={() => setIsSearchVisible(true)}>
+										<SearchIcon />
+									</TouchableOpacity>
+								)}
+
 							</View>
+
 						)}
 						{children}
 					</CustomScrollView>
 				</KeyboardAvoidingView>
 			) : (
 				<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
-					<View style={[styles.container(bgColor), style]}>
+					<View style={[styles.container, style, { backgroundColor: bgColor }]}>
 						{showBackIcon ? (
 							<View style={[styles.headerContainer, headerStyle]}>
 								<CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
@@ -80,7 +105,7 @@ const CustomView = ({
 						) : (
 							<View style={[styles.headerContainer, headerStyle]}>
 								<CustomTouchableOpacity onPress={fnOpenDrawer}>
-									<Ioniicons name={'menu'} size={30} color={textColor} />
+									<Ioniicons name={'menu'} size={30} color={iconColor} />
 								</CustomTouchableOpacity>
 								{right}
 							</View>
@@ -88,24 +113,24 @@ const CustomView = ({
 						{children}
 					</View>
 				</KeyboardAvoidingView>
-			)}
-		</SafeAreaView>
+			)
+			}
+		</SafeAreaView >
 	);
 };
 
 export default CustomView;
 
 const styles = StyleSheet.create({
-	safeArea: bgColor => ({
+	safeArea: (bgColor) => ({
 		flex: 1,
 		backgroundColor: bgColor
 	}),
-	container: bgColor => ({
+	container: {
 		flex: 1,
 		paddingBottom: 100,
 		paddingHorizontal: '4%',
-		backgroundColor: bgColor
-	}),
+	},
 	flexContainer: {
 		flex: 1,
 		justifyContent: 'center'

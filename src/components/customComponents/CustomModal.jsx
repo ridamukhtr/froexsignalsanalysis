@@ -24,7 +24,7 @@ const CustomModal = ({ isVisible, setIsVisible, children, modalStyle }) => {
 export default CustomModal;
 
 const styles = StyleSheet.create({
-	modalContainer: { backgroundColor: COLORS.DARK_BLUE, borderRadius: 20, padding: 20 },
+	modalContainer: { backgroundColor: COLORS.DARK_BG, borderRadius: 20, padding: 20 },
 	modal: { margin: 15 },
 	iconBox: { alignSelf: 'flex-end', marginBottom: 16 }
 });

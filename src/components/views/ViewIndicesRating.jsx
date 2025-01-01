@@ -39,7 +39,7 @@ const ViewIndicesRating = ({ price, summaryChange, summaryChangeP, update_time }
 	const maSummaryColor = getMaSummaryColor(summaryChangeP);
 
 	return (
-		<View style={{ backgroundColor: COLORS.DARK_BLUE, padding: 20 }}>
+		<View style={{ backgroundColor: COLORS.DARK_BG, padding: 20 }}>
 			<View style={styles.colorContainer}>
 				{maSummaryColor === COLORS.RED && <Arrow name="arrow-down" size={25} color={COLORS.RED} />}
 				{maSummaryColor === COLORS.GREEN && <Arrow name="arrow-up" size={25} color={COLORS.GREEN} />}

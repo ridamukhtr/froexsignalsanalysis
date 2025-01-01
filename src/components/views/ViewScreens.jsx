@@ -1,6 +1,6 @@
 // import packages
 import React, { useEffect, useState } from 'react';
-import Favourite from 'react-native-vector-icons/AntDesign';
+import Favourite from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
 // import styling
@@ -18,7 +18,7 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false, r
 	const [favorites, setFavorites] = useState([]);
 	const [isFavItem, setIsFavItem] = useState([]);
 
-	const { bgColor } = useThemeManager()
+	const { bgColor, textColor, borderColor } = useThemeManager()
 
 	useEffect(() => {
 		const loadFavorites = async () => {
@@ -68,12 +68,13 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false, r
 
 		const maSummaryColor = getMaSummaryColor(item?.ma_summery);
 		return (
-			<View style={styles.itemContainer}>
+
+			<View style={[styles.itemContainer, { borderColor: borderColor }]}>
 				<CustomTouchableOpacity onPress={() => toggleFavorite(item?.page_id)}>
 					{favorites.includes(item?.page_id) ? (
-						<Favourite name="heart" size={17} color={COLORS.GREEN} />
+						<Favourite name="star" size={17} color={COLORS.GREEN} />
 					) : (
-						<Favourite name="hearto" color={COLORS.GREEN} size={17} />
+						<Favourite name="star-outline" color={COLORS.GREEN} size={17} />
 					)}
 					{/* {isFavItem?.find((fav) => fav == item?.page_id) ? (<Favourite
                         name="heart"
@@ -98,21 +99,18 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false, r
 						{/* <CustomText style={globalStyles.titleText}>|</CustomText> */}
 						{/* <CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText> */}
 						{/* </View> */}
-						<CustomText style={[globalStyles.titleText, { color: COLORS.WHITE }]}>{` ${item?.price}`}</CustomText>
+						<CustomText style={[globalStyles.titleText, { color: textColor }]}>{item?.price}</CustomText>
 					</View>
 					<View style={globalStyles.container}>
-						<View style={[globalStyles.container, { fontSize: 10, gap: 7, }]}>
+						<View style={[globalStyles.container, { gap: 7, }]}>
 							<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
 							{/* <CustomText style={[globalStyles.timeText]}>{item?.symbol2}</CustomText> */}
 						</View>
 						<View style={[globalStyles.container, { gap: 4 }]}>
-							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{item?.summaryChange}</CustomText>
-							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{'('}</CustomText>
-							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>
-								{item?.summaryChangeP}
-								{'%'}
+							<CustomText style={[globalStyles.timeText, { fontSize: 12, color: maSummaryColor }]}>{item?.summaryChange}</CustomText>
+							<CustomText style={[globalStyles.timeText, { fontSize: 12, color: maSummaryColor }]}>
+								{`( ${item?.summaryChangeP} %)`}
 							</CustomText>
-							<CustomText style={[globalStyles.timeText, { color: maSummaryColor }]}>{')'}</CustomText>
 						</View>
 					</View>
 				</CustomTouchableOpacity>
@@ -127,7 +125,7 @@ const ViewScreens = ({ data, onPressItem, favourite, isFavoriteScreen = false, r
 				renderItem={renderItem}
 				keyExtractor={item => item?.page_id?.toString()}
 				showsVerticalScrollIndicator={false}
-				contentContainerStyle={{ paddingBottom: '55%' }}
+				contentContainerStyle={{ paddingBottom: '25%' }}
 				refreshControl={
 					refreshControlProps ? (
 						<RefreshControl
@@ -156,16 +154,9 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 12,
-		paddingVertical: 14,
+		paddingVertical: 7,
 		borderBottomWidth: 1,
-		borderColor: COLORS.GREY
 	}
-	// loaderContainer: {
-	// 	alignItems: 'center',
-	// 	justifyContent: 'center',
-	// 	top: 30,
-	// 	marginVertical: 10
-	// }
 });
 
 export default ViewScreens;

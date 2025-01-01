@@ -1,10 +1,10 @@
 export const ROUTES = {
 	root: 'root',
 	splashScreen: 'splashScreen',
-	bottomTabs: 'bottomTabs',
+	bottomTabs: 'Home',
 	drawer: 'drawer',
-	screenHome: 'Home',
-	screenFavourite: 'Favourite',
+	screenHome: 'Home Screen',
+	screenFavourite: 'Favourites',
 	screenForex: 'Forex',
 	screenStock: 'Stock',
 	screenCommodities: 'Commodities',
@@ -13,5 +13,6 @@ export const ROUTES = {
 	screenHelp: 'Help',
 	screenDetails: 'Details',
 	screenChart: 'Charts',
-	screenHistory: 'History'
+	screenCalender: 'Calender',
+
 };

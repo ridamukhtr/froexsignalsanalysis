@@ -23,7 +23,7 @@ const ChartScreen = () => {
     }, [isFocused]);
 
     return (
-        <View style={{ flex: 1, backgroundColor: COLORS.DARK_BLUE }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.DARK_BG }}>
             <HorizontalView tabs={tabs} variant={"button"} />
             <CustomChart />
         </View>

@@ -7,12 +7,16 @@ import { COLORS } from '../../styles/theme-styles';
 import globalStyles from '../../styles/global-styles';
 // import components
 import CustomTouchableOpacity from './CustomTouchableOpacity';
+// import hooks
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 const CustomSearchField = ({ onSearch }) => {
 	const inputRef = useRef(null);
 
 	const [searchText, setSearchText] = useState('');
 	const [isSearchActive, setIsSearchActive] = useState(false);
+
+	const { dropdownColor, textColor } = useThemeManager();
 
 	const fnSearchTextChange = text => {
 		setSearchText(text);
@@ -29,14 +33,16 @@ const CustomSearchField = ({ onSearch }) => {
 	};
 
 	return (
-		<View style={[globalStyles.searchContainer, styles.container]}>
+
+		<View style={[styles.searchContainer, styles.container, { backgroundColor: dropdownColor }]}>
 			<TextInput
 				ref={inputRef}
 				value={searchText}
 				placeholder="Search..."
+				placeholderTextColor={textColor}
 				onChangeText={fnSearchTextChange}
 				onFocus={() => setIsSearchActive(true)}
-				style={[globalStyles.searchInput, styles.input]}
+				style={[styles.searchInput, styles.input, { color: textColor }]}
 				onBlur={() => {
 					if (!searchText) {
 						setIsSearchActive(false);
@@ -55,7 +61,22 @@ const CustomSearchField = ({ onSearch }) => {
 export default CustomSearchField;
 
 const styles = StyleSheet.create({
-	container: { flexDirection: 'row', alignItems: 'center' }
+	container: {
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
+	searchContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		borderRadius: 10,
+		paddingHorizontal: 10,
+		marginLeft: 10,
+		flex: 1
+	},
+	searchInput: {
+		flex: 1,
+		fontSize: 16
+	}
 	// input: { height: 30, lineHeight: 30 },
 	// clearButton: { padding: 5 }
 });
