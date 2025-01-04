@@ -34,7 +34,7 @@ const CustomDropdown = ({ item, onPress, activeTheme }) => {
 							<CustomTouchableOpacity key={index} style={[styles.menuItemContainer]} onPress={() => onPress(themeItem.label)}>
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<CustomText style={styles.menuItemText}>{themeItem?.label}</CustomText>
-									{activeTheme === themeItem.label && <Check name={'check'} size={20} color={COLORS.GREEN} />}
+									{activeTheme === themeItem?.label && <Check name={'check'} size={20} color={COLORS.GREEN} />}
 								</View>
 							</CustomTouchableOpacity>
 						))}

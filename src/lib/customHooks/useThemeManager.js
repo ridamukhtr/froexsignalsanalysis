@@ -1,42 +1,4 @@
-// // import packages
-// import { useEffect } from 'react';
-// import { Appearance } from 'react-native';
-// import { useDispatch, useSelector } from 'react-redux';
-// // import styling
-// import { COLORS } from '../../styles/theme-styles';
-// // import reducer
-// import { changeTheme, selectedThemeSelector } from '../../redux/themeReducer';
-
-// export function useThemeManager() {
-// 	const dispatch = useDispatch();
-// 	const currentTheme = useSelector(selectedThemeSelector);
-
-// 	useEffect(() => {
-// 		const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-// 			dispatch(changeTheme(colorScheme));
-// 		});
-// 		return () => subscription.remove();
-// 	}, []);
-
-// 	const bgColor = currentTheme === 'dark' ? COLORS.DARK_BG : COLORS.LIGHT_BG;
-// 	const textColor = currentTheme === 'dark' ? COLORS.LIGHT_BG : COLORS.DARK_BG;
-// 	const fnToggleTheme = () => {
-// 		const newTheme = currentTheme == 'dark' ? 'light' : 'dark';
-
-// 		dispatch(changeTheme(newTheme));
-// 	};
-
-// 	return {
-// 		currentTheme,
-// 		bgColor,
-// 		textColor,
-
-// 		fnToggleTheme
-// 	};
-// }
-
-import { useEffect } from "react";
-import { Appearance } from "react-native";
+// import packages
 import { useDispatch, useSelector } from "react-redux";
 // import styling
 import { COLORS } from "../../styles/theme-styles";
@@ -46,13 +8,6 @@ import { changeTheme, selectedThemeSelector } from "../../redux/themeReducer";
 export function useThemeManager() {
 	const dispatch = useDispatch();
 	const currentTheme = useSelector(selectedThemeSelector);
-
-	useEffect(() => {
-		const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-			dispatch(changeTheme(colorScheme));
-		});
-		return () => subscription.remove();
-	}, []);
 
 	const isDarkTheme = currentTheme === "dark";
 

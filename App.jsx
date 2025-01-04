@@ -1,5 +1,5 @@
 // import packeges
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { Provider } from 'react-redux';
 // import store
@@ -7,14 +7,16 @@ import { store } from './src/redux/store';
 // import navigator
 import AppNavigator from './src/navigators/AppNavigator';
 //  import styling
-import { COLORS } from './src/styles/theme-styles';
+import Statusbar from './src/styles/Statusbar';
 
 const App = () => {
+
 	// const appId = "ae8020dd-afb4-49c2-9ec5-a8003e99b36a"
 
 	return (
 		<Provider store={store}>
-			<View style={{ flex: 1, backgroundColor: COLORS.NAV_BLUE }}>
+			<View style={{ flex: 1, }}>
+				<Statusbar />
 				<AppNavigator />
 			</View>
 		</Provider>

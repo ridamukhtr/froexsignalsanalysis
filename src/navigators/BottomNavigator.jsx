@@ -22,26 +22,77 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const StockStack = () => {
-	const hideTabBar = () => {
-		const parent = navigation.getParent();
-		parent?.setOptions({
-			tabBarStyle: { display: 'none' }
-		});
-	};
-
-	const { bgColor, textColor, currentTheme } = useThemeManager();
+	const { bgColor, textColor, currentTheme, footerColor } = useThemeManager();
 
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name={ROUTES.screenStock} component={HomeScreen} options={{ headerShown: false }} />
-			<Stack.Screen name={ROUTES.screenDetails} component={DetailsScreen} options={{ headerShown: false }} />
-			<Stack.Screen name={ROUTES.screenChart} component={ChartScreen} options={{ headerShown: false }} />
+			<Stack.Screen
+				name={ROUTES.screenStock}
+				component={HomeScreen}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenDetails}
+				component={DetailsScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: {
+								alignItems: 'center',
+								height: 80,
+								paddingTop: 11,
+								backgroundColor: footerColor,
+								borderWidth: 0,
+								borderColor: 'transparent',
+								marginBottom: 0,
+							}
+						});
+					}
+				})}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenChart}
+				component={ChartScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: {
+								alignItems: 'center',
+								height: 80,
+								paddingTop: 11,
+								backgroundColor: footerColor,
+								borderWidth: 0,
+								borderColor: 'transparent',
+								marginBottom: 0,
+							}
+						});
+					}
+				})}
+			/>
 		</Stack.Navigator>
 	);
 };
 
 const BottomNavigator = () => {
-	const { footerColor, iconColor, borderColor, textColor, currentTheme } = useThemeManager();
+	const { footerColor, iconColor, } = useThemeManager();
 	return (
 		<Tab.Navigator
 			screenOptions={({ route }) => ({
@@ -60,8 +111,6 @@ const BottomNavigator = () => {
 							break;
 					}
 
-
-					// Use the color provided by tabBarActiveTintColor/tabBarInactiveTintColor
 					return focused ? (
 						<TouchableWithoutFeedback onPress={() => { }}>
 							<View
@@ -89,7 +138,7 @@ const BottomNavigator = () => {
 					let labelText = '';
 					switch (route.name) {
 						case ROUTES.bottomTabs:
-							labelText = 'Stocks';
+							labelText = 'Markets';
 							break;
 						case ROUTES.screenCalender:
 							labelText = 'Calendar';
@@ -126,7 +175,7 @@ const BottomNavigator = () => {
 			<Tab.Screen
 				name={ROUTES.bottomTabs}
 				component={StockStack}
-				options={{ headerShown: false }}
+				options={{ headerShown: false, tabBarHideOnKeyboard: true, }}
 			/>
 			<Tab.Screen
 				name={ROUTES.screenCalender}

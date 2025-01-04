@@ -96,7 +96,7 @@ const DetailsScreen = ({ itemId }) => {
 
 
 	const handlePressItem = () => {
-		fnNavigateToDetails();
+		// fnNavigateToDetails();
 		console.log('Item pressed:');
 	};
 

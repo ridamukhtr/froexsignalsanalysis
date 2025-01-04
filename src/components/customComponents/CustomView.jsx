@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
 	}),
 	container: {
 		flex: 1,
-		paddingBottom: 100,
 		paddingHorizontal: '4%',
 	},
 	flexContainer: {

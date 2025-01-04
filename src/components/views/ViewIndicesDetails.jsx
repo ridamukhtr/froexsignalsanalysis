@@ -9,7 +9,10 @@ const ViewIndicesDetails = ({ pivotData }) => {
     const { textColor, bgColor } = useThemeManager();
 
     if (!pivotData) {
-        return <CustomText>No Pivot Points Data Available</CustomText>;
+        return (
+            <View style={{ paddingHorizontal: 20 }}>
+                <CustomText>No Pivot Points Data Available</CustomText>
+            </View>)
     }
 
     return (

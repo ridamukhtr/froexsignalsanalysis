@@ -9,7 +9,7 @@ const CustomBottomSheet = ({ children, isVisible, onClose }) => {
 
   const { bgColor, textColor } = useThemeManager();
 
-  const MAX_HEIGHT = SCREEN_HEIGHT > 700 ? 530 : 450;
+  const MAX_HEIGHT = SCREEN_HEIGHT > 700 ? 480 : 450;
   const MIN_HEIGHT = 230;
 
   const translateY = useSharedValue(SCREEN_HEIGHT);
@@ -41,6 +41,7 @@ const CustomBottomSheet = ({ children, isVisible, onClose }) => {
       translateY.value = withSpring(SCREEN_HEIGHT - MIN_HEIGHT);
     } else {
       translateY.value = withSpring(SCREEN_HEIGHT);
+
     }
   }, [isVisible]);
 
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   dimmedBackground: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: COLORS.DIM_BG,
   },
   bottomSheet: {
     width: '100%',

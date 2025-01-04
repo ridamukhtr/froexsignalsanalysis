@@ -85,6 +85,13 @@ const TechnicalIndicatorView = ({ indicators }) => {
 
   const { getMaSummaryColor } = useCommonFunctions();
 
+  if (!indicators) {
+    return (
+      <View style={{ paddingHorizontal: 20 }}>
+        <CustomText>No Indicators Data Available</CustomText>
+      </View>)
+  }
+
   return (
     <View style={{ paddingTop: 10, borderColor: COLORS.GREY, borderWidth: 1, margin: 10, borderRadius: 5 }}>
       {indicators?.map((indicator, index) => (

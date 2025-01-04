@@ -19,6 +19,7 @@ export const COLORS = {
     YELLOW: "#e2ad41",
     BLACK: "#424752",
     RED: "#E4372D",
+    DIM_BG: 'rgba(0, 0, 0, 0.5)',
 
     PRIMARY: "#1A152A",
     DARK_BLUE: "#0D1216",
