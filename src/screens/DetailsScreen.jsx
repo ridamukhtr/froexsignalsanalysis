@@ -36,64 +36,17 @@ const DetailsScreen = ({ itemId }) => {
 	const { item } = route?.params;
 
 	const [selectedTime, setSelectedTime] = useState(1800);
-	const [advanceReportData, setAdvanceReportData] = useState(null);
-	const [error, setError] = useState(null);
 
 	const { bgColor, textColor } = useThemeManager();
-	const { allSignals, detailData, onRefresh, refreshing, timeData, activeFromTime } = useDetailsScreen(item);
-	const { showLoader, hideLoader } = useLoadingHooks();
-
-	const fetchAdvanceReport = async (item, type, period) => {
-		console.log("item---->>", item);
-		console.log("type---->>", type);
-		console.log("selectedTime (period)---->>", period);
-		showLoader();
-		try {
-			const response = await fetch(
-				`https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${item?.msg_id}&period=${period}&type=${item?.type}`
-			);
-
-			const data = await response.json();
-			if (data?.pp) {
-				const { pivot_point, overall, } = data.pp;
-				const info = data.info;
-				const indicators = data?.indicator?.indicators ? Object.entries(data?.indicator?.indicators)?.slice(0, -1)?.map(([key, value]) => ({
-					name: key,
-					value: value?.v || null,
-					action: value?.s || null,
-				}))
-					: [];
-				setAdvanceReportData({ pivot_point, summary: overall?.summary, indicators, info });
-			} else {
-				console.log("No data found in the response");
-			}
-
-		} catch (err) {
-			console.error('Error fetching advance report:', err.message);
-			setError(err?.message);
-		}
-		finally {
-			hideLoader();
-		}
-	};
-
-	useEffect(() => {
-		if (item?.msg_id, selectedTime) {
-			fetchAdvanceReport(item, item?.type, selectedTime);
-		}
-	}, [item, selectedTime]);
-
-	console.log("advancee", advanceReportData);
+	const { allSignals, detailData, refreshing, timeData, activeFromTime, advanceReportData, isSummaryLoading, onRefresh, }
+		= useDetailsScreen(item, selectedTime);
 
 	const onTabChange = (newTab) => {
 		const selectedPeriod = Object?.keys(time_map)?.find(key => time_map[key] === newTab);
 		if (selectedPeriod) {
-			setSelectedTime(parseInt(selectedPeriod, 10)); // Update the selectedTime state
+			setSelectedTime(parseInt(selectedPeriod, 10));
 		}
 	};
-
-
-
 
 	const handlePressItem = () => {
 		// fnNavigateToDetails();
@@ -183,7 +136,7 @@ const DetailsScreen = ({ itemId }) => {
 
 						<ViewModalData title={'Technical Indicators'} timeData={tecData} />
 
-						<AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} indicators={advanceReportData?.indicators} />
+						<AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} indicators={advanceReportData?.indicators} isLoading={isSummaryLoading} />
 					</CustomScrollView>
 				</>
 			)}

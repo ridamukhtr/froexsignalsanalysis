@@ -55,7 +55,7 @@ const CustomView = ({
 							</View>
 						) : (
 							<View style={[styles.headerContainer, headerStyle]}>
-								<CustomTouchableOpacity onPress={fnOpenDrawer}>
+								<CustomTouchableOpacity onPress={fnOpenDrawer} >
 									<Ioniicons name={'menu'} size={30} />
 								</CustomTouchableOpacity>
 								{right}
@@ -104,8 +104,8 @@ const CustomView = ({
 							</View>
 						) : (
 							<View style={[styles.headerContainer, headerStyle]}>
-								<CustomTouchableOpacity onPress={fnOpenDrawer}>
-									<Ioniicons name={'menu'} size={30} color={iconColor} />
+								<CustomTouchableOpacity onPress={fnOpenDrawer} >
+									<Ioniicons name={'menu'} size={30} color={iconColor} style={{ marginLeft: -3 }} />
 								</CustomTouchableOpacity>
 								{right}
 							</View>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
 		paddingTop: 30,
 		paddingBottom: 15,
 		flexDirection: 'row',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	headerFullWidthContainer: {
 		gap: 10,

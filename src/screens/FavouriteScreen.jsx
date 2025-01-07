@@ -1,41 +1,38 @@
-
-
-import React, { useCallback, useEffect, useState } from 'react';
+// import packeges
+import React, { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import components
 import CustomSearchField from '../components/customComponents/CustomSearchField';
 import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
-import { useGetMarketDataQuery } from '../redux/storeApis';
-import { useFocusEffect } from '@react-navigation/native';
+// import hook
+import useInnerScreens from '../lib/customHooks/useInnerScreens';
 
 const FavouriteScreen = () => {
-
     const [data, setData] = useState([]);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
+    const { handlePressItem } = useInnerScreens();
 
     useFocusEffect(
         useCallback(() => {
             const loadFavorites = async () => {
                 try {
-                    const storedFavorites = await AsyncStorage.getItem('favorites');
+                    const storedFavorites = await AsyncStorage?.getItem('favorites');
                     const favourites = storedFavorites ? JSON.parse(storedFavorites) : [];
-                    console.log("ids", favourites);
                     setData(favourites);
-
-                    // Uncomment and modify if filtering logic is needed:
-                    // setData(allData?.filter((item) => favourites?.includes(item?.page_id)));
                 } catch (error) {
                     console.error('Error loading favorites:', error);
                 }
             };
 
             loadFavorites();
-        }, [])
+        }, [refreshTrigger])
     );
 
-    const handlePressItem = (item) => {
-        console.log('Item pressed:', item);
-        // Add navigation logic if needed
+    const refreshFavorites = () => {
+        setRefreshTrigger((prev) => prev + 1);
     };
 
     return (
@@ -44,6 +41,7 @@ const FavouriteScreen = () => {
                 data={data}
                 onPressItem={handlePressItem}
                 isFavoriteScreen={true}
+                refreshControlProps={{ onRefresh: refreshFavorites }}
             />
         </CustomView>
     );

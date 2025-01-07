@@ -5,7 +5,7 @@ const globalStyles = StyleSheet.create({
 	screenHeadingTxt: { fontSize: 24, lineHeight: 30, color: COLORS.textColor, textAlign: 'center' },
 	container: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
 	timeText: { fontSize: 12, fontWeight: '400', color: COLORS.GREY_TEXT },
-	titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 22 },
+	titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 20 },
 	text: { fontSize: 11, },
 	screenDescTxt: { textAlign: 'center' },
 	defaultTxt: { fontSize: 14, lineHeight: 20, color: COLORS.WHITE },

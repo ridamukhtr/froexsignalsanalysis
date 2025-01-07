@@ -7,7 +7,7 @@ import { COLORS } from '../../styles/theme-styles';
 import CustomScrollView from '../customComponents/CustomScrollView';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 
-const HorizontalView = ({ tabs = [], containerStyle, initialTab = '', onTabChange = () => {}, customStyles, variant }) => {
+const HorizontalView = ({ tabs = [], containerStyle, initialTab = '', onTabChange = () => { }, customStyles, variant }) => {
 	const [selectedTab, setSelectedTab] = useState(initialTab || tabs[0]);
 
 	const fnTabPress = tab => {

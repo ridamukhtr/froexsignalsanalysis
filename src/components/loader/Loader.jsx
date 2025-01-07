@@ -7,11 +7,11 @@ import loading from '../../animations/loading.json';
 // import hook
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
-export const Loader = ({ loop, loaderStyle }) => {
+export const Loader = ({ loop, loaderStyle, animationStyle }) => {
 	const { bgColor } = useThemeManager();
 	return (
 		<View style={[styles.container, loaderStyle, { color: bgColor }]}>
-			<LottieView loop={loop ? false : loop} source={loading} autoPlay style={styles.animation} />
+			<LottieView loop={loop ? false : loop} source={loading} autoPlay style={[styles.animation, animationStyle]} />
 		</View>
 	);
 };

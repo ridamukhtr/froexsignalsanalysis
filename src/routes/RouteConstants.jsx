@@ -5,6 +5,7 @@ export const ROUTES = {
 	drawer: 'drawer',
 	screenHome: 'Home Screen',
 	screenFavourite: 'Favourites',
+	favStack: 'Favourite Stack',
 	screenForex: 'Forex',
 	screenStock: 'Stock',
 	screenCommodities: 'Commodities',

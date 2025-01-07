@@ -1,50 +1,18 @@
 // import packages
 import { StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 // import routes
 import { ROUTES } from '../routes/RouteConstants';
 // import components
 import ViewScreens from '../components/views/ViewScreens';
-// import store
-import { useGetInnerScreenDataQuery } from '../redux/storeApis';
+// import hook
+import useInnerScreens from '../lib/customHooks/useInnerScreens';
 
-const CryptoCurrencyScreen = ({ data, refreshControlProps }) => {
-	const navigation = useNavigation();
+const CryptoCurrencyScreen = ({ data, refreshControlProps, activeSort }) => {
 
-	const [selectedItem, setSelectedItem] = useState(null);
+	const { handlePressItem, transformAndSortData } = useInnerScreens();
 
-	const transformedData = data?.crypto ? Object?.values(data.crypto) : [];
-
-	const { data: detailData } = useGetInnerScreenDataQuery(
-		{
-			id: selectedItem?.id,
-			msg_id: selectedItem?.msg_id
-		},
-		{
-			skip: !selectedItem,
-			enabled: !!selectedItem
-		}
-	);
-
-	useEffect(() => {
-		if (detailData && selectedItem) {
-			const params = {
-				id: selectedItem?.id,
-				msg_id: selectedItem?.msg_id,
-				item: selectedItem,
-				detailData
-			};
-
-			navigation.navigate(ROUTES.screenDetails, { item: selectedItem, params });
-			setSelectedItem(null);
-		}
-	}, [detailData, selectedItem, navigation]);
-
-	const handlePressItem = item => {
-		setSelectedItem(item);
-		console.log('Item pressed:', item);
-	};
+	const transformedData = data?.crypto ? transformAndSortData(data?.crypto, activeSort) : [];
 
 	return <ViewScreens data={transformedData} onPressItem={handlePressItem} refreshControlProps={refreshControlProps} />;
 };

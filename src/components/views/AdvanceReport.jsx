@@ -1,6 +1,7 @@
 // import packages
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import moment from 'moment-timezone';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
 // import components
 import HorizontalView from './HorizontalView';
 import ViewIndicesDetails from './ViewIndicesDetails';
@@ -11,17 +12,24 @@ import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
 // import styling
+import { Loader } from '../loader/Loader';
 import { COLORS } from '../../styles/theme-styles';
 // import assets
 import time_map from '../../../assets/time_map';
 
-const AdvanceReport = ({ advanceDetail, info, selectedTime, onTabChange, indicators }) => {
+const AdvanceReport = ({ advanceDetail, info, selectedTime, onTabChange, indicators, isLoading }) => {
+
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const formattedTime = info?.update_time
+        ? moment.utc(info.update_time, "YYYY-MM-DD hh:mm [UTC]")
+            .tz(systemTimeZone)
+            .format("YYYY-MM-DD hh:mm A z")
+        : "No time available";
 
     const tabs = Object?.values(time_map);
     const selectedTimeLabel = selectedTime && time_map[selectedTime] ? time_map[selectedTime] : 'Unknown Time';
-
     const [isDetailsVisible, setIsDetailsVisible] = useState(false);
-
     const { textColor, bgColor } = useThemeManager();
 
     const { getMaSummaryColor } = useCommonFunctions();
@@ -30,10 +38,15 @@ const AdvanceReport = ({ advanceDetail, info, selectedTime, onTabChange, indicat
 
     const fnDetailsVisibility = () => {
         setIsDetailsVisible(prevState => !prevState);
+        // Scroll to the details section when clicked
+        scrollViewRef.current.scrollTo({ y: detailsSectionRef.current.offsetTop, animated: true });
     };
 
+    const scrollViewRef = useRef(null); // Reference for ScrollView
+    const detailsSectionRef = useRef(null); // Reference for the Details section
+
     return (
-        <View style={{ marginTop: 15 }}>
+        <ScrollView ref={scrollViewRef} style={{ marginTop: 15 }}>
             <CustomText style={[styles.title, { fontSize: 16, color: textColor }]}>{'Advance Report for Professionals'}</CustomText>
 
             <HorizontalView tabs={tabs} variant={"button"} onTabChange={onTabChange} initialTab={time_map[selectedTime]} />
@@ -43,14 +56,22 @@ const AdvanceReport = ({ advanceDetail, info, selectedTime, onTabChange, indicat
                         <CustomText style={{ fontWeight: 'bold' }}>{'Updated Time'}</CustomText>
                     </View>
 
-                    <CustomText style={{ fontSize: 13 }}>{'Dec 12, 2024 01:12 PM (PST)'}</CustomText>
+                    <CustomText style={{ fontSize: 13 }}>{formattedTime}</CustomText>
                     <CustomText style={{ fontSize: 13 }}>{info?.update_time}</CustomText>
 
                     <View style={[styles.boxContent, { marginTop: 10 }]}>
                         <CustomText style={{ fontWeight: 'bold' }}>{'Summary :'}</CustomText>
-                        <View style={styles.btn}>
-                            <CustomText style={{ color: maSummaryColor }}>{advanceDetail?.summary}</CustomText>
-                        </View>
+                        {isLoading ? (
+                            <View style={{}}>
+                                <Loader animationStyle={{ width: 25, height: 25 }} />
+                            </View>
+                        ) : (
+                            <View style={styles.btn}>
+                                <CustomText style={{ color: maSummaryColor }}>
+                                    {advanceDetail?.summary || 'no signal'}
+                                </CustomText>
+                            </View>
+                        )}
                     </View>
                 </View>
 
@@ -58,17 +79,26 @@ const AdvanceReport = ({ advanceDetail, info, selectedTime, onTabChange, indicat
                     <CustomText style={{ fontSize: 18, color: "white" }}>{'View Details'}</CustomText>
                 </CustomTouchableOpacity>
 
-                {isDetailsVisible && (
-                    <View style={{ paddingVertical: 15 }}>
-                        <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10 }} >  {` Pivot Points (${selectedTimeLabel}) `}</CustomText>
-                        <ViewIndicesDetails pivotData={advanceDetail?.pivot_point} />
-                        <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10, paddingTop: 15 }} >  {`Technical Indicators (${selectedTimeLabel}) `}</CustomText>
-                        <TechnicalIndicatorView indicators={indicators} />
-
-                    </View>
-                )}
+                <View ref={detailsSectionRef}>
+                    {isDetailsVisible && (
+                        <View style={{ paddingVertical: 15 }}>
+                            {isLoading ? (
+                                <View style={{ paddingVertical: 20 }}>
+                                    <Loader animationStyle={{ width: 50, height: 50 }} />
+                                </View>
+                            ) : (
+                                <>
+                                    <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10 }} >  {` Pivot Points (${selectedTimeLabel}) `}</CustomText>
+                                    <ViewIndicesDetails pivotData={advanceDetail?.pivot_point} />
+                                    <CustomText style={{ fontWeight: "bold", paddingHorizontal: 10, paddingTop: 15 }} >  {`Technical Indicators (${selectedTimeLabel}) `}</CustomText>
+                                    <TechnicalIndicatorView indicators={indicators} />
+                                </>
+                            )}
+                        </View>
+                    )}
+                </View>
             </View>
-        </View>
+        </ScrollView>
     );
 };
 

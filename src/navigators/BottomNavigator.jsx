@@ -1,5 +1,7 @@
 // import packages
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,13 +18,14 @@ import { COLORS } from '../styles/theme-styles';
 import { ROUTES } from '../routes/RouteConstants';
 // import hooks
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
-import { TouchableWithoutFeedback, View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const StockStack = () => {
 	const { bgColor, textColor, currentTheme, footerColor } = useThemeManager();
+	const navigation = useNavigation();
+
 
 	return (
 		<Stack.Navigator>
@@ -91,8 +94,85 @@ const StockStack = () => {
 	);
 };
 
+const FavouriteStack = () => {
+	const { footerColor } = useThemeManager();
+	const navigation = useNavigation();
+
+
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name={ROUTES.favStack}
+				component={FavouriteScreen}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenDetails}
+				component={DetailsScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: {
+								alignItems: 'center',
+								height: 80,
+								paddingTop: 11,
+								backgroundColor: footerColor,
+								borderWidth: 0,
+								borderColor: 'transparent',
+								marginBottom: 0,
+							}
+						});
+					}
+				})}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenChart}
+				component={ChartScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: {
+								alignItems: 'center',
+								height: 80,
+								paddingTop: 11,
+								backgroundColor: footerColor,
+								borderWidth: 0,
+								borderColor: 'transparent',
+								marginBottom: 0,
+							}
+						});
+					}
+				})}
+			/>
+		</Stack.Navigator>
+	);
+};
+
 const BottomNavigator = () => {
+	const navigation = useNavigation();
+
 	const { footerColor, iconColor, } = useThemeManager();
+
+
+
 	return (
 		<Tab.Navigator
 			screenOptions={({ route }) => ({
@@ -184,7 +264,7 @@ const BottomNavigator = () => {
 			/>
 			<Tab.Screen
 				name={ROUTES.screenFavourite}
-				component={FavouriteScreen}
+				component={FavouriteStack}
 				options={{ headerShown: false }}
 			/>
 		</Tab.Navigator>

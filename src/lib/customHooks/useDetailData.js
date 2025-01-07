@@ -5,11 +5,9 @@ import moment from 'moment-timezone';
 import time_map from '../../../assets/time_map';
 //  import hook
 import useLoadingHooks from './useLoadingHook';
-import { useGetDetailsAdvanceReportQuery } from '../../redux/storeApis';
 
-const useDetailsScreen = (item, period) => {
-    const { msg_id, type } = item;
-
+const useDetailsScreen = (item, selectedTime) => {
+    const { msg_id, type, page_id } = item || {};
     const { showLoader, hideLoader } = useLoadingHooks();
 
     const [error, setError] = useState(null);
@@ -18,11 +16,17 @@ const useDetailsScreen = (item, period) => {
     const [detailData, setDetailData] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
     const [advanceReportData, setAdvanceReportData] = useState(null);
+    const [isSummaryLoading, setIsSummaryLoading] = useState(false);
 
     useEffect(() => {
         fetchDetailData();
-        // fetchAdvanceReport();
-    }, [item]);
+    }, [page_id]);
+
+    useEffect(() => {
+        if (msg_id && selectedTime) {
+            fetchAdvanceReport(selectedTime);
+        }
+    }, [msg_id, selectedTime]);
 
     const getUserCountry = async () => {
         try {
@@ -70,9 +74,10 @@ const useDetailsScreen = (item, period) => {
                 setDetailData(relevantData || null);
             }
 
-            const timeIntervals = ['5m', '15m', '30m', '1h', '4h', '5h', '1d', '1w'];
-            const timeData = timeIntervals.map((interval) => ({
-                time: interval,
+            const timeIntervals = ['300', '900', '1800', '3600', '14400', '18000', '86400', '604800'];
+
+            const timeData = timeIntervals?.map((interval) => ({
+                time: time_map[interval] || interval,
                 maBuy: data?.average?.ma?.buy?.[interval] || 0,
                 maSell: data?.average?.ma?.sell?.[interval] || 0,
                 maSignal: data?.average?.ma?.signal?.[interval] || 0,
@@ -89,35 +94,68 @@ const useDetailsScreen = (item, period) => {
         }
     };
 
-    const activeFrom = updateTime => {
-        if (updateTime) {
-            const momentTime = moment(updateTime);
-            const formattedTime = momentTime.format('hh:mm A');
-            const formattedDate = momentTime.format('YYYY-MM-DD');
-            const timeZone = moment.tz.guess();
-            const country = moment.tz(timeZone).format('z');
-
-            return `${formattedDate} ${formattedTime} (${country})`;
+    const fetchAdvanceReport = async (period) => {
+        if (!msg_id || !type) {
+            console.error('Missing msg_id or type for fetchAdvanceReport:', { msg_id, type });
+            return;
         }
-        return null;
-    };
 
-    const activeFromTime = activeFrom(detailData?.update_time);
+        try {
+            showLoader();
+            setIsSummaryLoading(true);
+
+            const response = await fetch(
+                `https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${msg_id}&period=${period}&type=${type}`
+            );
+            const data = await response.json();
+
+            if (data?.pp) {
+                const { pivot_point, overall } = data?.pp;
+                const info = data.info;
+                const indicators = data?.indicator?.indicators
+                    ? Object?.entries(data?.indicator?.indicators)
+                        .slice(0, -1)
+                        .map(([key, value]) => ({
+                            name: key,
+                            value: value?.v || null,
+                            action: value?.s || null,
+                        }))
+                    : [];
+
+                setAdvanceReportData({ pivot_point, summary: overall?.summary, indicators, info });
+            } else {
+                console.log('No data found in the response');
+            }
+        } catch (err) {
+            console.error('Error fetching advance report:', err?.message);
+            setError(err?.message);
+        } finally {
+            hideLoader();
+            setIsSummaryLoading(false);
+        }
+    };
 
     const onRefresh = async () => {
         setRefreshing(true);
         await fetchDetailData();
-        // await fetchAdvanceReport();
+        if (msg_id && selectedTime) {
+            await fetchAdvanceReport(selectedTime);
+        }
         setRefreshing(false);
     };
 
+    const activeFromTime = detailData?.update_time
+        ? moment(detailData?.update_time)?.format('YYYY-MM-DD hh:mm A z')
+        : null;
+
     return {
         detailData,
-        // advanceReportData,
+        advanceReportData,
         allSignals,
         timeData,
         error,
         refreshing,
+        isSummaryLoading,
         activeFromTime,
         onRefresh,
     };

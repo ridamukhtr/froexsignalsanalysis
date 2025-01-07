@@ -1,49 +1,15 @@
 // import packeges
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 // import screens
 import ViewScreens from '../components/views/ViewScreens';
-// import routes
-import { ROUTES } from '../routes/RouteConstants';
-// import store
-import { useGetInnerScreenDataQuery } from '../redux/storeApis';
+// import hook
+import useInnerScreens from '../lib/customHooks/useInnerScreens';
 
-const ComoditiesScreen = ({ data, refreshControlProps }) => {
-	const navigation = useNavigation();
+const ComoditiesScreen = ({ data, refreshControlProps, activeSort }) => {
 
-	const [selectedItem, setSelectedItem] = useState(null);
+	const { handlePressItem, transformAndSortData } = useInnerScreens();
 
-	const transformedData = data?.commo ? Object?.values(data?.commo) : [];
-
-	const { data: detailData } = useGetInnerScreenDataQuery(
-		{
-			id: selectedItem?.id,
-			msg_id: selectedItem?.msg_id
-		},
-		{
-			skip: !selectedItem,
-			enabled: !!selectedItem
-		}
-	);
-
-	useEffect(() => {
-		if (detailData && selectedItem) {
-			const params = {
-				id: selectedItem?.id,
-				msg_id: selectedItem?.msg_id,
-				item: selectedItem,
-				detailData
-			};
-
-			navigation.navigate(ROUTES.screenDetails, { item: selectedItem, params });
-			setSelectedItem(null);
-		}
-	}, [detailData, selectedItem, navigation]);
-
-	const handlePressItem = item => {
-		setSelectedItem(item);
-		console.log('Item pressed:', item);
-	};
+	const transformedData = data?.commo ? transformAndSortData(data?.commo, activeSort) : [];
 
 	return <ViewScreens data={transformedData} onPressItem={handlePressItem} refreshControlProps={refreshControlProps} />;
 };
