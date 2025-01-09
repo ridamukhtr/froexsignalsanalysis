@@ -1,6 +1,6 @@
 // import packages
 import React from 'react';
-import { Share } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import Theme from 'react-native-vector-icons/MaterialIcons';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
@@ -9,6 +9,7 @@ import BottomNavigator from './BottomNavigator';
 // import route
 import { ROUTES } from '../routes/RouteConstants';
 // import hooks
+import { useFavManager } from '../lib/customHooks/useFavManager';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
 // import styling
 import { COLORS } from '../styles/theme-styles';
@@ -19,24 +20,25 @@ import CustomDropdown from '../components/customComponents/CustomDropdown';
 import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
 // import screens
 import FavouriteScreen from '../screens/FavouriteScreen';
+// import reducer
+import { changeTheme } from '../redux/themeReducer';
 
 const Drawer = createDrawerNavigator();
 
 // Custom Drawer Content
 function CustomDrawerContent(props) {
-	const { bgColor, textColor, currentTheme, fnToggleTheme } = useThemeManager();
+	const dispatch = useDispatch();
 
-	const fnShare = () => {
-		Share.share({
-			message: 'Your share message here'
-		});
-	};
+	const { fnShare } = useFavManager();
+	const { bgColor, textColor, currentTheme, } = useThemeManager();
+
 
 	const items = [{ label: 'Dark' }, { label: 'Light' }];
 
-	const fnThemeChange = selectedTheme => {
-		if (currentTheme !== selectedTheme.toLowerCase()) {
-			fnToggleTheme();
+	const fnThemeChange = (selectedTheme) => {
+		const themeToSet = selectedTheme.toLowerCase();
+		if (currentTheme !== themeToSet) {
+			dispatch(changeTheme(themeToSet));
 		}
 	};
 

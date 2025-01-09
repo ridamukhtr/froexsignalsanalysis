@@ -45,15 +45,15 @@ const useInnerScreens = () => {
   };
 
   const transformAndSortData = (data, sortKey) => {
-    if (!data || Object.keys(data).length === 0) return [];
+    if (!data || Object?.keys(data)?.length === 0) return [];
 
     const dataArray = Object.values(data);
     if (sortKey === 'name') {
       return _.orderBy(dataArray, ['symbol'], ['asc']);
     } else if (sortKey === 'price') {
-      return _.orderBy(dataArray, [(item) => parseFloat(item.price)], ['desc']);
+      return _.orderBy(dataArray, [(item) => parseFloat(item?.price)], ['desc']);
     } else if (sortKey === 'change%') {
-      return _.orderBy(dataArray, [(item) => parseFloat(item.summaryChangeP)], ['desc']);
+      return _.orderBy(dataArray, [(item) => parseFloat(item?.summaryChangeP)], ['desc']);
     } else if (sortKey === 'signal') {
       const signalOrder = ['Strong Buy', 'Buy', 'Neutral', 'Sell', 'Strong Sell'];
       return _.orderBy(

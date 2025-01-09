@@ -4,10 +4,14 @@ import { COLORS } from './theme-styles';
 const globalStyles = StyleSheet.create({
 	screenHeadingTxt: { fontSize: 24, lineHeight: 30, color: COLORS.textColor, textAlign: 'center' },
 	container: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-	timeText: { fontSize: 12, fontWeight: '400', color: COLORS.GREY_TEXT },
-	titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 20 },
+	timeText: { fontSize: 12, fontWeight: '400', },
+	titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 25 },
 	text: { fontSize: 11, },
 	screenDescTxt: { textAlign: 'center' },
+	boxContainer: { paddingTop: 10, borderWidth: 1, marginVertical: 10, borderRadius: 5 },
+	cell: { flex: 1, paddingVertical: 5, paddingHorizontal: 12 },
+	column: { flex: 1, paddingHorizontal: 10 },
+	rowContainer: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1 },
 	defaultTxt: { fontSize: 14, lineHeight: 20, color: COLORS.WHITE },
 	cardContainer: {
 		borderRadius: 10,

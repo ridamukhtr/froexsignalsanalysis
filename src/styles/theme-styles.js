@@ -21,7 +21,7 @@ export const COLORS = {
     RED: "#E4372D",
     DIM_BG: 'rgba(0, 0, 0, 0.5)',
 
-    PRIMARY: "#1A152A",
+    PRIMARY: "#ffffff",
     DARK_BLUE: "#0D1216",
     NAV_BLUE: "#211C37",
     SEARCH_BLUE: "#312E43",

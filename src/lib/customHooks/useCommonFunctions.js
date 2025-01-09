@@ -1,10 +1,11 @@
 // import styling
 import { COLORS } from '../../styles/theme-styles';
-import useThemeManager from './useThemeManager';
+import { setInitialTheme } from "../../redux/themeReducer";
+// import packages
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export function useCommonFunctions() {
-	// const { textColor } = useThemeManager();
-	const getMaSummaryColor = summary => {
+export const useCommonFunctions = () => {
+	const getMaSummaryColor = (summary, textColor) => {
 		switch (summary?.toLowerCase()) {
 			case 'strong buy':
 			case 'buy':
@@ -15,10 +16,22 @@ export function useCommonFunctions() {
 			case 'strong sell':
 				return COLORS.RED;
 			default:
-				return COLORS.BLACK;
-			// return textColor;
+				return textColor;
 		}
 	};
 
-	return { getMaSummaryColor };
-}
+	return {
+		getMaSummaryColor,
+	};
+};
+
+export const initializeTheme = async (dispatch) => {
+	try {
+		const storedTheme = await AsyncStorage.getItem('userTheme');
+		if (storedTheme) {
+			dispatch(setInitialTheme(storedTheme));
+		}
+	} catch (error) {
+		console.error("Error fetching theme from AsyncStorage:", error);
+	}
+};

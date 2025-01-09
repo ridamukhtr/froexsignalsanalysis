@@ -121,8 +121,9 @@ const useDetailsScreen = (item, selectedTime) => {
                             action: value?.s || null,
                         }))
                     : [];
-
-                setAdvanceReportData({ pivot_point, summary: overall?.summary, indicators, info });
+                const smaData = data?.ma_avg?.ma_avg?.SMA || {};
+                const emaData = data?.ma_avg?.ma_avg?.EMA || {};
+                setAdvanceReportData({ pivot_point, summary: overall?.summary, indicators, info, emaData, smaData });
             } else {
                 console.log('No data found in the response');
             }

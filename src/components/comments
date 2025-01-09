@@ -1,0 +1,15 @@
+const maData =
+		timeData?.map(item => ({
+			time: item?.time,
+			maBuy: item?.maBuy ?? 0,
+			maSell: item?.maSell ?? 0,
+			maSignal: item?.maSignal ?? 0
+		})) || [];
+
+	const tecData =
+		timeData?.map(item => ({
+			time: item?.time,
+			tecBuy: item?.tecBuy ?? 0,
+			tecSell: item?.tecSell ?? 0,
+			tecSignal: item?.tecSignal ?? 0
+		})) || [];

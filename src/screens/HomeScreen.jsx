@@ -36,7 +36,7 @@ const sortingOptions = [
 ];
 
 const HomeScreen = () => {
-	const tabs = ['Stocks', 'Forex', 'Commodities', 'Indices', 'Crypto Currency'];
+	const tabs = ['Stocks', 'Forex', 'Indices', 'Crypto Currency', 'Commodities',];
 	const [activeTime, setActiveTime] = useState('1800');
 	const [activeSort, setActiveSort] = useState('price');
 	const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
@@ -85,6 +85,7 @@ const HomeScreen = () => {
 				) : (
 					<>
 						<HorizontalView
+							useScrollView={true}
 							variant="default"
 							tabs={tabs}
 							initialTab={activeScreen}

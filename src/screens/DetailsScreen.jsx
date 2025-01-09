@@ -1,44 +1,44 @@
 //  import packages
 import { StyleSheet, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import { RefreshControl } from 'react-native-gesture-handler';
+import Theme from 'react-native-vector-icons/MaterialIcons';
+import React, { useState } from 'react';
+import Favourite from 'react-native-vector-icons/MaterialIcons';
+import { useRoute } from '@react-navigation/native';
 //  import components
 import CustomView from '../components/customComponents/CustomView';
 import ViewIndicesRating from '../components/views/ViewIndicesRating';
-import ViewModalData from '../components/views/ViewModalData';
+import ViewIndicesDetails from '../components/views/ViewIndicesDetails';
+import TechnicalIndicatorView from '../components/views/TechnicalIndicatorView';
 import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
 import CustomScrollView from '../components/customComponents/CustomScrollView';
-import SignalSummery from '../components/views/SignalSummery';
 import CustomText from '../components/customComponents/CustomText';
+import MovingAverageView from '../components/views/MovingAverageView';
 import AdvanceReport from '../components/views/AdvanceReport';
+import { Loader } from '../components/loader/Loader';
 //  import route
 import { ROUTES } from '../routes/RouteConstants';
 // import styles
-import globalStyles from '../styles/global-styles';
 import { COLORS } from '../styles/theme-styles';
 // import assets
-import { Loader } from '../components/loader/Loader';
-import { RefreshControl } from 'react-native-gesture-handler';
+import time_map from '../../assets/time_map';
 // import hook
 import useDetailsScreen from '../lib/customHooks/useDetailData';
-import { useGetDetailsAdvanceReportQuery } from '../redux/storeApis';
-import time_map from '../../assets/time_map';
-import useLoadingHooks from '../lib/customHooks/useLoadingHook';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
+import { useFavManager } from '../lib/customHooks/useFavManager';
 
 const DetailsScreen = ({ itemId }) => {
-	const navigation = useNavigation();
-
-	const fnNavigateToDetails = () => navigation.navigate(ROUTES?.screenChart);
 
 	const route = useRoute();
 	const { item } = route?.params;
 
 	const [selectedTime, setSelectedTime] = useState(1800);
 
+	const selectedTimeLabel = selectedTime && time_map[selectedTime] ? time_map[selectedTime] : 'Unknown Time';
+
 	const { bgColor, textColor } = useThemeManager();
-	const { allSignals, detailData, refreshing, timeData, activeFromTime, advanceReportData, isSummaryLoading, onRefresh, }
+	const { favorites, fnShare, toggleFavorite } = useFavManager();
+	const { detailData, refreshing, activeFromTime, advanceReportData, isSummaryLoading, onRefresh, }
 		= useDetailsScreen(item, selectedTime);
 
 	const onTabChange = (newTab) => {
@@ -48,41 +48,40 @@ const DetailsScreen = ({ itemId }) => {
 		}
 	};
 
-	const handlePressItem = () => {
-		// fnNavigateToDetails();
-		console.log('Item pressed:');
-	};
 
-	const ChartIcon = () => {
+	const RightView = () => {
 		return (
-			<CustomTouchableOpacity onPress={handlePressItem}>
-				<Icon name={'linechart'} size={20} color={COLORS.WHITE} />
-			</CustomTouchableOpacity>
+			<View style={{ flexDirection: "row", alignItems: "center", gap: 15 }} >
+				<CustomTouchableOpacity onPress={() => toggleFavorite(item)}>
+					{favorites?.find((fav) => fav?.page_id == item?.page_id) ? (
+						<Favourite name="star" size={17} color={COLORS.GREEN} />
+					) : (
+						<Favourite name="star-outline" color={COLORS.GREEN} size={17} />
+					)}
+				</CustomTouchableOpacity>
+				<CustomTouchableOpacity onPress={fnShare}>
+					<Theme name="share" size={20} color={textColor} />
+				</CustomTouchableOpacity>
+			</View>
 		);
 	};
 
-	const maData =
-		timeData?.map(item => ({
-			time: item?.time,
-			maBuy: item?.maBuy ?? 0,
-			maSell: item?.maSell ?? 0,
-			maSignal: item?.maSignal ?? 0
-		})) || [];
-
-	const tecData =
-		timeData?.map(item => ({
-			time: item?.time,
-			tecBuy: item?.tecBuy ?? 0,
-			tecSell: item?.tecSell ?? 0,
-			tecSignal: item?.tecSignal ?? 0
-		})) || [];
-
 	return (
-		<CustomView showBackIcon title={item?.symbol} right={<ChartIcon />}>
+		<CustomView showBackIcon title={item?.symbol} right={<RightView />}>
 			{!detailData && !advanceReportData ? (
 				<Loader />
 			) : (
-				<>
+				<CustomScrollView refreshControl={
+					<RefreshControl
+						onRefresh={onRefresh}
+						progressViewOffset={10}
+						colors={[textColor]}
+						tintColor={textColor}
+						progressBackgroundColor={bgColor}
+						refreshing={refreshing}
+						renderIndicator={() => <Loader />}
+					/>
+				}>
 					<ViewIndicesRating
 						price={item?.price}
 						summaryChange={item?.summaryChange}
@@ -90,60 +89,35 @@ const DetailsScreen = ({ itemId }) => {
 						update_time={activeFromTime}
 					/>
 
-					<CustomScrollView refreshControl={
-						<RefreshControl
-							onRefresh={onRefresh}
-							progressViewOffset={10}
-							colors={[textColor]}
-							tintColor={textColor}
-							progressBackgroundColor={bgColor}
-							refreshing={refreshing}
-							renderIndicator={() => <Loader />}
-						/>
-					}>
-						<View style={{ marginVertical: 15 }}>
-							<CustomText
-								style={[
-									globalStyles.titleText,
-									{ fontSize: 16, paddingBottom: 10 }
-								]}
-							>
-								{'Signal Summary'}
-							</CustomText>
-							<View style={{ flexDirection: 'row', alignItems: 'center', gap: 60 }}>
-								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
-									{'Time'}
-								</CustomText>
-								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
-									{item?.symbol}
-								</CustomText>
+					<AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} isLoading={isSummaryLoading} />
+
+					<View style={{}}>
+						{isSummaryLoading ? (
+							<View style={{ paddingVertical: 20 }}>
+								<Loader animationStyle={{ width: 50, height: 50 }} />
 							</View>
+						) : (
+							<>
+								<CustomText style={{ fontWeight: "bold", }} >  {`Pivot Points (${selectedTimeLabel})`}</CustomText>
+								<ViewIndicesDetails pivotData={advanceReportData?.pivot_point} />
+								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Technical Indicators (${selectedTimeLabel}) `}</CustomText>
+								<TechnicalIndicatorView indicators={advanceReportData?.indicators} />
+								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Moving Averages (${selectedTimeLabel}) `}</CustomText>
+								<MovingAverageView emaData={advanceReportData?.emaData} smaData={advanceReportData?.smaData} />
+							</>
+						)}
+					</View>
+				</CustomScrollView>
 
-							{allSignals?.map((signal, index) => (
-								<SignalSummery
-									key={index}
-									symbol={signal?.symbol}
-									maSummary={signal?.ma_summery}
-									ago={signal?.ago}
-									ma_summery={signal?.ma_summery}
-									activeTime={signal?.activeTime}
-									time={signal?.mappedTime}
-								/>
-							))}
-						</View>
-
-						<ViewModalData title={'Moving Averages Lines'} timeData={maData} />
-
-						<ViewModalData title={'Technical Indicators'} timeData={tecData} />
-
-						<AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} indicators={advanceReportData?.indicators} isLoading={isSummaryLoading} />
-					</CustomScrollView>
-				</>
-			)}
-		</CustomView>
+			)
+			}
+		</CustomView >
 	);
 };
 
 export default DetailsScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	btnContainer: { alignItems: 'center', paddingVertical: 10, borderBottomRightRadius: 3, borderBottomLeftRadius: 3, },
+
+});

@@ -1,5 +1,5 @@
 // import packages
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -19,13 +19,31 @@ import { ROUTES } from '../routes/RouteConstants';
 // import hooks
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
 
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+const getTabBarStyle = (footerColor) => ({
+	alignItems: 'center',
+	justifyContent: 'center',
+	height: 65,
+	paddingTop: 5,
+	backgroundColor: footerColor,
+	borderWidth: 0,
+	borderColor: 'transparent',
+	marginBottom: 0,
+});
+
 const StockStack = () => {
-	const { bgColor, textColor, currentTheme, footerColor } = useThemeManager();
+	const { footerColor } = useThemeManager();
 	const navigation = useNavigation();
 
+	// Update parent tab bar style when theme changes
+	useEffect(() => {
+		navigation.getParent()?.setOptions({
+			tabBarStyle: getTabBarStyle(footerColor)
+		});
+	}, [footerColor, navigation]);
 
 	return (
 		<Stack.Navigator>
@@ -49,15 +67,7 @@ const StockStack = () => {
 					},
 					beforeRemove: () => {
 						navigation.getParent()?.setOptions({
-							tabBarStyle: {
-								alignItems: 'center',
-								height: 80,
-								paddingTop: 11,
-								backgroundColor: footerColor,
-								borderWidth: 0,
-								borderColor: 'transparent',
-								marginBottom: 0,
-							}
+							tabBarStyle: getTabBarStyle(footerColor)
 						});
 					}
 				})}
@@ -77,15 +87,7 @@ const StockStack = () => {
 					},
 					beforeRemove: () => {
 						navigation.getParent()?.setOptions({
-							tabBarStyle: {
-								alignItems: 'center',
-								height: 80,
-								paddingTop: 11,
-								backgroundColor: footerColor,
-								borderWidth: 0,
-								borderColor: 'transparent',
-								marginBottom: 0,
-							}
+							tabBarStyle: getTabBarStyle(footerColor)
 						});
 					}
 				})}
@@ -98,6 +100,12 @@ const FavouriteStack = () => {
 	const { footerColor } = useThemeManager();
 	const navigation = useNavigation();
 
+	// Update parent tab bar style when theme changes
+	useEffect(() => {
+		navigation.getParent()?.setOptions({
+			tabBarStyle: getTabBarStyle(footerColor)
+		});
+	}, [footerColor, navigation]);
 
 	return (
 		<Stack.Navigator>
@@ -121,15 +129,7 @@ const FavouriteStack = () => {
 					},
 					beforeRemove: () => {
 						navigation.getParent()?.setOptions({
-							tabBarStyle: {
-								alignItems: 'center',
-								height: 80,
-								paddingTop: 11,
-								backgroundColor: footerColor,
-								borderWidth: 0,
-								borderColor: 'transparent',
-								marginBottom: 0,
-							}
+							tabBarStyle: getTabBarStyle(footerColor)
 						});
 					}
 				})}
@@ -149,15 +149,7 @@ const FavouriteStack = () => {
 					},
 					beforeRemove: () => {
 						navigation.getParent()?.setOptions({
-							tabBarStyle: {
-								alignItems: 'center',
-								height: 80,
-								paddingTop: 11,
-								backgroundColor: footerColor,
-								borderWidth: 0,
-								borderColor: 'transparent',
-								marginBottom: 0,
-							}
+							tabBarStyle: getTabBarStyle(footerColor)
 						});
 					}
 				})}
@@ -168,10 +160,12 @@ const FavouriteStack = () => {
 
 const BottomNavigator = () => {
 	const navigation = useNavigation();
+	const { footerColor, iconColor, currentTheme } = useThemeManager();
 
-	const { footerColor, iconColor, } = useThemeManager();
-
-
+	useEffect(() => {
+		const tabBarStyle = getTabBarStyle(footerColor);
+		navigation.setOptions({ tabBarStyle });
+	}, [footerColor, currentTheme, navigation]);
 
 	return (
 		<Tab.Navigator
@@ -198,7 +192,6 @@ const BottomNavigator = () => {
 									backgroundColor: iconColor,
 									borderRadius: 150 / 1,
 									height: 33,
-
 									width: 55,
 									alignItems: "center",
 									justifyContent: "center",
@@ -241,21 +234,13 @@ const BottomNavigator = () => {
 						</CustomText>
 					);
 				},
-				tabBarStyle: {
-					alignItems: 'center',
-					height: 80,
-					paddingTop: 11,
-					backgroundColor: footerColor,
-					borderWidth: 0,
-					borderColor: 'transparent',
-					marginBottom: 0,
-				},
+				tabBarStyle: getTabBarStyle(footerColor),
 			})}
 		>
 			<Tab.Screen
 				name={ROUTES.bottomTabs}
 				component={StockStack}
-				options={{ headerShown: false, tabBarHideOnKeyboard: true, }}
+				options={{ headerShown: false, tabBarHideOnKeyboard: true }}
 			/>
 			<Tab.Screen
 				name={ROUTES.screenCalender}
@@ -270,6 +255,5 @@ const BottomNavigator = () => {
 		</Tab.Navigator>
 	);
 };
-
 
 export default BottomNavigator;

@@ -1,8 +1,6 @@
 // import packages
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import Favourite from 'react-native-vector-icons/MaterialIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
 // import styling
 import { COLORS } from '../../styles/theme-styles';
@@ -10,42 +8,16 @@ import globalStyles from '../../styles/global-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
 import CustomTouchableOpacity from '../customComponents/CustomTouchableOpacity';
-// import hooks
 import { Loader } from '../loader/Loader';
+// import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
+import { useFavManager } from '../../lib/customHooks/useFavManager';
 
 const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshControlProps }) => {
 
-	const [favorites, setFavorites] = useState([]);
-
+	const { favorites, saveFavorites } = useFavManager();
 	const { bgColor, textColor, borderColor } = useThemeManager();
-
-	useFocusEffect(
-		useCallback(() => {
-			getFavorites();
-
-		}, [])
-	);
-
-	const getFavorites = async () => {
-		try {
-			const storedFavorites = await AsyncStorage?.getItem('favorites');
-			setFavorites(storedFavorites ? JSON.parse(storedFavorites) : []);
-
-		} catch (error) {
-			console.error('Error loading favorites:', error);
-		}
-	}
-
-	const saveFavorites = async (updatedFavorites) => {
-		try {
-			await AsyncStorage?.setItem('favorites', JSON.stringify(updatedFavorites));
-			await getFavorites();
-		} catch (error) {
-			console.error('Error saving favorites:', error);
-		}
-	};
 
 	const toggleFavorite = async (item) => {
 		const isAddedFav = favorites?.find((addItem) => addItem?.page_id == item?.page_id);
@@ -58,7 +30,7 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 
 	const renderItem = ({ item }) => {
 		const { getMaSummaryColor } = useCommonFunctions();
-		const maSummaryColor = getMaSummaryColor(item?.ma_summery);
+		const maSummaryColor = item?.ma_summery ? getMaSummaryColor(item?.ma_summery) : textColor;
 
 
 		return (

@@ -17,11 +17,13 @@ export function useThemeManager() {
 	const dropdownColor = isDarkTheme ? COLORS.DARK_DROPDOWN : COLORS.LIGHT_DROPDOWN;
 	const iconColor = isDarkTheme ? COLORS.DARK_ICON : COLORS.LIGHT_ICON;
 	const footerColor = isDarkTheme ? COLORS.DARK_FOOTER_BG : COLORS.WHITE;
+	const tabColor = isDarkTheme ? COLORS.DARK_FOOTER_BG : COLORS.PRIMARY;
 
 	const fnToggleTheme = () => {
 		const newTheme = isDarkTheme ? "light" : "dark";
 		dispatch(changeTheme(newTheme));
 	};
+
 
 	return {
 		currentTheme,
@@ -31,6 +33,8 @@ export function useThemeManager() {
 		dropdownColor,
 		iconColor,
 		footerColor,
+		tabColor,
+		isDarkTheme,
 
 		fnToggleTheme,
 	};
