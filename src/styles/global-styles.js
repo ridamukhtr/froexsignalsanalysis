@@ -4,6 +4,7 @@ import { COLORS } from './theme-styles';
 const globalStyles = StyleSheet.create({
 	screenHeadingTxt: { fontSize: 24, lineHeight: 30, color: COLORS.textColor, textAlign: 'center' },
 	container: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+	gapContainer: { flexDirection: "row", alignItems: "center", gap: 15 },
 	timeText: { fontSize: 12, fontWeight: '400', },
 	titleText: { fontSize: 13, fontWeight: 'bold', lineHeight: 25 },
 	text: { fontSize: 11, },

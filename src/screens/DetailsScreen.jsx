@@ -54,9 +54,9 @@ const DetailsScreen = ({ itemId }) => {
 			<View style={{ flexDirection: "row", alignItems: "center", gap: 15 }} >
 				<CustomTouchableOpacity onPress={() => toggleFavorite(item)}>
 					{favorites?.find((fav) => fav?.page_id == item?.page_id) ? (
-						<Favourite name="star" size={17} color={COLORS.GREEN} />
+						<Favourite name="star" size={20} color={textColor} />
 					) : (
-						<Favourite name="star-outline" color={COLORS.GREEN} size={17} />
+						<Favourite name="star-outline" color={textColor} size={20} />
 					)}
 				</CustomTouchableOpacity>
 				<CustomTouchableOpacity onPress={fnShare}>
@@ -98,7 +98,7 @@ const DetailsScreen = ({ itemId }) => {
 							</View>
 						) : (
 							<>
-								<CustomText style={{ fontWeight: "bold", }} >  {`Pivot Points (${selectedTimeLabel})`}</CustomText>
+								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Pivot Points (${selectedTimeLabel})`}</CustomText>
 								<ViewIndicesDetails pivotData={advanceReportData?.pivot_point} />
 								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Technical Indicators (${selectedTimeLabel}) `}</CustomText>
 								<TechnicalIndicatorView indicators={advanceReportData?.indicators} />

@@ -1,7 +1,7 @@
 // import packages
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,6 +12,8 @@ import DetailsScreen from '../screens/DetailsScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import FavouriteScreen from '../screens/FavouriteScreen';
 import CustomText from '../components/customComponents/CustomText';
+import MoreScreen from '../screens/MoreScreen';
+import SeacrhScreen from '../screens/SeacrhScreen';
 // import styling
 import { COLORS } from '../styles/theme-styles';
 // import route
@@ -26,8 +28,7 @@ const Stack = createStackNavigator();
 const getTabBarStyle = (footerColor) => ({
 	alignItems: 'center',
 	justifyContent: 'center',
-	height: 65,
-	paddingTop: 5,
+	height: 55,
 	backgroundColor: footerColor,
 	borderWidth: 0,
 	borderColor: 'transparent',
@@ -175,33 +176,26 @@ const BottomNavigator = () => {
 
 					switch (route.name) {
 						case ROUTES.bottomTabs:
-							iconName = focused ? 'signal-cellular-3' : 'signal-cellular-outline';
+							iconName = 'signal-cellular-outline';
 							break;
 						case ROUTES.screenCalender:
-							iconName = focused ? 'calendar-month' : 'calendar-month-outline';
+							iconName = 'calendar-month-outline';
 							break;
 						case ROUTES.screenFavourite:
-							iconName = focused ? 'star' : 'star-outline';
+							iconName = 'star-outline';
+							break;
+						case ROUTES.screenSearch:
+							iconName = 'magnify';
+							break;
+						case ROUTES.screenMore:
+							iconName = 'cog-outline';
 							break;
 					}
 
 					return focused ? (
-						<TouchableWithoutFeedback onPress={() => { }}>
-							<View
-								style={{
-									backgroundColor: iconColor,
-									borderRadius: 150 / 1,
-									height: 33,
-									width: 55,
-									alignItems: "center",
-									justifyContent: "center",
-								}}
-							>
-								<Icon name={iconName} size={28} color={color} />
-							</View>
-						</TouchableWithoutFeedback>
+						<Icon name={iconName} size={23} color={color} />
 					) : (
-						<Icon name={iconName} size={28} color={color} />
+						<Icon name={iconName} size={23} color={color} />
 					);
 				},
 				tabBarActiveTintColor: COLORS.YELLOW,
@@ -213,18 +207,25 @@ const BottomNavigator = () => {
 						case ROUTES.bottomTabs:
 							labelText = 'Markets';
 							break;
+						case ROUTES.screenFavourite:
+							labelText = 'Favourites';
+							break;
 						case ROUTES.screenCalender:
 							labelText = 'Calendar';
 							break;
-						case ROUTES.screenFavourite:
-							labelText = 'Favourites';
+						case ROUTES.screenSearch:
+							labelText = 'Search';
+							break;
+						case ROUTES.screenMore:
+							labelText = 'Setting';
 							break;
 					}
 					return (
 						<CustomText
 							style={{
-								paddingTop: 3,
-								fontSize: 12,
+								bottom: 3,
+								lineHeight: 15,
+								fontSize: 10,
 								fontWeight: '600',
 								color: focused ? COLORS.YELLOW : iconColor,
 								textAlign: 'center',
@@ -234,7 +235,26 @@ const BottomNavigator = () => {
 						</CustomText>
 					);
 				},
-				tabBarStyle: getTabBarStyle(footerColor),
+				tabBarStyle: {
+					...getTabBarStyle(footerColor),
+					elevation: 0, // Remove shadow on Android
+					borderTopWidth: 0, // Remove border on iOS
+				},
+				tabBarItemStyle: {
+					activeOpacity: 1,
+					android_ripple: { enabled: false }, // Disable ripple on Android
+				},
+				tabBarButton: (props) => (
+					<TouchableOpacity
+						{...props}
+						activeOpacity={1} // Prevent opacity effect on iOS
+						style={{
+							flex: 1,
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					/>
+				),
 			})}
 		>
 			<Tab.Screen
@@ -242,15 +262,29 @@ const BottomNavigator = () => {
 				component={StockStack}
 				options={{ headerShown: false, tabBarHideOnKeyboard: true }}
 			/>
-			<Tab.Screen
-				name={ROUTES.screenCalender}
-				component={HistoryScreen}
-				options={{ headerShown: false }}
-			/>
+
 			<Tab.Screen
 				name={ROUTES.screenFavourite}
 				component={FavouriteStack}
 				options={{ headerShown: false }}
+			/>
+
+			<Tab.Screen
+				name={ROUTES.screenSearch}
+				component={SeacrhScreen}
+				options={{ headerShown: false }}
+			/>
+
+			<Tab.Screen
+				name={ROUTES.screenCalender}
+				component={HistoryScreen}
+				options={{ headerShown: false, }}
+			/>
+
+			<Tab.Screen
+				name={ROUTES.screenMore}
+				component={MoreScreen}
+				options={{ headerShown: false, tabBarHideOnKeyboard: true }}
 			/>
 		</Tab.Navigator>
 	);

@@ -85,7 +85,7 @@ export default function DrawerNavigator() {
 			drawerContent={props => <CustomDrawerContent {...props} />}
 			screenOptions={{
 				headerShown: false,
-				drawerPosition: 'left',
+				drawerPosition: 'right',
 				drawerType: 'front',
 				swipeEnabled: true,
 				drawerItemStyle: { margin: 0, padding: 0 },
@@ -95,22 +95,15 @@ export default function DrawerNavigator() {
 			}}
 		>
 			{/* The Drawer Screens */}
-			<Drawer.Screen
-				name={ROUTES.screenHome}
-				component={BottomNavigator}
-				options={{
-					drawerLabel: () => null,
-					title: 'Home'
-				}}
-			/>
-			<Drawer.Screen
+
+			{/* <Drawer.Screen
 				name={ROUTES.screenFavourite}
 				component={FavouriteScreen}
 				options={{
 					drawerLabel: () => null,
 					title: 'Favourite'
 				}}
-			/>
+			/> */}
 		</Drawer.Navigator>
 	);
 }

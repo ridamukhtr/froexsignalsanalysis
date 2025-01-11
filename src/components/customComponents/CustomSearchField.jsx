@@ -1,10 +1,8 @@
 // import packages
 import React, { useRef, useState } from 'react';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Cross from 'react-native-vector-icons/Octicons';
 import { StyleSheet, TextInput, View } from 'react-native';
-// import styles
-import { COLORS } from '../../styles/theme-styles';
-import globalStyles from '../../styles/global-styles';
 // import components
 import CustomTouchableOpacity from './CustomTouchableOpacity';
 // import hooks
@@ -16,11 +14,13 @@ const CustomSearchField = ({ onSearch }) => {
 	const [searchText, setSearchText] = useState('');
 	const [isSearchActive, setIsSearchActive] = useState(false);
 
-	const { dropdownColor, textColor } = useThemeManager();
+	const { dropdownColor, textColor, tabColor, iconColor, borderColor, footerColor } = useThemeManager();
 
 	const fnSearchTextChange = text => {
 		setSearchText(text);
-		// Add onSearch logic here
+		if (onSearch) {
+			onSearch(text);
+		}
 	};
 
 	const fnClearSearch = () => {
@@ -33,8 +33,9 @@ const CustomSearchField = ({ onSearch }) => {
 	};
 
 	return (
+		<View style={[styles.searchContainer, { backgroundColor: dropdownColor }]}>
+			<Icon name="magnify" size={20} color={iconColor} style={styles.searchIcon} />
 
-		<View style={[styles.searchContainer, styles.container, { backgroundColor: dropdownColor }]}>
 			<TextInput
 				ref={inputRef}
 				value={searchText}
@@ -42,16 +43,16 @@ const CustomSearchField = ({ onSearch }) => {
 				placeholderTextColor={textColor}
 				onChangeText={fnSearchTextChange}
 				onFocus={() => setIsSearchActive(true)}
-				style={[styles.searchInput, styles.input, { color: textColor }]}
+				style={[styles.searchInput, { color: textColor }]}
 				onBlur={() => {
 					if (!searchText) {
 						setIsSearchActive(false);
 					}
 				}}
 			/>
-			{isSearchActive && (
-				<CustomTouchableOpacity style={styles.clearButton} activeOpacity={0.7} onPress={fnClearSearch}>
-					<Icon name="cross" size={20} color={COLORS.WHITE} />
+			{isSearchActive && searchText && (
+				<CustomTouchableOpacity style={{ padding: 5 }} activeOpacity={0.7} onPress={fnClearSearch}>
+					<Cross name="x-circle-fill" size={20} color={iconColor} />
 				</CustomTouchableOpacity>
 			)}
 		</View>
@@ -61,22 +62,18 @@ const CustomSearchField = ({ onSearch }) => {
 export default CustomSearchField;
 
 const styles = StyleSheet.create({
-	container: {
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
 	searchContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		borderRadius: 10,
+		borderRadius: 150 / 1,
 		paddingHorizontal: 10,
-		marginLeft: 10,
-		flex: 1
+	},
+	searchIcon: {
+		marginRight: 8,
 	},
 	searchInput: {
 		flex: 1,
-		fontSize: 16
-	}
-	// input: { height: 30, lineHeight: 30 },
-	// clearButton: { padding: 5 }
+		fontSize: 16,
+	},
+
 });

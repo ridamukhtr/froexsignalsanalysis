@@ -1,8 +1,5 @@
 // import styling
 import { COLORS } from '../../styles/theme-styles';
-import { setInitialTheme } from "../../redux/themeReducer";
-// import packages
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useCommonFunctions = () => {
 	const getMaSummaryColor = (summary, textColor) => {
@@ -23,15 +20,4 @@ export const useCommonFunctions = () => {
 	return {
 		getMaSummaryColor,
 	};
-};
-
-export const initializeTheme = async (dispatch) => {
-	try {
-		const storedTheme = await AsyncStorage.getItem('userTheme');
-		if (storedTheme) {
-			dispatch(setInitialTheme(storedTheme));
-		}
-	} catch (error) {
-		console.error("Error fetching theme from AsyncStorage:", error);
-	}
 };

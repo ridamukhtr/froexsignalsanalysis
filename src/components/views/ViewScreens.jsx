@@ -37,22 +37,22 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 			<View style={[styles.itemContainer, { borderColor }]}>
 				<CustomTouchableOpacity onPress={() => toggleFavorite(item)}>
 					{favorites?.find((fav) => fav?.page_id == item?.page_id) ? (
-						<Favourite name="star" size={17} color={COLORS.GREEN} />
+						<Favourite name="star" size={17} color={textColor} />
 					) : (
-						<Favourite name="star-outline" color={COLORS.GREEN} size={17} />
+						<Favourite name="star-outline" color={textColor} size={17} />
 					)}
 				</CustomTouchableOpacity>
 
 				<CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.(item)}>
-					<View style={[globalStyles.container, { gap: 7 }]}>
-						<CustomText style={globalStyles.titleText} numberOfLines={1}>
+					<View style={[globalStyles.container, {}]}>
+						<CustomText style={[globalStyles.titleText, { lineHeight: 15, paddingBottom: 0, marginBottom: 0 }]} numberOfLines={1}>
 							{item?.symbol}
 						</CustomText>
-						<CustomText style={[globalStyles.titleText, { color: textColor }]}>{item?.price}</CustomText>
+						<CustomText style={[globalStyles.titleText, { lineHeight: 15, color: textColor }]}>{item?.price}</CustomText>
 					</View>
 					<View style={globalStyles.container}>
-						<View style={[globalStyles.container, { gap: 7 }]}>
-							<CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
+						<View style={[globalStyles.container, { gap: 7, }]}>
+							<CustomText style={[globalStyles.titleText, { lineHeight: 15, color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
 						</View>
 						<View style={[globalStyles.container, { gap: 4 }]}>
 							<CustomText style={[globalStyles.timeText, { fontSize: 12, color: maSummaryColor }]}>{item?.summaryChange}</CustomText>
@@ -61,8 +61,8 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 							</CustomText>
 						</View>
 					</View>
-				</CustomTouchableOpacity>
-			</View>
+				</CustomTouchableOpacity >
+			</View >
 		);
 	};
 
@@ -73,7 +73,7 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 				renderItem={renderItem}
 				keyExtractor={(item) => item?.page_id?.toString()}
 				showsVerticalScrollIndicator={false}
-				contentContainerStyle={{ paddingBottom: '50%' }}
+				contentContainerStyle={{ paddingBottom: '42%' }}
 				refreshControl={
 					refreshControlProps ? (
 						<RefreshControl
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 12,
+		gap: 8,
 		paddingVertical: 7,
 		borderBottomWidth: 1,
 	}

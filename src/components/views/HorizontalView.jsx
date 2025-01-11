@@ -1,6 +1,6 @@
 // import packages
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 // import styling
 import { COLORS } from '../../styles/theme-styles';
 // import components
@@ -10,7 +10,13 @@ import CustomText from '../customComponents/CustomText';
 // import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
-const HorizontalView = ({ tabs = [], useScrollView, containerStyle, initialTab = '', onTabChange = () => { }, customStyles, variant }) => {
+const HorizontalView = ({
+	tabs = [],
+	useScrollView,
+	containerStyle,
+	initialTab = '',
+	onTabChange = () => { }, customStyles, variant }) => {
+
 	const scrollViewRef = useRef();
 	const tabPositions = useRef([]);
 	const [selectedTab, setSelectedTab] = useState(initialTab || tabs[0]);
@@ -35,13 +41,15 @@ const HorizontalView = ({ tabs = [], useScrollView, containerStyle, initialTab =
 		<View style={[styles.container, containerStyle]}>
 
 			{useScrollView ? (
-				<View style={{ marginHorizontal: -12 }}>
+				<View style={{ marginRight: -13 }}>
 					<CustomScrollView scrollViewRef={scrollViewRef} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollViewContent}>
-						{tabs.map(tab => (
+						{tabs.map((tab, index) => (
 							<CustomTouchableOpacity
 								key={tab}
 								onPress={() => fnTabPress(tab)}
-								style={variant === 'button' ? styles.tabButton : null}
+								style={[variant === 'button' ? styles.tabButton : null,
+								index === tabs.length - 1 ? { marginRight: 10 } : null,
+								]}
 								onLayout={(event) => {
 									// Capture the layout of each tab
 									const { x, width } = event.nativeEvent.layout;
@@ -49,16 +57,16 @@ const HorizontalView = ({ tabs = [], useScrollView, containerStyle, initialTab =
 								}}>
 								{variant === 'default' ? (
 									<>
-										<Text style={[styles.tabText, selectedTab === tab ? styles.activeTabText : null]}>{tab}</Text>
+										<CustomText style={[styles.tabText, selectedTab === tab ? styles.activeTabText : null]}>{tab}</CustomText>
 										{selectedTab === tab && <View style={[styles.activeIndicator, customStyles]} />}
 									</>
 								) : variant === 'button' ? (
 									<View style={[styles.activeTabText, selectedTab === tab ? styles.activeBg : null]}>
-										<Text style={[styles.tabText, selectedTab === tab ? styles.activeBtnText : null]}>{tab}</Text>
+										<CustomText style={[styles.tabText, selectedTab === tab ? styles.activeBtnText : null]}>{tab}</CustomText>
 									</View>
 								) : (
 									// Fallback: No variant provided
-									<Text style={styles.tabText}>{tab}</Text>
+									<CustomText style={styles.tabText}>{tab}</CustomText>
 								)}
 							</CustomTouchableOpacity>
 						))}
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	tabButton: {
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	tabText: {
 		fontSize: 16,

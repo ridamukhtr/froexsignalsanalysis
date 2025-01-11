@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import Search from 'react-native-vector-icons/Ionicons';
+import Notification from 'react-native-vector-icons/MaterialCommunityIcons';
 import Check from 'react-native-vector-icons/Ionicons';
 // @import screens
 import StockScreen from './StockScreen';
@@ -13,7 +15,6 @@ import CryptoCurrencyScreen from './CryptoCurrencyScreen';
 import { Loader } from '../components/loader/Loader';
 import HorizontalView from '../components/views/HorizontalView';
 import CustomView from '../components/customComponents/CustomView';
-import CustomSearchField from '../components/customComponents/CustomSearchField';
 import CustomText from '../components/customComponents/CustomText';
 import CustomBottomSheet from '../components/customComponents/CustomBottomSheet';
 import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
@@ -77,9 +78,22 @@ const HomeScreen = () => {
 		setBottomSheetVisible(false);
 	};
 
+	const RightView = () => {
+		return (
+			<View style={globalStyles.gapContainer} >
+				<CustomTouchableOpacity >
+					<Notification name="bell-outline" size={20} color={textColor} />
+				</CustomTouchableOpacity>
+				<CustomTouchableOpacity >
+					<Search name="search" color={textColor} size={20} />
+				</CustomTouchableOpacity>
+			</View>
+		);
+	};
+
 	return (
 		<>
-			<CustomView right={<CustomSearchField />}>
+			<CustomView right={<RightView />} >
 				{isApiLoading ? (
 					<Loader />
 				) : (

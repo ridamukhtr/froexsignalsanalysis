@@ -24,7 +24,7 @@ const CustomDropdown = ({ item, onPress, activeTheme }) => {
 	return (
 		<View>
 			<CustomTouchableOpacity style={styles.menuButton} onPress={toggleModal}>
-				<DotsVerticalIcon name={'dots-three-vertical'} size={20} color={textColor} />
+				<DotsVerticalIcon name={'dots-three-vertical'} size={20} color={textColor} style={{ marginRight: -5 }} />
 			</CustomTouchableOpacity>
 
 			<Modal visible={modalVisible} transparent={true} animationType="fade" onBackdropPress={toggleModal} onBackButtonPress={toggleModal}>
@@ -48,8 +48,7 @@ const CustomDropdown = ({ item, onPress, activeTheme }) => {
 const styles = StyleSheet.create({
 	modalOverlay: {
 		position: 'absolute',
-		top: '25%',
-		left: 60,
+		top: '10%',
 		alignSelf: 'flex-end',
 		alignItems: 'flex-end'
 	},

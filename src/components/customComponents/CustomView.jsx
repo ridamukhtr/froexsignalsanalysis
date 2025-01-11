@@ -3,30 +3,29 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import Ioniicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { Image, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 // @import modules
 import CustomText from './CustomText';
 import CustomScrollView from './CustomScrollView';
 import CustomTouchableOpacity from './CustomTouchableOpacity';
 // @import styles
 import { IS_IOS } from '../../styles/theme-styles';
+import globalStyles from '../../styles/global-styles';
 // @import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 import useNavigationManager from '../../lib/customHooks/useNavigationManager';
+import CustomSearchField from './CustomSearchField';
 
 const CustomView = ({
 	children,
 	style,
-	showDrawer,
-	contentContainerStyle,
-	scrollViewRef,
-	showsHorizontalScrollIndicator,
 	title = false,
-	showsVerticalScrollIndicator,
 	showBackIcon = false,
 	headerStyle,
 	onPressBackIcon,
-	right
+	right,
+	isSearchView = false,
+	search
 }) => {
 
 	const { bgColor, textColor, iconColor } = useThemeManager();
@@ -34,87 +33,38 @@ const CustomView = ({
 
 	return (
 		<SafeAreaView style={styles.safeArea(bgColor)}>
-			{showDrawer ? (
-				<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
-					<CustomScrollView
-						scrollViewRef={scrollViewRef}
-						style={[styles.container, style, { backgroundColor: bgColor }]}
-						contentContainerStyle={contentContainerStyle}
-						showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
-						showsVerticalScrollIndicator={showsVerticalScrollIndicator}
-					>
-						{showBackIcon ? (
-							<View style={[styles.headerContainer, headerStyle]}>
-								<CustomTouchableOpacity onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
-									<Icon name={'chevron-left'} size={20} color={textColor} />
-								</CustomTouchableOpacity>
-								<View style={{ paddingLeft: 20 }}>
-									<CustomText style={styles.titleContainer(textColor)}>{title}</CustomText>
-								</View>
-								{right}
-							</View>
-						) : (
-							<View style={[styles.headerContainer, headerStyle]}>
-								<CustomTouchableOpacity onPress={fnOpenDrawer} >
-									<Ioniicons name={'menu'} size={30} />
-								</CustomTouchableOpacity>
-								{right}
-								{isSearchVisible ? (
-									<View style={globalStyles.searchContainer}>
-										<TextInput
-											style={globalStyles.searchInput}
-											placeholder="Search..."
-											value={searchText}
-											onChangeText={handleSearchTextChange}
-											autoFocus
-										/>
-										<TouchableOpacity style={{ padding: 5, }} activeOpacity={0.7} onPress={handleClearSearch}>
-											<Icon name={"cross"} size={20} color={COLORS.WHITE} style={styles.searchIconInside} />
-										</TouchableOpacity>
-									</View>
-								) : (
-									<CustomText style={styles.titleContainer}>{title}</CustomText>
-								)}
-
-								{!isSearchVisible && (
-									<TouchableOpacity onPress={() => setIsSearchVisible(true)}>
-										<SearchIcon />
-									</TouchableOpacity>
-								)}
-
-							</View>
-
-						)}
-						{children}
-					</CustomScrollView>
-				</KeyboardAvoidingView>
-			) : (
-				<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'}>
-					<View style={[styles.container, style, { backgroundColor: bgColor }]}>
-						{showBackIcon ? (
-							<View style={[styles.headerContainer, headerStyle]}>
-								<CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
-									<Icon name={'chevron-left'} size={20} color={textColor} />
-								</CustomTouchableOpacity>
-								<View style={{ flex: 1, paddingLeft: 20 }}>
-									<CustomText style={styles.titleContainer(textColor)}>{title}</CustomText>
-								</View>
-
-								{right}
-							</View>
-						) : (
-							<View style={[styles.headerContainer, headerStyle]}>
-								<CustomTouchableOpacity onPress={fnOpenDrawer} >
-									<Ioniicons name={'menu'} size={30} color={iconColor} style={{ marginLeft: -3 }} />
-								</CustomTouchableOpacity>
-								{right}
-							</View>
-						)}
+			<KeyboardAvoidingView style={{ flex: 1 }} behavior={IS_IOS ? 'padding' : 'height'} >
+				{isSearchView ? (
+					<View style={[styles.container, style]}>
+						<View style={[styles.headerContainer, headerStyle]}>
+							<CustomSearchField />
+						</View>
 						{children}
 					</View>
-				</KeyboardAvoidingView>
-			)
-			}
+				) : (<View style={[styles.container, style]}>
+					{showBackIcon ? (
+						<View style={[styles.headerContainer, headerStyle]}>
+							<CustomTouchableOpacity highlight={true} onPress={onPressBackIcon ? onPressBackIcon : fnNavigateGoBack}>
+								<Icon name={'chevron-left'} size={20} color={textColor} />
+							</CustomTouchableOpacity>
+							<View style={{ flex: 1, paddingLeft: 20 }}>
+								<CustomText style={styles.titleContainer(textColor)}>{title}</CustomText>
+							</View>
+
+							{right}
+						</View>
+					) : (
+						<View style={[styles.headerContainer, headerStyle,]}>
+							<View style={{ flexDirection: "row", alignItems: "center", gap: 12, flex: 1 }} >
+								<Image source={require('../../../assets/images/logo.jpg')} style={{ height: 30, width: 30, borderRadius: 25, }} />
+								<CustomText style={globalStyles.titleText}>ForaxAnalysis</CustomText>
+							</View>
+							<CustomText >{right}</CustomText>
+						</View>
+					)}
+					{children}
+				</View>)}
+			</KeyboardAvoidingView>
 		</SafeAreaView >
 	);
 };
