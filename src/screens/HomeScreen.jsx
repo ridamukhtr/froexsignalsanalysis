@@ -42,6 +42,7 @@ const HomeScreen = () => {
 	const [activeSort, setActiveSort] = useState('price');
 	const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
 	const [bottomSheetType, setBottomSheetType] = useState('time');
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const { textColor, bgColor, dropdownColor, borderColor } = useThemeManager();
 	const { activeTab: activeScreen, fnActiveTab: setActiveScreen } = useActiveTab('Stocks');
@@ -63,6 +64,10 @@ const HomeScreen = () => {
 		isRefreshing: isFetching,
 	};
 
+	const handleSearch = (query) => {
+		setSearchQuery(query);
+	};
+
 	const handleBottomSheetType = (type) => {
 		setBottomSheetType(type);
 		setBottomSheetVisible(true);
@@ -78,22 +83,9 @@ const HomeScreen = () => {
 		setBottomSheetVisible(false);
 	};
 
-	const RightView = () => {
-		return (
-			<View style={globalStyles.gapContainer} >
-				<CustomTouchableOpacity >
-					<Notification name="bell-outline" size={20} color={textColor} />
-				</CustomTouchableOpacity>
-				<CustomTouchableOpacity >
-					<Search name="search" color={textColor} size={20} />
-				</CustomTouchableOpacity>
-			</View>
-		);
-	};
-
 	return (
 		<>
-			<CustomView right={<RightView />} >
+			<CustomView onSearch={handleSearch} >
 				{isApiLoading ? (
 					<Loader />
 				) : (
@@ -127,15 +119,14 @@ const HomeScreen = () => {
 							</CustomTouchableOpacity>
 						</View>
 
-
-						{activeScreen === 'Stocks' && <StockScreen data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Crypto Currency' && <CryptoCurrencyScreen data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Forex' && <ForexScreen data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Commodities' && <ComoditiesScreen data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Indices' && <IndicesScreen data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
+						{activeScreen === 'Stocks' && <StockScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
+						{activeScreen === 'Crypto Currency' && <CryptoCurrencyScreen searchQuery={searchQuery} data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
+						{activeScreen === 'Forex' && <ForexScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
+						{activeScreen === 'Commodities' && <ComoditiesScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
+						{activeScreen === 'Indices' && <IndicesScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
 					</>
 				)}
-			</CustomView>
+			</CustomView >
 
 			{isBottomSheetVisible && (
 				<CustomBottomSheet
@@ -178,7 +169,8 @@ const HomeScreen = () => {
 							))}
 					</View>
 				</CustomBottomSheet>
-			)}
+			)
+			}
 		</>
 	);
 };

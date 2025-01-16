@@ -9,24 +9,11 @@ import globalStyles from '../../styles/global-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
 
-const ViewIndicesRating = ({ price, summaryChange, summaryChangeP, update_time }) => {
-	const now = moment();
-	const timeZone = moment.tz.guess();
-	const currentTime = now.format('h:mm A');
-	const currentDate = now.format('MM/DD/YYYY');
-	const country = moment.tz(timeZone).format('z');
+const ViewIndicesRating = ({ price, summaryChange, summaryChangeP, update_time, ago }) => {
 
-	const getTimeDifference = updateTime => {
-		if (updateTime) {
-			const cleanedTime = updateTime.replace(/\s\([A-Za-z]*\)$/, '');
-
-			const updateMoment = moment(cleanedTime, 'YYYY-MM-DD hh:mm A');
-			return updateMoment.fromNow();
-		}
-		return 'No update time available';
-	};
-
-	const timeDifference = getTimeDifference(update_time);
+	const localTime = moment(update_time, 'YYYY-MM-DD').local().format('YYYY-MM-DD hh:mm A');
+	const timezone = moment.tz.guess();
+	const timezoneAbbr = moment.tz(timezone).zoneAbbr();
 
 	const getMaSummaryColor = summaryChange => {
 		const numericValue = parseFloat(summaryChange);
@@ -48,39 +35,9 @@ const ViewIndicesRating = ({ price, summaryChange, summaryChangeP, update_time }
 					{maSummaryColor === COLORS.GREEN && <Arrow name="sort-up" size={15} color={COLORS.GREEN} style={{}} />}
 				</View>
 			</View>
-			<CustomText style={{ fontSize: 12, lineHeight: 12, }}>{timeDifference}</CustomText>
+			<CustomText style={{ fontSize: 12, lineHeight: 12, }}>{localTime} {timezoneAbbr}</CustomText>
+			<CustomText style={{ fontSize: 12, lineHeight: 12, }}>{ago}</CustomText>
 		</View>
-		// <View style={{}}>
-		// 	<View style={styles.colorContainer}>
-		// 		<CustomText style={styles.titleText}>{`$ ${price}`}</CustomText>
-		// 		<View style={{ flexDirection: 'row', marginRight: 10 }}>
-		// 			{maSummaryColor === COLORS.RED && <Arrow name="sort-down" size={15} color={COLORS.RED} style={{ marginTop: -3 }} />}
-		// 			{maSummaryColor === COLORS.GREEN && <Arrow name="sort-up" size={15} color={COLORS.GREEN} style={{ marginBottom: -5 }} />}
-
-		//  <View style={{ flexDirection: 'row', }}> 
-		// 	<CustomText style={[globalStyles.titleText, { color: maSummaryColor, }]}>{summaryChange}{`(${summaryChangeP}%)`}</CustomText>
-		// </View>
-		//  <CustomText style={[globalStyles.titleText, { color: maSummaryColor }]}>{`(${summaryChangeP}%)`} </CustomText> 
-		//  </View> 
-
-		// </View>
-		// <CustomText style={{ fontSize: 12, lineHeight: 12, }}>{timeDifference}</CustomText>
-		//  <View> 
-		// {/* <View style={styles.boxContent}>
-		// 				<CustomText style={[globalStyles.titleText, { fontSize: 14, }]}>{'Update Time :'}</CustomText>
-		// 				<View>
-		// 					<CustomText style={{ fontSize: 12, }}>{timeDifference}</CustomText>
-		// 					<CustomText style={{ fontSize: 12, color: COLORS.WHITE }}>{update_time}</CustomText>
-		// 				</View>
-		// 			</View> */}
-		// {/* <View style={styles.boxContent}>
-		// 				<CustomText style={[globalStyles.titleText, { fontSize: 14, color: COLORS.WHITE }]}>{'Current Time :'}</CustomText>
-		// 				<CustomText style={{ fontSize: 12, color: COLORS.WHITE }}>
-		// 					{currentDate} {currentTime} {country}
-		// 				</CustomText>
-		// 			</View> */}
-		// {/* </View> */ }
-		// </View>
 	);
 };
 

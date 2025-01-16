@@ -18,6 +18,7 @@ export function useThemeManager() {
 	const iconColor = isDarkTheme ? COLORS.DARK_ICON : COLORS.LIGHT_ICON;
 	const footerColor = isDarkTheme ? COLORS.DARK_FOOTER_BG : COLORS.WHITE;
 	const tabColor = isDarkTheme ? COLORS.DARK_FOOTER_BG : COLORS.PRIMARY;
+	const logoColor = isDarkTheme ? COLORS.BLACK : COLORS.SECONDARY;
 
 	const fnToggleTheme = () => {
 		const newTheme = isDarkTheme ? "light" : "dark";
@@ -35,6 +36,7 @@ export function useThemeManager() {
 		footerColor,
 		tabColor,
 		isDarkTheme,
+		logoColor,
 
 		fnToggleTheme,
 	};

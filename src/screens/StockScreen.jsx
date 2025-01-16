@@ -6,15 +6,17 @@ import ViewScreens from '../components/views/ViewScreens';
 // Import hook
 import useInnerScreens from '../lib/customHooks/useInnerScreens';
 
-const StockScreen = ({ data, refreshControlProps, activeSort }) => {
+const StockScreen = ({ data, refreshControlProps, activeSort, searchQuery }) => {
 
-	const { handlePressItem, transformAndSortData } = useInnerScreens();
+	const { handlePressItem, transformAndSortData, filterData } = useInnerScreens();
 
 	const transformedData = data?.stock ? transformAndSortData(data?.stock, activeSort) : [];
 
+	const filteredData = filterData(transformedData, searchQuery);
+
 	return (
 		<ViewScreens
-			data={transformedData}
+			data={filteredData}
 			onPressItem={handlePressItem}
 			refreshControlProps={refreshControlProps}
 		/>

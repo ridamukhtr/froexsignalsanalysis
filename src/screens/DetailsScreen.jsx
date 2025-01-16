@@ -16,8 +16,6 @@ import CustomText from '../components/customComponents/CustomText';
 import MovingAverageView from '../components/views/MovingAverageView';
 import AdvanceReport from '../components/views/AdvanceReport';
 import { Loader } from '../components/loader/Loader';
-//  import route
-import { ROUTES } from '../routes/RouteConstants';
 // import styles
 import { COLORS } from '../styles/theme-styles';
 // import assets
@@ -26,6 +24,8 @@ import time_map from '../../assets/time_map';
 import useDetailsScreen from '../lib/customHooks/useDetailData';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
 import { useFavManager } from '../lib/customHooks/useFavManager';
+import SignalSummery from '../components/views/SignalSummery';
+import globalStyles from '../styles/global-styles';
 
 const DetailsScreen = ({ itemId }) => {
 
@@ -38,7 +38,7 @@ const DetailsScreen = ({ itemId }) => {
 
 	const { bgColor, textColor } = useThemeManager();
 	const { favorites, fnShare, toggleFavorite } = useFavManager();
-	const { detailData, refreshing, activeFromTime, advanceReportData, isSummaryLoading, onRefresh, }
+	const { update, ago, allSignals, detailData, refreshing, activeFromTime, advanceReportData, isSummaryLoading, onRefresh, }
 		= useDetailsScreen(item, selectedTime);
 
 	const onTabChange = (newTab) => {
@@ -66,6 +66,8 @@ const DetailsScreen = ({ itemId }) => {
 		);
 	};
 
+	const firstSignalUpdateTime = allSignals?.find(signal => signal?.ago !== "1 hour");
+
 	return (
 		<CustomView showBackIcon title={item?.symbol} right={<RightView />}>
 			{!detailData && !advanceReportData ? (
@@ -86,8 +88,57 @@ const DetailsScreen = ({ itemId }) => {
 						price={item?.price}
 						summaryChange={item?.summaryChange}
 						summaryChangeP={item?.summaryChangeP}
-						update_time={activeFromTime}
+						update_time={update}
+						ago={ago}
 					/>
+
+					<View style={{ marginVertical: 15 }}>
+						<CustomText
+							style={[
+								globalStyles.titleText,
+								{ fontSize: 16, paddingBottom: 10 }
+							]}
+						>
+							{'Signal Summary'}
+						</CustomText>
+
+						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between", }}>
+							<View style={{ width: "33.3%", }}>
+
+								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
+									{'Time Frame'}
+								</CustomText>
+							</View>
+							<View style={{ width: "33.3%", }}>
+								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
+									{"Signal"}
+								</CustomText>
+							</View>
+							<View style={{ width: "33.3%", }}>
+								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
+									{"Update"}
+								</CustomText>
+							</View>
+						</View>
+						{allSignals?.map((signal, index) => (
+							<SignalSummery
+								key={index}
+								symbol={signal?.symbol}
+								maSummary={signal?.ma_summery}
+								ago={signal?.ago}
+								ma_summery={signal?.ma_summery}
+								activeTime={signal?.activeTime}
+								time={signal?.mappedTime}
+							/>
+						))}
+						{firstSignalUpdateTime && (
+							<View style={{ marginTop: 15, backgroundColor: COLORS.LIGHT_RED, borderRadius: 5, padding: 7 }}>
+								<CustomText style={{ color: "#A6686E" }}>
+									(From {firstSignalUpdateTime.ago}) means: Market in same direction from {firstSignalUpdateTime.ago}. When new sell signal generated
+								</CustomText>
+							</View>
+						)}
+					</View>
 
 					<AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} isLoading={isSummaryLoading} />
 

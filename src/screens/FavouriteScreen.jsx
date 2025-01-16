@@ -8,18 +8,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import components
 import CustomView from '../components/customComponents/CustomView';
 import ViewScreens from '../components/views/ViewScreens';
-import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
 // import hook
 import useInnerScreens from '../lib/customHooks/useInnerScreens';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
-import globalStyles from '../styles/global-styles';
 
 const FavouriteScreen = () => {
     const [data, setData] = useState([]);
     const [refreshTrigger, setRefreshTrigger] = useState(0);
-    const { handlePressItem } = useInnerScreens();
-    const { textColor } = useThemeManager();
+    const [searchQuery, setSearchQuery] = useState('');
 
+    const { handlePressItem, filterData } = useInnerScreens();
+    const { textColor } = useThemeManager();
+    const filteredData = filterData(data, searchQuery);
     useFocusEffect(
         useCallback(() => {
             const loadFavorites = async () => {
@@ -40,28 +40,19 @@ const FavouriteScreen = () => {
         setRefreshTrigger((prev) => prev + 1);
     };
 
-    const RightView = () => {
-        return (
-            <View style={globalStyles.gapContainer} >
-                <CustomTouchableOpacity >
-                    <Notification name="bell-outline" size={20} color={textColor} />
-                </CustomTouchableOpacity>
-                <CustomTouchableOpacity >
-                    <Search name="search" color={textColor} size={20} />
-                </CustomTouchableOpacity>
-            </View>
-        );
+    const handleSearch = (query) => {
+        setSearchQuery(query);
     };
 
     return (
-        <CustomView right={<RightView />}>
+        <CustomView onSearch={handleSearch} >
             <ViewScreens
-                data={data}
+                data={filteredData}
                 onPressItem={handlePressItem}
                 isFavoriteScreen={true}
                 refreshControlProps={{ onRefresh: refreshFavorites }}
             />
-        </CustomView>
+        </CustomView >
     );
 };
 

@@ -64,7 +64,15 @@ const useInnerScreens = () => {
     };
   }
 
-  return { handlePressItem, transformAndSortData };
+  const filterData = (data, searchQuery) => {
+    if (!searchQuery) return data;
+
+    return data.filter(item =>
+      item?.symbol?.toLowerCase()?.includes(searchQuery?.toLowerCase())
+    );
+  };
+
+  return { handlePressItem, transformAndSortData, filterData };
 };
 
 export default useInnerScreens;

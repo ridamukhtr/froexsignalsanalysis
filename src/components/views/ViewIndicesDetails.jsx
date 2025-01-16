@@ -9,6 +9,15 @@ import globalStyles from '../../styles/global-styles';
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 const PivotTableView = ({ pivotData }) => {
+
+    if (!pivotData || Object?.keys(pivotData)?.length === 0) {
+        return (
+            <View style={{ paddingHorizontal: 20 }}>
+                <CustomText>No Pivot Data Available</CustomText>
+            </View>
+        );
+    }
+
     const { textColor, borderColor } = useThemeManager();
 
     const desiredOrder = ['r1', 'r2', 'r3', 'pp', 's3', 's2', 's1'];
@@ -21,14 +30,6 @@ const PivotTableView = ({ pivotData }) => {
     const rowHeaders = desiredOrder
         .filter((key, index) => Object?.values(pivotData)?.filter(category => findKeyInCategory(category, key) !== undefined)?.length > 0)
         ?.map((key, index) => displayOrder[index]);
-
-    if (!pivotData || Object?.keys(pivotData)?.length === 0) {
-        return (
-            <View style={{ paddingHorizontal: 20 }}>
-                <CustomText>No Pivot Data Available</CustomText>
-            </View>
-        );
-    }
 
     return (
         <View style={[globalStyles.boxContainer, { borderColor: borderColor, }]}>

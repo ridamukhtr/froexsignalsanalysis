@@ -13,6 +13,7 @@ export default function useNavigationManager() {
 	const fnNavigateToCrypto = () => navigation.navigate(ROUTES.screenCrypto);
 	const fnNavigateToForex = () => navigation.navigate(ROUTES.screenForex);
 	const fnNavigateToHelp = () => navigation.navigate(ROUTES.screenHelp);
+	const fnNavigateToPrivacy = () => navigation.navigate(ROUTES.screenPrivacy);
 	const fnNavigateToCommodities = () => navigation.navigate(ROUTES.screenCommodities);
 	const fnNavigateToDetails = () => navigation.navigate(ROUTES.screenDetails);
 
@@ -33,6 +34,7 @@ export default function useNavigationManager() {
 		fnNavigateToHome,
 		fnNavigateToIndices,
 		fnNavigateToDetails,
+		fnNavigateToPrivacy,
 
 		fnNavigateToRoot,
 		fnOpenDrawer,

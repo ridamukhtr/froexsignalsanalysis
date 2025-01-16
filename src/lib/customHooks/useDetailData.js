@@ -12,6 +12,8 @@ const useDetailsScreen = (item, selectedTime) => {
 
     const [error, setError] = useState(null);
     const [timeData, setTimeData] = useState([]);
+    const [update, setUpdate] = useState([]);
+    const [ago, setAgo] = useState([]);
     const [allSignals, setAllSignals] = useState([]);
     const [detailData, setDetailData] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
@@ -45,7 +47,9 @@ const useDetailsScreen = (item, selectedTime) => {
                 `https://massyart.com/ringsignal/inv/api_data?id=${item?.page_id}`
             );
             const data = await response.json();
-
+            const { update, ago } = data?.info || {};
+            setUpdate(update || 'N/A');
+            setAgo(ago || 'N/A');
             if (data?.all?.length > 0) {
                 const userCountry = await getUserCountry();
                 const processedSignals = data?.all?.map((signal) => {
@@ -58,13 +62,24 @@ const useDetailsScreen = (item, selectedTime) => {
                         ? moment?.tz(rawTime, moment?.tz?.guess())?.format('YYYY-MM-DD hh:mm A z')
                         : 'N/A';
 
-                    const mappedTime = time_map[signal?.time] || `${signal?.time} seconds`;
+                    const fullTime = {
+                        300: '5 minutes',
+                        900: '15 minutes',
+                        1800: '30 minutes',
+                        3600: '1 Hour',
+                        14400: '4 Hours',
+                        18000: '5 Hours',
+                        86400: '1 Day',
+                        604800: '1 Week',
+                    };
+                    const mappedTime = fullTime[signal?.time] || `${signal?.time} seconds`;
 
                     return {
                         ...signal,
                         activeTime: formattedTime,
                         userCountry,
                         mappedTime,
+                        ago: signal?.ago || 'N/A',
                     };
                 });
 
@@ -146,7 +161,7 @@ const useDetailsScreen = (item, selectedTime) => {
     };
 
     const activeFromTime = detailData?.update_time
-        ? moment(detailData?.update_time)?.format('YYYY-MM-DD hh:mm A z')
+        ? moment(detailData?.update_time)?.format('DD-MM-YYYY hh:mm A z')
         : null;
 
     return {
@@ -158,6 +173,9 @@ const useDetailsScreen = (item, selectedTime) => {
         refreshing,
         isSummaryLoading,
         activeFromTime,
+        update,
+        ago,
+        getUserCountry,
         onRefresh,
     };
 };

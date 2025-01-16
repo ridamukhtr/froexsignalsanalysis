@@ -12,30 +12,33 @@ import { COLORS } from '../../styles/theme-styles';
 // import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
-const CustomDropdown = ({ item, onPress, activeTheme }) => {
-	const [modalVisible, setModalVisible] = useState(false);
+const CustomDropdown = ({ item, onPress }) => {
 
-	const { textColor, bgColor } = useThemeManager();
+	const [modalVisible, setModalVisible] = useState(false);
+	const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
 	const toggleModal = () => {
 		setModalVisible(!modalVisible);
 	};
 
 	return (
-		<View>
+		<View style={styles.container}>
 			<CustomTouchableOpacity style={styles.menuButton} onPress={toggleModal}>
-				<DotsVerticalIcon name={'dots-three-vertical'} size={20} color={textColor} style={{ marginRight: -5 }} />
+				<DotsVerticalIcon />
 			</CustomTouchableOpacity>
 
-			<Modal visible={modalVisible} transparent={true} animationType="fade" onBackdropPress={toggleModal} onBackButtonPress={toggleModal}>
-				<CustomTouchableOpacity activeOpacity={1} style={styles.modalOverlay}>
-					<View style={[styles.dropdown(bgColor)]}>
-						{item?.map((themeItem, index) => (
-							<CustomTouchableOpacity key={index} style={[styles.menuItemContainer]} onPress={() => onPress(themeItem.label)}>
-								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-									<CustomText style={styles.menuItemText}>{themeItem?.label}</CustomText>
-									{activeTheme === themeItem?.label && <Check name={'check'} size={20} color={COLORS.GREEN} />}
-								</View>
+			<Modal
+				visible={modalVisible}
+				transparent={true}
+				animationType="fade"
+				onBackdropPress={toggleModal}
+				onBackButtonPress={toggleModal}
+			>
+				<CustomTouchableOpacity activeOpacity={1} style={styles.modalOverlay} >
+					<View style={styles.dropdown}>
+						{item?.map((item, index) => (
+							<CustomTouchableOpacity key={index} style={[styles.menuItemContainer, { backgroundColor: selectedItemIndex == index ? COLORS.DIM : COLORS.WHITE }]} onPress={onPress} >
+								<DZText style={styles.menuItemText}>{item?.label}</DZText>
 							</CustomTouchableOpacity>
 						))}
 					</View>
@@ -50,30 +53,30 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		top: '10%',
 		alignSelf: 'flex-end',
-		alignItems: 'flex-end'
+		alignItems: 'flex-end',
 	},
-	dropdown: (textColor, bgColor) => ({
+	dropdown: {
 		width: 200,
-		backgroundColor: COLORS.MED_GRAY,
-		borderRadius: 8,
+		backgroundColor: COLORS.WHITE,
+		borderRadius: 20,
 		padding: 10,
 		gap: 5,
-		borderColor: COLORS.DIM_GRAY,
+		borderColor: COLORS.DIM,
 		borderWidth: 1,
 		elevation: 5,
 		shadowOffset: { width: 0, height: 0 },
 		shadowOpacity: 0.1,
-		shadowRadius: 2
-	}),
+		shadowRadius: 2,
+	},
 	menuItemContainer: {
 		paddingVertical: 10,
 		borderRadius: 15,
-		padding: 15
+		padding: 15,
 	},
 	menuItemText: {
 		fontSize: 16,
-		color: COLORS.NAV_BLUE
-	}
+		color: COLORS.GREY_TEXT,
+	},
 });
 
 export default CustomDropdown;

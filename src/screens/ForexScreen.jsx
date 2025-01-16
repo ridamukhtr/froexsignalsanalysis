@@ -6,13 +6,15 @@ import ViewScreens from '../components/views/ViewScreens';
 // import hook
 import useInnerScreens from '../lib/customHooks/useInnerScreens';
 
-const ForexScreen = ({ data, refreshControlProps, activeSort }) => {
+const ForexScreen = ({ data, refreshControlProps, activeSort, searchQuery }) => {
 
-	const { handlePressItem, transformAndSortData } = useInnerScreens();
+	const { handlePressItem, transformAndSortData, filterData } = useInnerScreens();
 
 	const transformedData = data?.forex ? transformAndSortData(data?.forex, activeSort) : [];
 
-	return <ViewScreens data={transformedData} onPressItem={handlePressItem} refreshControlProps={refreshControlProps} />;
+	const filteredData = filterData(transformedData, searchQuery);
+
+	return <ViewScreens data={filteredData} onPressItem={handlePressItem} refreshControlProps={refreshControlProps} />;
 };
 
 export default ForexScreen;

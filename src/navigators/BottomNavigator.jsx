@@ -20,6 +20,8 @@ import { COLORS } from '../styles/theme-styles';
 import { ROUTES } from '../routes/RouteConstants';
 // import hooks
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
+import HelpScreen from '../screens/HelpScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -158,6 +160,68 @@ const FavouriteStack = () => {
 		</Stack.Navigator>
 	);
 };
+const MoreStack = () => {
+	const { footerColor } = useThemeManager();
+	const navigation = useNavigation();
+
+	// Update parent tab bar style when theme changes
+	useEffect(() => {
+		navigation.getParent()?.setOptions({
+			tabBarStyle: getTabBarStyle(footerColor)
+		});
+	}, [footerColor, navigation]);
+
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name={ROUTES.screenMore}
+				component={MoreScreen}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenHelp}
+				component={HelpScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: getTabBarStyle(footerColor)
+						});
+					}
+				})}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenPrivacy}
+				component={PrivacyPolicyScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: getTabBarStyle(footerColor)
+						});
+					}
+				})}
+			/>
+
+		</Stack.Navigator>
+	);
+};
 
 const BottomNavigator = () => {
 	const navigation = useNavigation();
@@ -178,16 +242,13 @@ const BottomNavigator = () => {
 						case ROUTES.bottomTabs:
 							iconName = 'signal-cellular-outline';
 							break;
-						case ROUTES.screenCalender:
-							iconName = 'calendar-month-outline';
-							break;
+						// case ROUTES.screenCalender:
+						// 	iconName = 'calendar-month-outline';
+						// 	break;
 						case ROUTES.screenFavourite:
 							iconName = 'star-outline';
 							break;
-						case ROUTES.screenSearch:
-							iconName = 'magnify';
-							break;
-						case ROUTES.screenMore:
+						case ROUTES.moreStack:
 							iconName = 'cog-outline';
 							break;
 					}
@@ -210,13 +271,10 @@ const BottomNavigator = () => {
 						case ROUTES.screenFavourite:
 							labelText = 'Favourites';
 							break;
-						case ROUTES.screenCalender:
-							labelText = 'Calendar';
-							break;
-						case ROUTES.screenSearch:
-							labelText = 'Search';
-							break;
-						case ROUTES.screenMore:
+						// case ROUTES.screenCalender:
+						// 	labelText = 'Calendar';
+						// 	break;
+						case ROUTES.moreStack:
 							labelText = 'Setting';
 							break;
 					}
@@ -268,22 +326,16 @@ const BottomNavigator = () => {
 				component={FavouriteStack}
 				options={{ headerShown: false }}
 			/>
-
-			<Tab.Screen
-				name={ROUTES.screenSearch}
-				component={SeacrhScreen}
-				options={{ headerShown: false }}
-			/>
-
+			{/* 
 			<Tab.Screen
 				name={ROUTES.screenCalender}
 				component={HistoryScreen}
 				options={{ headerShown: false, }}
-			/>
+			/> */}
 
 			<Tab.Screen
-				name={ROUTES.screenMore}
-				component={MoreScreen}
+				name={ROUTES.moreStack}
+				component={MoreStack}
 				options={{ headerShown: false, tabBarHideOnKeyboard: true }}
 			/>
 		</Tab.Navigator>

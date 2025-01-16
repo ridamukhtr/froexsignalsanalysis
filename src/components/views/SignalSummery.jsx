@@ -1,37 +1,38 @@
 // import packages
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Arrow from 'react-native-vector-icons/Entypo';
-import Icon from 'react-native-vector-icons/Fontisto';
-// import styling
-import { COLORS } from '../../styles/theme-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
 // import hooks
 import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
+// import styling
+import globalStyles from '../../styles/global-styles';
 
-const SignalSummery = ({ maSummary, time, ago, activeTime, ma_summery }) => {
+const SignalSummery = ({ maSummary, time, ago, ma_summery, }) => {
+
+	const { borderColor } = useThemeManager();
 	const { getMaSummaryColor } = useCommonFunctions();
 
 	const maSummaryColor = getMaSummaryColor(ma_summery);
 
 	return (
-		<View style={styles.container}>
-			<View style={{ width: '18%' }}>
-				<CustomText>{time}</CustomText>
-			</View>
 
-			<View>
-				<View style={styles.content}>
-					{maSummaryColor === COLORS.RED && <Arrow name="arrow-down" size={20} color={COLORS.RED} />}
-					{maSummaryColor === COLORS.GREEN && <Arrow name="arrow-up" size={20} color={COLORS.GREEN} />}
-					{maSummaryColor === COLORS.BLUE && <Icon name="arrow-h" size={20} color={COLORS.BLUE} />}
-					<CustomText style={{ fontSize: 14 }}>{maSummary}</CustomText>
-					<CustomText style={{ fontSize: 14 }}>
-						{'(update'} {ago} {'ago)'}
-					</CustomText>
+		<View style={[styles.container, { borderColor: borderColor, }]}>
+			<View style={styles.content}>
+				<View style={{ width: "33.3%", }}>
+
+					<CustomText style={globalStyles.titleText}>{time}</CustomText>
 				</View>
-				<CustomText style={{ fontSize: 14 }}>{activeTime}</CustomText>
+				<View style={{ width: "33.3%", }}>
+
+					<CustomText style={{ fontSize: 14, color: maSummaryColor }}>{maSummary}</CustomText>
+				</View>
+				<View style={{ width: "33.3%", }}>
+
+					<CustomText style={{ fontSize: 14, textAlign: "left" }}>{ago || "no time"} {'ago'}</CustomText>
+				</View>
+
 			</View>
 		</View>
 	);
@@ -40,6 +41,6 @@ const SignalSummery = ({ maSummary, time, ago, activeTime, ma_summery }) => {
 export default SignalSummery;
 
 const styles = StyleSheet.create({
-	container: { flexDirection: 'row', alignItems: 'center', gap: 25, paddingVertical: 7, borderBottomWidth: 1, borderColor: COLORS.GREY },
-	content: { flexDirection: 'row', alignItems: 'center', gap: 5 }
+	container: { paddingVertical: 7, borderBottomWidth: 1, },
+	content: { flexDirection: 'row', alignItems: 'center', }
 });
