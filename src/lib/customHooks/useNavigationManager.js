@@ -19,9 +19,6 @@ export default function useNavigationManager() {
 
 	const fnNavigateToRoot = () => navigation.navigate('Root');
 
-	const fnOpenDrawer = () => navigation.openDrawer();
-	const fnCloseDrawer = () => navigation.closeDrawer();
-
 	const fnNavigateGoBack = () => navigation.goBack();
 
 	return {
@@ -37,8 +34,6 @@ export default function useNavigationManager() {
 		fnNavigateToPrivacy,
 
 		fnNavigateToRoot,
-		fnOpenDrawer,
-		fnCloseDrawer,
 		fnNavigateGoBack
 	};
 }

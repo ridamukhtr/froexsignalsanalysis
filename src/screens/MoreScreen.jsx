@@ -1,7 +1,7 @@
 // import packages
 import { useDispatch } from 'react-redux';
 import { Switch } from 'react-native-switch';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Linking, View, Platform, ScrollView } from 'react-native';
 // import components
@@ -18,6 +18,7 @@ import globalStyles from '../styles/global-styles';
 import { COLORS } from '../styles/theme-styles';
 import CustomDropdown from '../components/customComponents/CustomDropdown';
 import CustomModal from '../components/customComponents/CustomModal';
+import { LogLevel, OneSignal } from 'react-native-onesignal';
 
 const links = [
   { label: 'Follow us on Facebook', icon: 'facebook', appUrl: 'fb://page/MXinvesting', webUrl: 'https://www.facebook.com/MXinvesting/' },
@@ -75,6 +76,32 @@ const MoreScreen = () => {
     setIsModalVisible(true);
   };
 
+  useEffect(() => {
+    // Set up logging level for debugging
+    OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+
+    // Initialize OneSignal with your App ID
+    OneSignal.initialize("ae8020dd-afb4-49c2-9ec5-a8003e99b36a");
+
+    // Request notification permission
+    OneSignal.Notifications.requestPermission(true);
+
+    // Handle notification clicks
+    OneSignal.Notifications.addEventListener('click', (event) => {
+      console.log('OneSignal: notification clicked:', event);
+    });
+
+    // Clean up listeners when the component unmounts
+    return () => {
+      OneSignal.Notifications.removeEventListener('click');
+    };
+  }, []);
+
+  const handleNotificationButtonPress = () => {
+    console.log('Notifications button pressed');
+    // Add any additional logic if needed
+  };
+
 
   return (
     <CustomView centered={true}>
@@ -109,7 +136,7 @@ const MoreScreen = () => {
 
           </View>
           <View style={[styles.body(borderColor), { borderBottomWidth: 0 }]} >
-            <CustomTouchableOpacity  >
+            <CustomTouchableOpacity onPress={handleNotificationButtonPress} >
               <CustomText>{'Notifications'}</CustomText>
             </CustomTouchableOpacity>
           </View>

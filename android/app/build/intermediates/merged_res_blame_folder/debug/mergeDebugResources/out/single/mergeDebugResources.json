@@ -1,46 +1,126 @@
 [
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-hdpi\\ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-mdpi/ic_launcher.png"
+        "merged": "com.forex_signals_analysis.app-debug-63:/layout_launch_screen.xml.flat",
+        "source": "com.forex_signals_analysis.app-main-65:/layout/launch_screen.xml"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-hdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/drawable_rn_edit_text_material.xml.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/drawable/rn_edit_text_material.xml"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\layout_launch_screen.xml.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\layout\\launch_screen.xml"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.forex_signals_analysis.app-debug-63:/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "com.forex_signals_analysis.app-main-65:/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-mdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxxhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\drawable_launch_screen.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\drawable\\launch_screen.png"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\drawable_rn_edit_text_material.xml.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\drawable\\rn_edit_text_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-debug-63:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Pro\\.gradle\\daemon\\8.8\\com.forex_signals_analysis.app-main-65:\\mipmap-hdpi\\ic_launcher_round.png"
     }
 ]

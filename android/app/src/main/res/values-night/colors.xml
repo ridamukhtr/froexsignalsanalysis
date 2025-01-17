@@ -1,0 +1,5 @@
+<resources>
+    <color name="light_bg">#FCFDFF</color>
+    <color name="dark_bg">#0D1216</color>
+    <color name="splash_bg">@color/dark_bg</color> <!-- Map splash_bg to dark_bg -->
+</resources>

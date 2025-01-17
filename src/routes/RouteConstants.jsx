@@ -1,10 +1,8 @@
 export const ROUTES = {
 	root: 'root',
-	splashScreen: 'splashScreen',
 	bottomTabs: 'Home',
 	bottombar: 'bottom bar',
 	screenHome: 'Home Screen',
-	drawer: 'drawer',
 	screenSearch: 'Search',
 	screenMore: 'More',
 	moreStack: 'More Stack',

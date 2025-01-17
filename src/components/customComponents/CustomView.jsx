@@ -53,7 +53,7 @@ const CustomView = ({
 	};
 
 	const { bgColor, textColor, iconColor, dropdownColor, logoColor } = useThemeManager();
-	const { fnOpenDrawer, fnNavigateGoBack } = useNavigationManager();
+	const { fnNavigateGoBack } = useNavigationManager();
 
 	return (
 		<SafeAreaView style={styles.safeArea(bgColor)}>

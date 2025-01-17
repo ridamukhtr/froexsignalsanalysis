@@ -9,6 +9,10 @@
         android:targetSdkVersion="34" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!--
     This manifest file is used only by Gradle to configure debug-only capabilities
     for React Native Apps.
@@ -19,19 +23,7 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.forex_signals_analysis.permission.C2D_MESSAGE" /> <!-- Required runtime permission to display notifications on Android 13 -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required, makes sure notifications are delivered on time. -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- c2dm RECEIVE are basic requirements for push messages through Google's FCM -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <!--
- Required so the device vibrates on receiving a push notification.
-         Vibration settings of the device still apply.
-    -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!--
- Use to restore notifications the user hasn't interacted with.
-     They could be missed notifications if the user reboots their device if this isn't in place.
-    -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- START: ShortcutBadger -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- START: ShortcutBadger -->
     <!-- Samsung -->
     <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
     <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" /> <!-- HTC -->
@@ -72,7 +64,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true" >
         <activity
             android:name="com.forex_signals_analysis.MainActivity"

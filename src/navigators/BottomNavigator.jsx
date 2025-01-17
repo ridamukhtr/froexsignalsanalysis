@@ -13,15 +13,14 @@ import HistoryScreen from '../screens/HistoryScreen';
 import FavouriteScreen from '../screens/FavouriteScreen';
 import CustomText from '../components/customComponents/CustomText';
 import MoreScreen from '../screens/MoreScreen';
-import SeacrhScreen from '../screens/SeacrhScreen';
+import HelpScreen from '../screens/HelpScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 // import styling
 import { COLORS } from '../styles/theme-styles';
 // import route
 import { ROUTES } from '../routes/RouteConstants';
 // import hooks
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
-import HelpScreen from '../screens/HelpScreen';
-import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 
 
 const Tab = createBottomTabNavigator();
