@@ -4,7 +4,7 @@
             "outputFile": "com.forex_signals_analysis.app-mergeDebugResources-61:/values-es-rES/values-es-rES.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\6c6c90c9ee3c40a3bf28d1e9e741000e\\transformed\\react-android-0.75.2-debug\\res\\values-es-rES\\values-es-rES.xml",
+                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\2d8855400ff0451dc5b7dd36420b65cf\\transformed\\jetified-react-android-0.75.2-debug\\res\\values-es-rES\\values-es-rES.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

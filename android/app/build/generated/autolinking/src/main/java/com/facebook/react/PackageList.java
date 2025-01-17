@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 // @react-native-masked-view/masked-view
 import org.reactnative.maskedview.RNCMaskedViewPackage;
-// @shopify/react-native-skia
-import com.shopify.reactnative.skia.RNSkiaPackage;
 // lottie-react-native
 import com.airbnb.android.react.lottie.LottiePackage;
 // react-native-gesture-handler
@@ -34,6 +32,8 @@ import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 // react-native-share
 import cl.json.RNSharePackage;
+// react-native-splash-screen
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 // react-native-svg
 import com.horcrux.svg.SvgPackage;
 // react-native-vector-icons
@@ -85,7 +85,6 @@ public class PackageList {
       new MainReactPackage(mConfig),
       new AsyncStoragePackage(),
       new RNCMaskedViewPackage(),
-      new RNSkiaPackage(),
       new LottiePackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeOneSignalPackage(),
@@ -95,6 +94,7 @@ public class PackageList {
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new RNSharePackage(),
+      new SplashScreenReactPackage(),
       new SvgPackage(),
       new VectorIconsPackage()
     ));

@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\4bc46c7e16a16cdc2784dd97fa9308db\\transformed\\play-services-basement-18.4.0\\res\\values-en-rGB\\values.xml",
+                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\8d4c8e7f446dae08d6f96ce4c372125b\\transformed\\jetified-play-services-basement-18.4.0\\res\\values-en-rGB\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -55,23 +55,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\6c6c90c9ee3c40a3bf28d1e9e741000e\\transformed\\react-android-0.75.2-debug\\res\\values-en-rGB\\values-en-rGB.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,131,214,288,364,446,526,604,684,758",
-                        "endColumns": "75,82,73,75,81,79,77,79,73,73",
-                        "endOffsets": "126,209,283,359,441,521,599,679,753,827"
-                    },
-                    "to": {
-                        "startLines": "37,63,77,78,113,114,115,117,119,120",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "3303,6163,7189,7263,10027,10109,10189,10350,10531,10605",
-                        "endColumns": "75,82,73,75,81,79,77,79,73,73",
-                        "endOffsets": "3374,6241,7258,7334,10104,10184,10262,10425,10600,10674"
-                    }
-                },
-                {
                     "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\34c7b460be611557453f03ea9c392964\\transformed\\browser-1.3.0\\res\\values-en-rGB\\values-en-rGB.xml",
                     "from": {
                         "startLines": "2,3,4,5",
@@ -89,7 +72,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\8ab99372fe438f632316de0b6baf6b77\\transformed\\play-services-base-18.5.0\\res\\values-en-rGB\\values.xml",
+                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\d6e84fba3599018bb3a4340f9fe792e8\\transformed\\jetified-play-services-base-18.5.0\\res\\values-en-rGB\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -103,6 +86,23 @@
                         "startOffsets": "3379,3484,3636,3761,3868,4019,4142,4258,4499,4658,4763,4915,5040,5186,5334,5397,5459",
                         "endColumns": "104,151,124,106,150,122,115,102,158,104,151,124,145,147,62,61,78",
                         "endOffsets": "3479,3631,3756,3863,4014,4137,4253,4356,4653,4758,4910,5035,5181,5329,5392,5454,5533"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Pro\\.gradle\\caches\\8.8\\transforms\\2d8855400ff0451dc5b7dd36420b65cf\\transformed\\jetified-react-android-0.75.2-debug\\res\\values-en-rGB\\values-en-rGB.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,131,214,288,364,446,526,604,684,758",
+                        "endColumns": "75,82,73,75,81,79,77,79,73,73",
+                        "endOffsets": "126,209,283,359,441,521,599,679,753,827"
+                    },
+                    "to": {
+                        "startLines": "37,63,77,78,113,114,115,117,119,120",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3303,6163,7189,7263,10027,10109,10189,10350,10531,10605",
+                        "endColumns": "75,82,73,75,81,79,77,79,73,73",
+                        "endOffsets": "3374,6241,7258,7334,10104,10184,10262,10425,10600,10674"
                     }
                 },
                 {
