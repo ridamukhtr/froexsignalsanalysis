@@ -6,11 +6,11 @@ import ViewScreens from '../components/views/ViewScreens';
 // import hook
 import useInnerScreens from '../lib/customHooks/useInnerScreens';
 
-const CryptoCurrencyScreen = ({ data, refreshControlProps, activeSort, searchQuery }) => {
+const CryptoCurrencyScreen = ({ data, refreshControlProps, activeSort, sortOrder, searchQuery }) => {
 
 	const { handlePressItem, transformAndSortData, filterData } = useInnerScreens();
 
-	const transformedData = data?.crypto ? transformAndSortData(data?.crypto, activeSort) : [];
+	const transformedData = data?.crypto ? transformAndSortData(data?.crypto, activeSort, sortOrder) : [];
 
 	const filteredData = filterData(transformedData, searchQuery);
 

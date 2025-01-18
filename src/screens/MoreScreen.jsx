@@ -1,6 +1,7 @@
 // import packages
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-native-switch';
+import { LogLevel, OneSignal } from 'react-native-onesignal';
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Linking, View, Platform, ScrollView } from 'react-native';
@@ -11,14 +12,12 @@ import CustomText from '../components/customComponents/CustomText';
 // import hooks
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
 import { useFavManager } from '../lib/customHooks/useFavManager';
-import { changeTheme } from '../redux/themeReducer';
+import { changeTheme, selectedThemeSelector } from '../redux/themeReducer';
 import useNavigationManager from '../lib/customHooks/useNavigationManager';
 // imort styling
 import globalStyles from '../styles/global-styles';
 import { COLORS } from '../styles/theme-styles';
-import CustomDropdown from '../components/customComponents/CustomDropdown';
 import CustomModal from '../components/customComponents/CustomModal';
-import { LogLevel, OneSignal } from 'react-native-onesignal';
 
 const links = [
   { label: 'Follow us on Facebook', icon: 'facebook', appUrl: 'fb://page/MXinvesting', webUrl: 'https://www.facebook.com/MXinvesting/' },
@@ -30,18 +29,16 @@ const links = [
 const MoreScreen = () => {
   const { scrollViewRef } = useRef();
   const dispatch = useDispatch();
-
+  const currentTheme = useSelector(selectedThemeSelector);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEnabled, setIsEnabled] = useState(currentTheme === 'dark');
 
   const { fnShare } = useFavManager();
   const { fnNavigateToHelp, fnNavigateToPrivacy } = useNavigationManager()
-  const { bgColor, textColor, currentTheme, borderColor, footerColor, dropdownColor, iconColor } = useThemeManager();
+  const { bgColor, textColor, borderColor, footerColor, dropdownColor, iconColor } = useThemeManager();
 
   const handleThemeToggle = (newCheckedState) => {
     const selectedTheme = newCheckedState ? 'dark' : 'light';
-
-    // Update the state and dispatch the theme change
     setIsEnabled(newCheckedState);
     dispatch(changeTheme(selectedTheme));
   };
@@ -173,7 +170,7 @@ const MoreScreen = () => {
               <CustomText>{'Privacy Policy'}</CustomText>
             </CustomTouchableOpacity>
           </View>
-          <View style={[styles.body(borderColor), { borderBottomWidth: 0 }]} >
+          <View style={[styles.body(borderColor),]} >
             <CustomTouchableOpacity onPress={fnNavigateToHelp} >
               <CustomText>{'Help'}</CustomText>
             </CustomTouchableOpacity>

@@ -26,7 +26,7 @@ const SignalSummery = ({ maSummary, time, ago, ma_summery, }) => {
 				</View>
 				<View style={{ width: "33.3%", }}>
 
-					<CustomText style={{ fontSize: 14, color: maSummaryColor }}>{maSummary}</CustomText>
+					<CustomText style={{ fontSize: 14, color: maSummaryColor }}>{maSummary || "no signal"}</CustomText>
 				</View>
 				<View style={{ width: "33.3%", }}>
 

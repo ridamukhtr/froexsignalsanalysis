@@ -1,6 +1,6 @@
 // import packages
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Keyboard } from 'react-native';
 // import styling
 import { COLORS } from '../../styles/theme-styles';
 // import components
@@ -23,6 +23,7 @@ const HorizontalView = ({
 
 	const { dropdownColor, textColor, footerColor, tabColor } = useThemeManager();
 	const fnTabPress = (tab, index) => {
+		Keyboard.dismiss();
 		setSelectedTab(tab);
 		onTabChange(tab);
 

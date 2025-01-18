@@ -40,17 +40,24 @@ const HomeScreen = () => {
 	const tabs = ['Stocks', 'Forex', 'Indices', 'Crypto Currency', 'Commodities',];
 	const [activeTime, setActiveTime] = useState('1800');
 	const [activeSort, setActiveSort] = useState('price');
+	const [sortOrder, setSortOrder] = useState('asc');
 	const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
 	const [bottomSheetType, setBottomSheetType] = useState('time');
 	const [searchQuery, setSearchQuery] = useState('');
 
-	const { textColor, bgColor, dropdownColor, borderColor } = useThemeManager();
+	const { textColor, dropdownColor, borderColor } = useThemeManager();
 	const { activeTab: activeScreen, fnActiveTab: setActiveScreen } = useActiveTab('Stocks');
 
 	const { data, isLoading, refetch: setIsRefreshing, isFetching } = useGetMarketDataQuery({
 		type: activeScreen?.toLowerCase(),
 		time: activeTime,
-	});
+	},
+		{
+			refetchOnMountOrArgChange: true,
+			refetchOnWindowFocus: false,
+			cacheTime: 0,
+		}
+	);
 
 	const isApiLoading = isLoading || isFetching;
 
@@ -74,11 +81,17 @@ const HomeScreen = () => {
 	};
 
 	const handleTimeSelect = (selectedTime) => {
-		setActiveTime(selectedTime);
+		if (selectedTime === activeTime) {
+			setIsRefreshing();
+		} else {
+			setActiveTime(selectedTime);
+		}
 		setBottomSheetVisible(false);
 	};
 
+
 	const handleSortSelect = (selectedSort) => {
+		setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
 		setActiveSort(selectedSort);
 		setBottomSheetVisible(false);
 	};
@@ -86,44 +99,44 @@ const HomeScreen = () => {
 	return (
 		<>
 			<CustomView onSearch={handleSearch} >
+
+				<HorizontalView
+					useScrollView={true}
+					variant="default"
+					tabs={tabs}
+					initialTab={activeScreen}
+					onTabChange={(tab) => setActiveScreen(tab)}
+				/>
+
+				<View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
+					<CustomTouchableOpacity
+						style={[styles.activeBg, globalStyles.container, { backgroundColor: dropdownColor }]}
+						onPress={() => handleBottomSheetType('time')}
+					>
+						<CustomText style={{ color: textColor }}>{time_map[activeTime]}</CustomText>
+						<Icon name="chevron-down" size={20} color={textColor} style={{ marginRight: -3 }} />
+					</CustomTouchableOpacity>
+
+					<CustomTouchableOpacity
+						style={[styles.activeBg, globalStyles.container, { backgroundColor: dropdownColor }]}
+						onPress={() => handleBottomSheetType('sort')}
+					>
+						<CustomText style={{ color: textColor }}>
+							{sortingOptions?.find((option) => option?.key === activeSort)?.label || 'Sort'}
+						</CustomText>
+
+						<Icon name="chevron-down" size={20} color={textColor} style={{ marginRight: -3 }} />
+					</CustomTouchableOpacity>
+				</View>
 				{isApiLoading ? (
 					<Loader />
 				) : (
 					<>
-						<HorizontalView
-							useScrollView={true}
-							variant="default"
-							tabs={tabs}
-							initialTab={activeScreen}
-							onTabChange={(tab) => setActiveScreen(tab)}
-						/>
-
-						<View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
-							<CustomTouchableOpacity
-								style={[styles.activeBg, globalStyles.container, { backgroundColor: dropdownColor }]}
-								onPress={() => handleBottomSheetType('time')}
-							>
-								<CustomText style={{ color: textColor }}>{time_map[activeTime]}</CustomText>
-								<Icon name="chevron-down" size={20} color={textColor} style={{ marginRight: -3 }} />
-							</CustomTouchableOpacity>
-
-							<CustomTouchableOpacity
-								style={[styles.activeBg, globalStyles.container, { backgroundColor: dropdownColor }]}
-								onPress={() => handleBottomSheetType('sort')}
-							>
-								<CustomText style={{ color: textColor }}>
-									{sortingOptions?.find((option) => option?.key === activeSort)?.label || 'Sort'}
-								</CustomText>
-
-								<Icon name="chevron-down" size={20} color={textColor} style={{ marginRight: -3 }} />
-							</CustomTouchableOpacity>
-						</View>
-
-						{activeScreen === 'Stocks' && <StockScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Crypto Currency' && <CryptoCurrencyScreen searchQuery={searchQuery} data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Forex' && <ForexScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Commodities' && <ComoditiesScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
-						{activeScreen === 'Indices' && <IndicesScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} />}
+						{activeScreen === 'Stocks' && <StockScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} sortOrder={sortOrder} />}
+						{activeScreen === 'Crypto Currency' && <CryptoCurrencyScreen searchQuery={searchQuery} data={data} refreshControlProps={refreshControlProps} activeSort={activeSort} sortOrder={sortOrder} />}
+						{activeScreen === 'Forex' && <ForexScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} sortOrder={sortOrder} />}
+						{activeScreen === 'Commodities' && <ComoditiesScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} sortOrder={sortOrder} />}
+						{activeScreen === 'Indices' && <IndicesScreen data={data} searchQuery={searchQuery} refreshControlProps={refreshControlProps} activeSort={activeSort} sortOrder={sortOrder} />}
 					</>
 				)}
 			</CustomView >
@@ -164,7 +177,9 @@ const HomeScreen = () => {
 									onPress={() => handleSortSelect(key)}
 								>
 									<CustomText style={{ color: textColor }}>{label}</CustomText>
-									{activeSort === key && <Check name="checkmark-circle" size={20} color={COLORS.CHECK_BLUE} />}
+									{activeSort === key && <Check
+										name={sortOrder === 'asc' ? "arrow-up-outline" : "arrow-down-outline"}
+										size={20} color={COLORS.CHECK_BLUE} />}
 								</CustomTouchableOpacity>
 							))}
 					</View>

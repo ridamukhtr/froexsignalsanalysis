@@ -5,11 +5,11 @@ import ViewScreens from '../components/views/ViewScreens';
 // import hook
 import useInnerScreens from '../lib/customHooks/useInnerScreens';
 
-const ComoditiesScreen = ({ data, refreshControlProps, activeSort, searchQuery }) => {
+const ComoditiesScreen = ({ data, refreshControlProps, activeSort, sortOrder, searchQuery }) => {
 
 	const { handlePressItem, transformAndSortData, filterData } = useInnerScreens();
 
-	const transformedData = data?.commo ? transformAndSortData(data?.commo, activeSort) : [];
+	const transformedData = data?.commo ? transformAndSortData(data?.commo, activeSort, sortOrder) : [];
 
 	const filteredData = filterData(transformedData, searchQuery);
 

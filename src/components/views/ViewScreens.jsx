@@ -3,7 +3,7 @@ import React from 'react';
 import Favourite from 'react-native-vector-icons/MaterialIcons';
 import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
 // import styling
-import { COLORS } from '../../styles/theme-styles';
+import { COLORS, SCREEN_HEIGHT } from '../../styles/theme-styles';
 import globalStyles from '../../styles/global-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
@@ -19,6 +19,7 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 	const { favorites, saveFavorites } = useFavManager();
 	const { bgColor, textColor, borderColor } = useThemeManager();
 
+	const height = SCREEN_HEIGHT > 700 ? 480 : 450
 	const toggleFavorite = async (item) => {
 		const isAddedFav = favorites?.find((addItem) => addItem?.page_id == item?.page_id);
 		const updatedFavorites = isAddedFav ? favorites?.filter((fav) => fav?.page_id != item?.page_id) : [...favorites, item]
@@ -74,6 +75,9 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 				keyExtractor={(item) => item?.page_id?.toString()}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: '42%' }}
+				ListFooterComponent={
+					<View style={{ height: 50 }} />
+				}
 				refreshControl={
 					refreshControlProps ? (
 						<RefreshControl

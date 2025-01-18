@@ -41,7 +41,7 @@ const PivotTableView = ({ pivotData }) => {
                     ?.filter(key => key !== 'demark')
                     ?.map((key, index) => (
                         <View key={index} style={globalStyles.column}>
-                            <CustomText style={[globalStyles.titleText, { fontSize: 11 }]}> {key?.charAt(0)?.toUpperCase() + key?.slice(1)}</CustomText>
+                            <CustomText style={[globalStyles.titleText, { fontSize: 11, flexShrink: 1 }]}> {key?.charAt(0)?.toUpperCase() + key?.slice(1)}</CustomText>
                         </View>
                     ))}
             </View>

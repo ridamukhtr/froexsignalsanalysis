@@ -9,9 +9,8 @@ const AppInitializer = ({ children }) => {
   useEffect(() => {
     const loadTheme = async () => {
       const savedTheme = await AsyncStorage.getItem('userTheme');
-      if (savedTheme) {
-        dispatch(setInitialTheme(savedTheme));
-      }
+      const defaultTheme = savedTheme || 'dark';
+      dispatch(setInitialTheme(defaultTheme));
     };
 
     loadTheme();

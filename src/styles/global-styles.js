@@ -10,8 +10,8 @@ const globalStyles = StyleSheet.create({
 	text: { fontSize: 11, },
 	screenDescTxt: { textAlign: 'center' },
 	boxContainer: { paddingTop: 10, borderWidth: 1, marginVertical: 10, borderRadius: 5 },
-	cell: { flex: 1, paddingVertical: 5, paddingHorizontal: 12 },
-	column: { flex: 1, paddingHorizontal: 10 },
+	cell: { flex: 1, paddingVertical: 5, paddingHorizontal: 12, },
+	column: { flex: 1, paddingHorizontal: 10, },
 	rowContainer: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1 },
 	defaultTxt: { fontSize: 14, lineHeight: 20, color: COLORS.WHITE },
 	cardContainer: {

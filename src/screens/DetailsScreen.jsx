@@ -2,7 +2,7 @@
 import { StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import Theme from 'react-native-vector-icons/MaterialIcons';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Favourite from 'react-native-vector-icons/MaterialIcons';
 import { useRoute } from '@react-navigation/native';
 //  import components
@@ -17,7 +17,7 @@ import MovingAverageView from '../components/views/MovingAverageView';
 import AdvanceReport from '../components/views/AdvanceReport';
 import { Loader } from '../components/loader/Loader';
 // import styles
-import { COLORS } from '../styles/theme-styles';
+import { COLORS, SCREEN_HEIGHT } from '../styles/theme-styles';
 // import assets
 import time_map from '../../assets/time_map';
 // import hook
@@ -31,6 +31,7 @@ const DetailsScreen = ({ itemId }) => {
 
 	const route = useRoute();
 	const { item } = route?.params;
+	const scrollViewRef = useRef();
 
 	const [selectedTime, setSelectedTime] = useState(1800);
 
@@ -73,7 +74,7 @@ const DetailsScreen = ({ itemId }) => {
 			{!detailData && !advanceReportData ? (
 				<Loader />
 			) : (
-				<CustomScrollView refreshControl={
+				<CustomScrollView scrollViewRef={scrollViewRef} refreshControl={
 					<RefreshControl
 						onRefresh={onRefresh}
 						progressViewOffset={10}
@@ -142,9 +143,9 @@ const DetailsScreen = ({ itemId }) => {
 
 					<AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} isLoading={isSummaryLoading} />
 
-					<View style={{}}>
+					<View style={{ minHeight: SCREEN_HEIGHT - 55, flex: 1, }}>
 						{isSummaryLoading ? (
-							<View style={{ paddingVertical: 20 }}>
+							<View style={{ paddingVertical: 20, }}>
 								<Loader animationStyle={{ width: 50, height: 50 }} />
 							</View>
 						) : (

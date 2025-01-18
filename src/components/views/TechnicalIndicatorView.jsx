@@ -29,7 +29,7 @@ const TechnicalIndicatorView = ({ indicators }) => {
           {index === 0 && (
             <View style={[globalStyles.rowContainer, { borderBottomColor: borderColor }]}>
               <View style={[globalStyles.column]}>
-                <CustomText style={[globalStyles.titleText, { fontSize: 11 }]}>{"Name"}</CustomText>
+                <CustomText style={[globalStyles.titleText, { fontSize: 11, }]}>{"Name"}</CustomText>
               </View>
 
               <View style={globalStyles.column}>
@@ -44,7 +44,9 @@ const TechnicalIndicatorView = ({ indicators }) => {
 
           <View style={[globalStyles.rowContainer, { borderBottomColor: borderColor }]}>
             <View style={globalStyles.cell}>
-              <CustomText style={[globalStyles.titleText, { fontSize: 11 }]}>{indicator?.name}</CustomText>
+              <CustomText style={[globalStyles.titleText, {
+                fontSize: 11, flexgrow: 1
+              }]}>{indicator?.name}</CustomText>
             </View>
             <View style={globalStyles.cell}>
               <CustomText style={globalStyles.text}>{Number(indicator?.value).toFixed(2)}</CustomText>
