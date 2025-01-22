@@ -16,6 +16,8 @@ export default function useNavigationManager() {
 	const fnNavigateToPrivacy = () => navigation.navigate(ROUTES.screenPrivacy);
 	const fnNavigateToCommodities = () => navigation.navigate(ROUTES.screenCommodities);
 	const fnNavigateToDetails = () => navigation.navigate(ROUTES.screenDetails);
+	const fnNavigateToNotification = () => navigation.navigate(ROUTES.screenNotification);
+	const fnNavigateToMore = () => navigation.navigate(ROUTES.screenMore);
 
 	const fnNavigateToRoot = () => navigation.navigate('Root');
 
@@ -32,6 +34,8 @@ export default function useNavigationManager() {
 		fnNavigateToIndices,
 		fnNavigateToDetails,
 		fnNavigateToPrivacy,
+		fnNavigateToNotification,
+		fnNavigateToMore,
 
 		fnNavigateToRoot,
 		fnNavigateGoBack

@@ -11,6 +11,7 @@ import ViewScreens from '../components/views/ViewScreens';
 // import hook
 import useInnerScreens from '../lib/customHooks/useInnerScreens';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
+import CustomText from '../components/customComponents/CustomText';
 
 const FavouriteScreen = () => {
     const [data, setData] = useState([]);
@@ -46,13 +47,24 @@ const FavouriteScreen = () => {
 
     return (
         <CustomView onSearch={handleSearch} >
-            <ViewScreens
-                data={filteredData}
-                onPressItem={handlePressItem}
-                isFavoriteScreen={true}
-                refreshControlProps={{ onRefresh: refreshFavorites }}
-            />
-        </CustomView >
+            {filteredData.length === 0 ? (
+                <View>
+                    <CustomText>
+                        No favorites added yet
+                    </CustomText>
+                    <CustomText>
+                        Add items to your favorites to see them here
+                    </CustomText>
+                </View>
+            ) : (
+                <ViewScreens
+                    data={filteredData}
+                    onPressItem={handlePressItem}
+                    isFavoriteScreen={true}
+                    refreshControlProps={{ onRefresh: refreshFavorites }}
+                />
+            )}
+        </CustomView>
     );
 };
 

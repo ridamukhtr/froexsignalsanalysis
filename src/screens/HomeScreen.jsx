@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import Search from 'react-native-vector-icons/Ionicons';
-import Notification from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 import Check from 'react-native-vector-icons/Ionicons';
 // @import screens
 import StockScreen from './StockScreen';
@@ -32,11 +31,12 @@ import globalStyles from '../styles/global-styles';
 const sortingOptions = [
 	{ key: 'name', label: 'Name' },
 	{ key: 'price', label: 'Price' },
-	{ key: 'change%', label: 'Change%' },
+	{ key: 'change%', label: '% Change' },
 	{ key: 'signal', label: 'Signal' },
 ];
 
 const HomeScreen = () => {
+	const navigation = useNavigation();
 	const tabs = ['Stocks', 'Forex', 'Indices', 'Crypto Currency', 'Commodities',];
 	const [activeTime, setActiveTime] = useState('1800');
 	const [activeSort, setActiveSort] = useState('price');
@@ -154,6 +154,7 @@ const HomeScreen = () => {
 									style={[
 										styles.timeOption,
 										{
+											justifyContent: 'space-between',
 											borderBottomColor: borderColor,
 											backgroundColor: activeTime === key ? dropdownColor : 'transparent',
 										},
@@ -176,10 +177,17 @@ const HomeScreen = () => {
 									]}
 									onPress={() => handleSortSelect(key)}
 								>
-									<CustomText style={{ color: textColor }}>{label}</CustomText>
-									{activeSort === key && <Check
-										name={sortOrder === 'asc' ? "arrow-up-outline" : "arrow-down-outline"}
-										size={20} color={COLORS.CHECK_BLUE} />}
+									<CustomText style={{ color: textColor }}>{label} </CustomText>
+									<Check
+										name={"arrow-up-outline"}
+										size={15}
+										color={activeSort === key && sortOrder === 'asc' ? COLORS.CHECK_BLUE : COLORS.WHITE}
+									/>
+									<Check
+										name={"arrow-down-outline"}
+										size={15}
+										color={activeSort === key && sortOrder === 'desc' ? COLORS.CHECK_BLUE : COLORS.WHITE}
+									/>
 								</CustomTouchableOpacity>
 							))}
 					</View>
@@ -204,7 +212,6 @@ const styles = StyleSheet.create({
 	timeOption: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'space-between',
 		padding: 15,
 		borderBottomWidth: 1,
 	},

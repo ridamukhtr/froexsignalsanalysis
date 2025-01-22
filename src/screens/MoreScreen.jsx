@@ -9,6 +9,7 @@ import { StyleSheet, Linking, View, Platform, ScrollView } from 'react-native';
 import CustomView from '../components/customComponents/CustomView';
 import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
 import CustomText from '../components/customComponents/CustomText';
+import CustomModal from '../components/customComponents/CustomModal';
 // import hooks
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
 import { useFavManager } from '../lib/customHooks/useFavManager';
@@ -17,7 +18,6 @@ import useNavigationManager from '../lib/customHooks/useNavigationManager';
 // imort styling
 import globalStyles from '../styles/global-styles';
 import { COLORS } from '../styles/theme-styles';
-import CustomModal from '../components/customComponents/CustomModal';
 
 const links = [
   { label: 'Follow us on Facebook', icon: 'facebook', appUrl: 'fb://page/MXinvesting', webUrl: 'https://www.facebook.com/MXinvesting/' },
@@ -34,7 +34,7 @@ const MoreScreen = () => {
   const [isEnabled, setIsEnabled] = useState(currentTheme === 'dark');
 
   const { fnShare } = useFavManager();
-  const { fnNavigateToHelp, fnNavigateToPrivacy } = useNavigationManager()
+  const { fnNavigateToHelp, fnNavigateToPrivacy, fnNavigateToNotification } = useNavigationManager()
   const { bgColor, textColor, borderColor, footerColor, dropdownColor, iconColor } = useThemeManager();
 
   const handleThemeToggle = (newCheckedState) => {
@@ -94,11 +94,6 @@ const MoreScreen = () => {
     };
   }, []);
 
-  const handleNotificationButtonPress = () => {
-    console.log('Notifications button pressed');
-    // Add any additional logic if needed
-  };
-
 
   return (
     <CustomView centered={true}>
@@ -133,7 +128,7 @@ const MoreScreen = () => {
 
           </View>
           <View style={[styles.body(borderColor), { borderBottomWidth: 0 }]} >
-            <CustomTouchableOpacity onPress={handleNotificationButtonPress} >
+            <CustomTouchableOpacity onPress={fnNavigateToNotification} >
               <CustomText>{'Notifications'}</CustomText>
             </CustomTouchableOpacity>
           </View>

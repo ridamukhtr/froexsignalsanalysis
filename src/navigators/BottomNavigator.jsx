@@ -15,6 +15,7 @@ import CustomText from '../components/customComponents/CustomText';
 import MoreScreen from '../screens/MoreScreen';
 import HelpScreen from '../screens/HelpScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
+import NotificationScreen from '../screens/NotificationScreen';
 // import styling
 import { COLORS } from '../styles/theme-styles';
 // import route
@@ -180,6 +181,26 @@ const MoreStack = () => {
 			<Stack.Screen
 				name={ROUTES.screenHelp}
 				component={HelpScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: getTabBarStyle(footerColor)
+						});
+					}
+				})}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenNotification}
+				component={NotificationScreen}
 				options={{
 					headerShown: false,
 					tabBarStyle: { display: 'none' }

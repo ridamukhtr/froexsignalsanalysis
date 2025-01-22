@@ -14,6 +14,7 @@ const globalStyles = StyleSheet.create({
 	column: { flex: 1, paddingHorizontal: 10, },
 	rowContainer: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1 },
 	defaultTxt: { fontSize: 14, lineHeight: 20, color: COLORS.WHITE },
+	alert: { marginTop: 15, backgroundColor: COLORS.LIGHT_RED, borderRadius: 5, padding: 7 },
 	cardContainer: {
 		borderRadius: 10,
 		borderColor: COLORS.GREY,

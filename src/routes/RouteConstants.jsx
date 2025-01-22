@@ -17,6 +17,7 @@ export const ROUTES = {
 	screenPrivacy: 'Privacy Policy',
 	screenDetails: 'Details',
 	screenChart: 'Charts',
+	screenNotification: 'Notifications',
 	screenCalender: 'Calender',
 
 };

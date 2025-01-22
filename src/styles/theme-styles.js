@@ -28,6 +28,7 @@ export const COLORS = {
     NAV_BLUE: "#211C37",
     SEARCH_BLUE: "#312E43",
     LIGHT_RED: "#F8D7DA",
+    DANGER_RED: "#A6686E",
     BLUE: "#06A9F2",
     CHECK_BLUE: "#445CF7",
     GREY: "#1C2533",

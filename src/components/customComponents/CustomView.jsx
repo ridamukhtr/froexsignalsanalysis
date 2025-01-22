@@ -53,7 +53,7 @@ const CustomView = ({
 	};
 
 	const { bgColor, textColor, iconColor, dropdownColor, logoColor } = useThemeManager();
-	const { fnNavigateGoBack } = useNavigationManager();
+	const { fnNavigateGoBack, fnNavigateToNotification, fnNavigateToMore } = useNavigationManager();
 
 	return (
 		<SafeAreaView style={styles.safeArea(bgColor)}>
@@ -113,7 +113,7 @@ const CustomView = ({
 											<CustomText style={globalStyles.titleText}>ForaxAnalysis</CustomText>
 										</View>
 										<View style={globalStyles.gapContainer} >
-											<CustomTouchableOpacity >
+											<CustomTouchableOpacity onPress={fnNavigateToMore}>
 												<Notification name="bell-outline" size={20} color={textColor} />
 											</CustomTouchableOpacity>
 											<CustomTouchableOpacity onPress={handleSearchToggle} >

@@ -11,6 +11,7 @@ import { all_data } from '../../assets/all_data'
 // import styling
 import globalStyles from '../styles/global-styles'
 import { useThemeManager } from '../lib/customHooks/useThemeManager'
+import { COLORS } from '../styles/theme-styles'
 
 const PrivacyPolicyScreen = () => {
 
@@ -81,7 +82,7 @@ const PrivacyPolicyScreen = () => {
         </View>
         <CustomText>{all_data.detail9}</CustomText>
         <CustomTouchableOpacity onPress={handleEmailPress} style={{ marginBottom: 15 }}>
-          <CustomText style={{ color: "#A6686E" }}>droid.st.labs@gmail.com</CustomText>
+          <CustomText style={{ color: COLORS.DANGER_RED }}>droid.st.labs@gmail.com</CustomText>
         </CustomTouchableOpacity>
       </CustomScrollView>
     </CustomView>
