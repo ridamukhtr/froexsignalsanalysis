@@ -1,4 +1,4 @@
-# Resolve react_native_pods.rb with node to allow for hoisting
+# Use node to resolve the react_native_pods.rb script dynamically, allowing for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
     "react-native/scripts/react_native_pods.rb",
@@ -6,8 +6,11 @@ require Pod::Executable.execute_command('node', ['-p',
   )', __dir__]).strip
 
 platform :ios, min_ios_version_supported
+
+# Prepare React Native project
 prepare_react_native_project!
 
+# Set up linkage for dynamic frameworks
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
@@ -15,26 +18,40 @@ if linkage != nil
 end
 
 target 'forex_signals_analysis' do
+  # Configuration for using native modules in the project
   config = use_native_modules!
 
+  # Use React Native, hoisting the app_path for easier management
   use_react_native!(
     :path => config[:reactNativePath],
-    # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # Enable modular headers for Firebase dependencies and other required pods
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'Firebase/Core', :modular_headers => true
+  pod 'Firebase/Messaging', :modular_headers => true
+
+  # Define the test target for the app
   target 'forex_signals_analysisTests' do
     inherit! :complete
-    # Pods for testing
+    # Pods for testing go here
   end
 
+  # Post-install script to finalize the React Native setup and manage framework configurations
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    # Configure post-install steps for React Native project (including React Native linking)
     react_native_post_install(
       installer,
       config[:reactNativePath],
-      :mac_catalyst_enabled => false,
-      # :ccache_enabled => true
+      :mac_catalyst_enabled => false, # Disable Mac Catalyst if not needed
     )
+
+    # Workaround for Xcode 12+ to prevent build errors with new architectures
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+      end
+    end
   end
 end
