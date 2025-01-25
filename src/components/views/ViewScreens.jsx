@@ -3,7 +3,7 @@ import React from 'react';
 import Favourite from 'react-native-vector-icons/MaterialIcons';
 import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
 // import styling
-import { COLORS, SCREEN_HEIGHT } from '../../styles/theme-styles';
+import { SCREEN_HEIGHT } from '../../styles/theme-styles';
 import globalStyles from '../../styles/global-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
@@ -53,7 +53,7 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 					</View>
 					<View style={globalStyles.container}>
 						<View style={[globalStyles.container, { gap: 7, }]}>
-							<CustomText style={[globalStyles.titleText, { lineHeight: 15, color: maSummaryColor }]}>{item?.ma_summery}</CustomText>
+							<CustomText style={[globalStyles.titleText, { lineHeight: 15, color: maSummaryColor }]}>{item?.ma_summery || "--"}</CustomText>
 						</View>
 						<View style={[globalStyles.container, { gap: 4 }]}>
 							<CustomText style={[globalStyles.timeText, { fontSize: 12, color: maSummaryColor }]}>{item?.summaryChange}</CustomText>

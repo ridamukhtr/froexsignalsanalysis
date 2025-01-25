@@ -29,7 +29,7 @@ const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, 
 				<CustomText style={{ left: 5 }}>{item?.symbol}</CustomText>
 				<Switch
 					value={isSubscribed}
-					onValueChange={onToggleSubscription}
+					onValueChange={() => onToggleSubscription(item)}
 					activeText={''}
 					inActiveText={''}
 					circleSize={20}

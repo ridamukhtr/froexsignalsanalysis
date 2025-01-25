@@ -1,6 +1,8 @@
 // import packages
 import { StyleSheet, Vibration, View } from 'react-native';
-import React, { useCallback, useState } from 'react';
+import Toast from 'react-native-toast-message';
+import React, { useCallback, useEffect, useState } from 'react';
+import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from '@react-navigation/native';
 import { Switch } from 'react-native-switch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,6 +27,7 @@ const NotificationScreen = () => {
 	const [isSubscribed, setIsSubscribed] = useState({});
 
 	const { dropdownColor, borderColor, footerColor, iconColor } = useThemeManager();
+
 	useFocusEffect(
 		useCallback(() => {
 			const loadFavorites = async () => {
@@ -41,30 +44,93 @@ const NotificationScreen = () => {
 		}, [])
 	);
 
-	const toggleCheckbox = (item, value) => {
+	useEffect(() => {
+		loadSelectedTimes();
+		loadPreferences();
+	}, []);
+
+	const toggleCheckbox = async (item, value) => {
 		setSelectedTime(prevState => {
-			const currentSelectedTimes = prevState[item?.symbol] || [];
+			const currentSelectedTimes = prevState[item?.msg_id] || [];
+			let updatedTimes;
+
 			if (currentSelectedTimes.includes(value)) {
-				return {
-					...prevState,
-					[item?.symbol]: currentSelectedTimes.filter(time => time !== value)
-				};
+				updatedTimes = currentSelectedTimes.filter(time => time !== value);
 			} else {
-				return {
-					...prevState,
-					[item?.symbol]: [...currentSelectedTimes, value]
-				};
+				updatedTimes = [...currentSelectedTimes, value];
 			}
+			const updatedSelectedTimes = {
+				...prevState,
+				[item?.msg_id]: updatedTimes,
+			};
+			AsyncStorage.setItem('selectedTimes', JSON.stringify(updatedSelectedTimes));
+
+			return updatedSelectedTimes;
 		});
 	};
 
-	const toggleSubscription = item => {
-		setIsSubscribed(prevState => {
-			return {
+	const toggleSubscription = async (item) => {
+		const msgId = item?.msg_id;
+		const symbol = item?.symbol || 'Unknown Symbol';
+		const isCurrentlySubscribed = isSubscribed[msgId] || false;
+
+		try {
+			if (isCurrentlySubscribed) {
+				await messaging().unsubscribeFromTopic(msgId);
+				Toast.show({
+					type: 'info',
+					text1: 'Unsubscribed',
+					text2: `You have unsubscribed from ${symbol}.`,
+				});
+			} else {
+				await messaging().subscribeToTopic(msgId);
+				Toast.show({
+					type: 'success',
+					text1: 'Subscribed',
+					text2: `You have subscribed to ${symbol}.`,
+				});
+			}
+			setIsSubscribed(prevState => ({
 				...prevState,
-				[item?.symbol]: !prevState[item?.symbol]
+				[msgId]: !isCurrentlySubscribed,
+			}));
+
+			const updatedSubscriptions = {
+				...isSubscribed,
+				[msgId]: !isCurrentlySubscribed,
 			};
-		});
+			await AsyncStorage.setItem('subscriptions', JSON.stringify(updatedSubscriptions));
+
+		} catch (error) {
+			console.error('Error while subscribing/unsubscribing:', error);
+		}
+	};
+
+	const loadSelectedTimes = async () => {
+		try {
+			const storedTimes = await AsyncStorage.getItem('selectedTimes');
+			if (storedTimes) {
+				setSelectedTime(JSON.parse(storedTimes));
+			}
+		} catch (error) {
+			console.error('Error loading selected times:', error);
+		}
+	};
+
+	const loadPreferences = async () => {
+		try {
+			const storedTimes = await AsyncStorage.getItem('selectedTimes');
+			if (storedTimes) {
+				setSelectedTime(JSON.parse(storedTimes));
+			}
+
+			const storedSubscriptions = await AsyncStorage.getItem('subscriptions');
+			if (storedSubscriptions) {
+				setIsSubscribed(JSON.parse(storedSubscriptions));
+			}
+		} catch (error) {
+			console.error('Error loading preferences:', error);
+		}
 	};
 
 	const toggleSound = () => {
@@ -141,16 +207,24 @@ const NotificationScreen = () => {
 						/>
 					</View>
 				</View>
+				<Toast
+					position="top"
+					visibilityTime={3000}
+					autoHide
+					topOffset={20}
+					style={{ backgroundColor: 'white', borderRadius: 8 }}
+				/>
 				{data?.length > 0 ? (
 					data?.map((item, index) => (
 						<ViewNotification
-							key={index}
+							key={item?.msg_id}
 							item={item}
-							selectedTime={selectedTime[item?.symbol] || []}
-							onToggleCheckbox={value => toggleCheckbox(item, value)}
-							isSubscribed={isSubscribed[item?.symbol] || false}
-							onToggleSubscription={() => toggleSubscription(item)}
+							selectedTime={selectedTime[item?.msg_id] || []}
+							onToggleCheckbox={(value) => toggleCheckbox(item, value)}
+							isSubscribed={isSubscribed[item?.msg_id] || false}
+							onToggleSubscription={() => toggleSubscription(item)} // Pass item
 						/>
+
 					))
 				) : (
 					<CustomText>
@@ -166,7 +240,7 @@ const NotificationScreen = () => {
 export default NotificationScreen;
 
 const styles = StyleSheet.create({
-	container: footerColor => ({
+	container: (footerColor) => ({
 		marginBottom: 15,
 		backgroundColor: footerColor,
 		borderRadius: 10,
@@ -175,7 +249,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.1,
 		shadowRadius: 2
 	}),
-	body: borderColor => ({
+	body: (borderColor) => ({
 		borderBottomColor: borderColor,
 		borderBottomWidth: 1,
 		paddingVertical: 15,

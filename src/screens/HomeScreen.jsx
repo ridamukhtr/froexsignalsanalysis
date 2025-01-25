@@ -1,5 +1,5 @@
 // @import packages
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,8 @@ import CustomView from '../components/customComponents/CustomView';
 import CustomText from '../components/customComponents/CustomText';
 import CustomBottomSheet from '../components/customComponents/CustomBottomSheet';
 import CustomTouchableOpacity from '../components/customComponents/CustomTouchableOpacity';
+import PushNotification from 'react-native-push-notification';
+import messaging from '@react-native-firebase/messaging';
 // @import hooks
 import useActiveTab from '../lib/customHooks/useActiveTab';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
@@ -27,6 +29,7 @@ import time_map from '../../assets/time_map';
 // import styling
 import { COLORS } from '../styles/theme-styles';
 import globalStyles from '../styles/global-styles';
+import { ROUTES } from '../routes/RouteConstants';
 
 const sortingOptions = [
 	{ key: 'name', label: 'Name' },
@@ -95,6 +98,57 @@ const HomeScreen = () => {
 		setActiveSort(selectedSort);
 		setBottomSheetVisible(false);
 	};
+
+	useEffect(() => {
+		const unsubscribeNotification = messaging().onMessage(async remoteMessage => {
+			console.log('Foreground notification:', remoteMessage);
+
+			const { title, message, topic } = remoteMessage.data;
+
+			if (topic) {
+				// Navigate to detail screen with topic
+				navigation.navigate(ROUTES.screenDetails, { topic });
+			} else {
+				console.log('No topic found in notification');
+			}
+
+			PushNotification.localNotification({
+				channelId: 'default-channel-id', // Ensure you have created this channel
+				title: title || 'Notification',
+				message: message || 'You have a new notification',
+				priority: 'high',
+			});
+		});
+
+		return () => unsubscribeNotification();
+	}, []);
+
+	const checkUserPermission = async () => {
+		const enabled = await messaging().hasPermission();
+		if (enabled !== -1) {
+			getFcmToken();
+		} else {
+			requestUserPermission();
+		}
+	};
+
+	const requestUserPermission = async () => {
+		const authStatus = await messaging().requestPermission();
+		const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+		if (enabled) {
+			getFcmToken();
+		}
+	};
+
+	const getFcmToken = async () => {
+		const fcmToken = await messaging().getToken();
+		if (fcmToken) {
+			console.log('Your Firebase Token is:', fcmToken);
+		} else {
+			console.log('Failed', 'No token received');
+		}
+	};
+
 
 	return (
 		<>
