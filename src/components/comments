@@ -1,15 +1,108 @@
 const maData =
-		timeData?.map(item => ({
-			time: item?.time,
-			maBuy: item?.maBuy ?? 0,
-			maSell: item?.maSell ?? 0,
-			maSignal: item?.maSignal ?? 0
-		})) || [];
+	timeData?.map(item => ({
+		time: item?.time,
+		maBuy: item?.maBuy ?? 0,
+		maSell: item?.maSell ?? 0,
+		maSignal: item?.maSignal ?? 0
+	})) || [];
 
-	const tecData =
-		timeData?.map(item => ({
-			time: item?.time,
-			tecBuy: item?.tecBuy ?? 0,
-			tecSell: item?.tecSell ?? 0,
-			tecSignal: item?.tecSignal ?? 0
-		})) || [];
+const tecData =
+	timeData?.map(item => ({
+		time: item?.time,
+		tecBuy: item?.tecBuy ?? 0,
+		tecSell: item?.tecSell ?? 0,
+		tecSignal: item?.tecSignal ?? 0
+	})) || [];
+{
+	!detailData && !advanceReportData ? (
+		<Loader />
+	) : (
+	<CustomScrollView scrollViewRef={scrollViewRef} refreshControl={
+		<RefreshControl
+			onRefresh={onRefresh}
+			progressViewOffset={10}
+			colors={[textColor]}
+			tintColor={textColor}
+			progressBackgroundColor={bgColor}
+			refreshing={refreshing}
+			renderIndicator={() => <Loader />}
+		/>
+	}>
+		<ViewIndicesRating
+			// price={item?.price}
+			// summaryChange={item?.summaryChange}
+			// summaryChangeP={item?.summaryChangeP}
+			update_time={update}
+			ago={ago}
+		/>
+
+		{/* <View style={{ marginVertical: 15 }}>
+						<CustomText
+							style={[
+								globalStyles.titleText,
+								{ fontSize: 16, paddingBottom: 10 }
+							]}
+						>
+							{'Signal Summary'}
+						</CustomText>
+
+						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between", }}>
+							<View style={{ width: "33.3%", }}>
+
+								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
+									{'Time Frame'}
+								</CustomText>
+							</View>
+							<View style={{ width: "33.3%", }}>
+								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
+									{"Signal"}
+								</CustomText>
+							</View>
+							<View style={{ width: "33.3%", }}>
+								<CustomText style={[globalStyles.titleText, { fontSize: 15 }]}>
+									{"Update"}
+								</CustomText>
+							</View>
+						</View>
+						{allSignals?.map((signal, index) => (
+							<SignalSummery
+								key={index}
+								symbol={signal?.symbol}
+								maSummary={signal?.ma_summery}
+								ago={signal?.ago}
+								ma_summery={signal?.ma_summery}
+								activeTime={signal?.activeTime}
+								time={signal?.mappedTime}
+							/>
+						))}
+						{firstSignalUpdateTime && (
+							<View style={globalStyles.alert}>
+								<CustomText style={{ color: COLORS.DANGER_RED }}>
+									(From {firstSignalUpdateTime.ago}) means: Market in same direction from {firstSignalUpdateTime.ago}. When new sell signal generated
+								</CustomText>
+							</View>
+						)}
+					</View> */}
+
+		{/* <AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} isLoading={isSummaryLoading} />
+
+					<View style={{ minHeight: SCREEN_HEIGHT - 55, flex: 1, }}>
+						{isSummaryLoading ? (
+							<View style={{ paddingVertical: 20, }}>
+								<Loader animationStyle={{ width: 50, height: 50 }} />
+							</View>
+						) : (
+							<>
+								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Pivot Points (${selectedTimeLabel})`}</CustomText>
+								<ViewIndicesDetails pivotData={advanceReportData?.pivot_point} />
+								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Technical Indicators (${selectedTimeLabel}) `}</CustomText>
+								<TechnicalIndicatorView indicators={advanceReportData?.indicators} />
+								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Moving Averages (${selectedTimeLabel}) `}</CustomText>
+								<MovingAverageView emaData={advanceReportData?.emaData} smaData={advanceReportData?.smaData} />
+							</>
+						)}
+					</View> */}
+	</CustomScrollView>
+
+)
+}

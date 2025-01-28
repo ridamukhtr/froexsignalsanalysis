@@ -5,7 +5,7 @@
     <color name="light_bg">#FCFDFF</color>
     <color name="splash_bg">@color/light_bg</color>
     <integer name="react_native_dev_server_port">8081</integer>
-    <string name="app_name">forex_signals_analysis</string>
+    <string name="app_name">Forex Signals Analysis</string>
     <string name="gcm_defaultSenderId" translatable="false">72201509759</string>
     <string name="google_api_key" translatable="false">AIzaSyD2n1QTsa9TrOmvGViZ6ghOdDBnZH8Cf00</string>
     <string name="google_app_id" translatable="false">1:72201509759:android:29ed8511e95ef5d8f0984a</string>

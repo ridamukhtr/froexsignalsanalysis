@@ -9,6 +9,7 @@ import CheckBox from '@react-native-community/checkbox';
 import globalStyles from '../../styles/global-styles';
 // import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
+import { COLORS } from '../../styles/theme-styles';
 
 const timeOptions = [
 	{ label: '5m', value: '5m' },
@@ -22,7 +23,6 @@ const timeOptions = [
 ];
 const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, onToggleSubscription }) => {
 	const { dropdownColor, iconColor } = useThemeManager();
-
 	return (
 		<View>
 			<View style={globalStyles.container}>
@@ -40,7 +40,7 @@ const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, 
 					backgroundInactive={dropdownColor}
 					innerCircleStyle={{ alignItems: 'center', justifyContent: 'center' }}
 					renderInsideCircle={() =>
-						isSubscribed ? <Icon name="check" size={15} color={iconColor} /> : <Icon name="times" size={15} color={iconColor} />
+						isSubscribed ? <Icon name="check" size={15} color={COLORS.GREEN} /> : <Icon name="times" size={15} color={iconColor} />
 					}
 				/>
 			</View>

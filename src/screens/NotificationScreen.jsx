@@ -51,7 +51,7 @@ const NotificationScreen = () => {
 
 	const toggleCheckbox = async (item, value) => {
 		setSelectedTime(prevState => {
-			const currentSelectedTimes = prevState[item?.msg_id] || [];
+			const currentSelectedTimes = prevState[item?.page_id] || [];
 			let updatedTimes;
 
 			if (currentSelectedTimes.includes(value)) {
@@ -61,7 +61,7 @@ const NotificationScreen = () => {
 			}
 			const updatedSelectedTimes = {
 				...prevState,
-				[item?.msg_id]: updatedTimes,
+				[item?.page_id]: updatedTimes,
 			};
 			AsyncStorage.setItem('selectedTimes', JSON.stringify(updatedSelectedTimes));
 
@@ -71,19 +71,24 @@ const NotificationScreen = () => {
 
 	const toggleSubscription = async (item) => {
 		const msgId = item?.msg_id;
+		const pageId = item?.page_id;
+		const identifier = msgId || pageId;
+		console.log("msgId", msgId);
+		console.log("pageId", pageId);
+
 		const symbol = item?.symbol || 'Unknown Symbol';
-		const isCurrentlySubscribed = isSubscribed[msgId] || false;
+		const isCurrentlySubscribed = isSubscribed[pageId] || false;
 
 		try {
 			if (isCurrentlySubscribed) {
-				await messaging().unsubscribeFromTopic(msgId);
+				await messaging().unsubscribeFromTopic(pageId);
 				Toast.show({
 					type: 'info',
 					text1: 'Unsubscribed',
 					text2: `You have unsubscribed from ${symbol}.`,
 				});
 			} else {
-				await messaging().subscribeToTopic(msgId);
+				await messaging().subscribeToTopic(pageId);
 				Toast.show({
 					type: 'success',
 					text1: 'Subscribed',
@@ -92,12 +97,12 @@ const NotificationScreen = () => {
 			}
 			setIsSubscribed(prevState => ({
 				...prevState,
-				[msgId]: !isCurrentlySubscribed,
+				[pageId]: !isCurrentlySubscribed,
 			}));
 
 			const updatedSubscriptions = {
 				...isSubscribed,
-				[msgId]: !isCurrentlySubscribed,
+				[pageId]: !isCurrentlySubscribed,
 			};
 			await AsyncStorage.setItem('subscriptions', JSON.stringify(updatedSubscriptions));
 
@@ -116,6 +121,7 @@ const NotificationScreen = () => {
 			console.error('Error loading selected times:', error);
 		}
 	};
+	console.log("time", selectedTime);
 
 	const loadPreferences = async () => {
 		try {
@@ -183,7 +189,7 @@ const NotificationScreen = () => {
 							backgroundInactive={dropdownColor}
 							innerCircleStyle={{ alignItems: 'center', justifyContent: 'center' }}
 							renderInsideCircle={() =>
-								isSoundEnabled ? <Icon name="check" size={15} color={iconColor} /> : <Icon name="times" size={15} color={iconColor} />
+								isSoundEnabled ? <Icon name="check" size={15} color={COLORS.GREEN} /> : <Icon name="times" size={15} color={iconColor} />
 							}
 						/>
 					</View>
@@ -202,7 +208,7 @@ const NotificationScreen = () => {
 							backgroundInactive={dropdownColor}
 							innerCircleStyle={{ alignItems: 'center', justifyContent: 'center' }}
 							renderInsideCircle={() =>
-								isVibrationEnabled ? <Icon name="check" size={15} color={iconColor} /> : <Icon name="times" size={15} color={iconColor} />
+								isVibrationEnabled ? <Icon name="check" size={15} color={COLORS.GREEN} /> : <Icon name="times" size={15} color={iconColor} />
 							}
 						/>
 					</View>
@@ -217,12 +223,12 @@ const NotificationScreen = () => {
 				{data?.length > 0 ? (
 					data?.map((item, index) => (
 						<ViewNotification
-							key={item?.msg_id}
+							key={item?.page_id}
 							item={item}
-							selectedTime={selectedTime[item?.msg_id] || []}
+							selectedTime={selectedTime[item?.page_id] || []}
 							onToggleCheckbox={(value) => toggleCheckbox(item, value)}
-							isSubscribed={isSubscribed[item?.msg_id] || false}
-							onToggleSubscription={() => toggleSubscription(item)} // Pass item
+							isSubscribed={isSubscribed[item?.page_id] || false}
+							onToggleSubscription={() => toggleSubscription(item)}
 						/>
 
 					))

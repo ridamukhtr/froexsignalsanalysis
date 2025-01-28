@@ -2,7 +2,7 @@
 import { StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import Theme from 'react-native-vector-icons/MaterialIcons';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Favourite from 'react-native-vector-icons/MaterialIcons';
 import { useRoute } from '@react-navigation/native';
 //  import components
@@ -16,45 +16,134 @@ import CustomText from '../components/customComponents/CustomText';
 import MovingAverageView from '../components/views/MovingAverageView';
 import AdvanceReport from '../components/views/AdvanceReport';
 import { Loader } from '../components/loader/Loader';
+import SignalSummery from '../components/views/SignalSummery';
 // import styles
 import { COLORS, SCREEN_HEIGHT } from '../styles/theme-styles';
+import globalStyles from '../styles/global-styles';
 // import assets
 import time_map from '../../assets/time_map';
 // import hook
 import useDetailsScreen from '../lib/customHooks/useDetailData';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
 import { useFavManager } from '../lib/customHooks/useFavManager';
-import SignalSummery from '../components/views/SignalSummery';
-import globalStyles from '../styles/global-styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { hideLoader, showLoader } from '../redux/LoaderReducer';
 
-const DetailsScreen = ({ itemId }) => {
+const DetailsScreen = () => {
 
 	const route = useRoute();
-	const { item } = route?.params;
-	const scrollViewRef = useRef();
+	const { page_id, msg_id, } = route?.params;
+	console.log('Route Params:', page_id, msg_id,);
+	const [data, setData] = useState(null);
 
-	const [selectedTime, setSelectedTime] = useState(1800);
+	const scrollViewRef = useRef();
+	const [selectedTime, setSelectedTime] = useState(3600);
+	const [activeTime, setActiveTime] = useState(null);
+	const [advanceReportData, setAdvanceReportData] = useState(null);
+	const [isSummaryLoading, setIsSummaryLoading] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
 
 	const selectedTimeLabel = selectedTime && time_map[selectedTime] ? time_map[selectedTime] : 'Unknown Time';
 
 	const { bgColor, textColor } = useThemeManager();
 	const { favorites, fnShare, toggleFavorite } = useFavManager();
-	const { update, ago, allSignals, detailData, refreshing, activeFromTime, advanceReportData, isSummaryLoading, onRefresh, }
-		= useDetailsScreen(item, selectedTime);
+	useEffect(() => {
+		fetchDetailData();
+	}, [page_id])
 
-	const onTabChange = (newTab) => {
-		const selectedPeriod = Object?.keys(time_map)?.find(key => time_map[key] === newTab);
-		if (selectedPeriod) {
-			setSelectedTime(parseInt(selectedPeriod, 10));
+	useEffect(() => {
+		if (msg_id && selectedTime) {
+			fetchAdvancedReport(selectedTime);
+		}
+	}, [msg_id, selectedTime]);
+
+	const fetchDetailData = async () => {
+		try {
+			showLoader();
+			const response = await fetch(`https://massyart.com/ringsignal/inv/api_data?id=${page_id}`);
+			const result = await response.json();
+			setData(result);
+		} catch (err) {
+			setError('Failed to fetch data');
+		} finally {
+			hideLoader();
 		}
 	};
 
+	const { all, info } = data || {};
+
+	useEffect(() => {
+		const getSelectedTime = async () => {
+			const storedTime = await AsyncStorage.getItem('selectedTimeofhome');
+			setActiveTime(storedTime);
+		};
+
+		getSelectedTime();
+	}, []);
+
+	const selectedData = data?.all?.find((item) => item?.time === activeTime);
+	console.log("sel", data);
+
+	const getMappedTime = (time) => {
+		return time_map[time] || 'Unknown Time';
+	};
+
+	const firstSignalUpdateTime = all?.find((signal) => signal?.ago !== "1 hour");
+
+	const fetchAdvancedReport = async (period) => {
+		try {
+			showLoader();
+			setIsSummaryLoading(true);
+			const response = await fetch(
+				`https://massyart.com/ringsignal/inv/app_details_pp?msg_id=${msg_id}&period=${period}&type=1`
+			);
+			const result = await response.json();
+			setAdvanceReportData(result);
+		} catch (err) {
+			console.error('Failed to fetch advanced report:', err);
+		}
+		finally {
+			hideLoader();
+			setIsSummaryLoading(false);
+		}
+	};
+	const overallSummary = advanceReportData?.indicator?.overall;
+	const pivotData = advanceReportData?.pp;
+	const smaData = advanceReportData?.ma_avg?.ma_avg?.SMA || {};
+	const emaData = advanceReportData?.ma_avg?.ma_avg?.EMA || {};
+
+	const transformIndicators = (indicatorsData) => {
+		if (!indicatorsData) return [];
+		return Object.entries(indicatorsData).map(([key, value]) => ({
+			name: key,
+			value: parseFloat(value?.v || 0),
+			action: value?.s || "Neutral",
+		}));
+	};
+	const technicalIndicators = transformIndicators(advanceReportData?.indicator?.indicators);
+
+	const onTabChange = (newTab) => {
+		const selectedPeriod = Object.keys(time_map).find((key) => time_map[key] === newTab);
+		if (selectedPeriod) {
+			const newTime = parseInt(selectedPeriod, 10);
+			setSelectedTime(newTime);
+		}
+	};
+
+	const onRefresh = async () => {
+		setRefreshing(true);
+		await fetchDetailData();
+		if (msg_id && selectedTime) {
+			await fetchAdvancedReport(selectedTime);
+		}
+		setRefreshing(false);
+	};
 
 	const RightView = () => {
 		return (
 			<View style={{ flexDirection: "row", alignItems: "center", gap: 15 }} >
-				<CustomTouchableOpacity onPress={() => toggleFavorite(item)}>
-					{favorites?.find((fav) => fav?.page_id == item?.page_id) ? (
+				<CustomTouchableOpacity onPress={() => toggleFavorite(page_id)}>
+					{favorites?.find((fav) => fav?.page_id == page_id) ? (
 						<Favourite name="star" size={20} color={textColor} />
 					) : (
 						<Favourite name="star-outline" color={textColor} size={20} />
@@ -67,11 +156,9 @@ const DetailsScreen = ({ itemId }) => {
 		);
 	};
 
-	const firstSignalUpdateTime = allSignals?.find(signal => signal?.ago !== "1 hour");
-
 	return (
-		<CustomView showBackIcon title={item?.symbol} right={<RightView />}>
-			{!detailData && !advanceReportData ? (
+		<CustomView showBackIcon title={all?.[0]?.symbol} right={<RightView />}>
+			{!data && !advanceReportData ? (
 				<Loader />
 			) : (
 				<CustomScrollView scrollViewRef={scrollViewRef} refreshControl={
@@ -83,16 +170,14 @@ const DetailsScreen = ({ itemId }) => {
 						progressBackgroundColor={bgColor}
 						refreshing={refreshing}
 						renderIndicator={() => <Loader />}
-					/>
-				}>
+					/>}>
 					<ViewIndicesRating
-						price={item?.price}
-						summaryChange={item?.summaryChange}
-						summaryChangeP={item?.summaryChangeP}
-						update_time={update}
-						ago={ago}
+						price={selectedData?.price}
+						summaryChange={selectedData?.summaryChange}
+						summaryChangeP={selectedData?.summaryChangeP}
+						update_time={info?.update}
+						ago={info?.ago}
 					/>
-
 					<View style={{ marginVertical: 15 }}>
 						<CustomText
 							style={[
@@ -121,17 +206,17 @@ const DetailsScreen = ({ itemId }) => {
 								</CustomText>
 							</View>
 						</View>
-						{allSignals?.map((signal, index) => (
+						{all?.map((signal, index) => (
 							<SignalSummery
 								key={index}
 								symbol={signal?.symbol}
 								maSummary={signal?.ma_summery}
 								ago={signal?.ago}
 								ma_summery={signal?.ma_summery}
-								activeTime={signal?.activeTime}
-								time={signal?.mappedTime}
+								time={getMappedTime(signal?.time)}
 							/>
 						))}
+
 						{firstSignalUpdateTime && (
 							<View style={globalStyles.alert}>
 								<CustomText style={{ color: COLORS.DANGER_RED }}>
@@ -141,7 +226,7 @@ const DetailsScreen = ({ itemId }) => {
 						)}
 					</View>
 
-					<AdvanceReport advanceDetail={advanceReportData} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} isLoading={isSummaryLoading} />
+					<AdvanceReport advanceDetail={overallSummary} info={advanceReportData?.info} onTabChange={onTabChange} selectedTime={selectedTime} isLoading={isSummaryLoading} />
 
 					<View style={{ minHeight: SCREEN_HEIGHT - 55, flex: 1, }}>
 						{isSummaryLoading ? (
@@ -151,18 +236,16 @@ const DetailsScreen = ({ itemId }) => {
 						) : (
 							<>
 								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Pivot Points (${selectedTimeLabel})`}</CustomText>
-								<ViewIndicesDetails pivotData={advanceReportData?.pivot_point} />
+								<ViewIndicesDetails pivotData={pivotData?.pivot_point} />
 								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Technical Indicators (${selectedTimeLabel}) `}</CustomText>
-								<TechnicalIndicatorView indicators={advanceReportData?.indicators} />
+								<TechnicalIndicatorView indicators={technicalIndicators} />
 								<CustomText style={{ fontWeight: "bold", paddingTop: 15 }} >  {`Moving Averages (${selectedTimeLabel}) `}</CustomText>
-								<MovingAverageView emaData={advanceReportData?.emaData} smaData={advanceReportData?.smaData} />
+								<MovingAverageView emaData={emaData} smaData={smaData} />
 							</>
 						)}
 					</View>
 				</CustomScrollView>
-
-			)
-			}
+			)}
 		</CustomView >
 	);
 };

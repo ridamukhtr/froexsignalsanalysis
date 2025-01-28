@@ -1,4 +1,3 @@
-// import packages
 import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -11,37 +10,18 @@ const useInnerScreens = () => {
 
   const navigation = useNavigation();
 
-  const [selectedItem, setSelectedItem] = useState(null);
-
-
-  const { data: detailData, } = useGetInnerScreenDataQuery(
-    {
-      id: selectedItem?.id,
-      msg_id: selectedItem?.msg_id
-    },
-    {
-      skip: !selectedItem,
-      enabled: !!selectedItem
-    }
-  );
-
-  useEffect(() => {
-    if (detailData && selectedItem) {
-      const params = {
-        id: selectedItem?.id,
-        msg_id: selectedItem?.msg_id,
-        item: selectedItem,
-        detailData
-      };
-
-      navigation.navigate(ROUTES.screenDetails, { item: selectedItem, params });
-      setSelectedItem(null);
-    }
-  }, [detailData, selectedItem, navigation]);
-
   const handlePressItem = (item) => {
-    setSelectedItem(item);
+    if (item?.page_id && item?.msg_id) {
+      console.log("Setting selected item:", item);
+      navigation.navigate(ROUTES.screenDetails, {
+        page_id: item.page_id,
+        msg_id: item.msg_id,
+      });
+    } else {
+      console.error("Invalid item passed to handlePressItem:", item);
+    }
   };
+
 
   const transformAndSortData = (data, sortKey, sortOrder = 'asc') => {
     if (!data || Object?.keys(data)?.length === 0) return [];

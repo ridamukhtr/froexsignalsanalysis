@@ -12,6 +12,9 @@ const MovingAverageView = ({ emaData, smaData }) => {
   const { textColor, borderColor } = useThemeManager();
   const { getMaSummaryColor } = useCommonFunctions();
 
+
+  const commonKeys = Object?.keys(emaData)?.filter((key) => key in smaData);
+
   if (!emaData || !smaData) {
     return (
       <View style={{ paddingHorizontal: 20 }}>
@@ -19,9 +22,6 @@ const MovingAverageView = ({ emaData, smaData }) => {
       </View>
     );
   }
-
-  const commonKeys = Object?.keys(emaData)?.filter((key) => key in smaData);
-
   return (
     <View style={[globalStyles.boxContainer, { borderColor: borderColor, }]}>
       <View style={[globalStyles.rowContainer, { borderBottomColor: borderColor }]}>

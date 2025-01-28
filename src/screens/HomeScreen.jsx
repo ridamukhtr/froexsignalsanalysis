@@ -30,6 +30,7 @@ import time_map from '../../assets/time_map';
 import { COLORS } from '../styles/theme-styles';
 import globalStyles from '../styles/global-styles';
 import { ROUTES } from '../routes/RouteConstants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const sortingOptions = [
 	{ key: 'name', label: 'Name' },
@@ -41,7 +42,7 @@ const sortingOptions = [
 const HomeScreen = () => {
 	const navigation = useNavigation();
 	const tabs = ['Stocks', 'Forex', 'Indices', 'Crypto Currency', 'Commodities',];
-	const [activeTime, setActiveTime] = useState('1800');
+	const [activeTime, setActiveTime] = useState('3600');
 	const [activeSort, setActiveSort] = useState('price');
 	const [sortOrder, setSortOrder] = useState('asc');
 	const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
@@ -61,6 +62,16 @@ const HomeScreen = () => {
 			cacheTime: 0,
 		}
 	);
+
+	useEffect(() => {
+		const getSelectedTime = async () => {
+			const storedTime = await AsyncStorage.getItem('selectedTimeofhome');
+			if (storedTime) {
+				setActiveTime(storedTime);
+			}
+		};
+		getSelectedTime();
+	}, []);
 
 	const isApiLoading = isLoading || isFetching;
 
@@ -83,72 +94,22 @@ const HomeScreen = () => {
 		setBottomSheetVisible(true);
 	};
 
-	const handleTimeSelect = (selectedTime) => {
+	const handleTimeSelect = async (selectedTime) => {
 		if (selectedTime === activeTime) {
 			setIsRefreshing();
 		} else {
 			setActiveTime(selectedTime);
+			// Store selected time in AsyncStorage
+			await AsyncStorage.setItem('selectedTimeofhome', selectedTime);
 		}
 		setBottomSheetVisible(false);
 	};
-
 
 	const handleSortSelect = (selectedSort) => {
 		setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
 		setActiveSort(selectedSort);
 		setBottomSheetVisible(false);
 	};
-
-	useEffect(() => {
-		const unsubscribeNotification = messaging().onMessage(async remoteMessage => {
-			console.log('Foreground notification:', remoteMessage);
-
-			const { title, message, topic } = remoteMessage.data;
-
-			if (topic) {
-				// Navigate to detail screen with topic
-				navigation.navigate(ROUTES.screenDetails, { topic });
-			} else {
-				console.log('No topic found in notification');
-			}
-
-			PushNotification.localNotification({
-				channelId: 'default-channel-id', // Ensure you have created this channel
-				title: title || 'Notification',
-				message: message || 'You have a new notification',
-				priority: 'high',
-			});
-		});
-
-		return () => unsubscribeNotification();
-	}, []);
-
-	const checkUserPermission = async () => {
-		const enabled = await messaging().hasPermission();
-		if (enabled !== -1) {
-			getFcmToken();
-		} else {
-			requestUserPermission();
-		}
-	};
-
-	const requestUserPermission = async () => {
-		const authStatus = await messaging().requestPermission();
-		const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-		if (enabled) {
-			getFcmToken();
-		}
-	};
-
-	const getFcmToken = async () => {
-		const fcmToken = await messaging().getToken();
-		if (fcmToken) {
-			console.log('Your Firebase Token is:', fcmToken);
-		} else {
-			console.log('Failed', 'No token received');
-		}
-	};
-
 
 	return (
 		<>

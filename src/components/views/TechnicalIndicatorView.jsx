@@ -14,11 +14,12 @@ const TechnicalIndicatorView = ({ indicators }) => {
   const { textColor, borderColor } = useThemeManager();
   const { getMaSummaryColor } = useCommonFunctions();
 
-  if (!indicators) {
+  if (!indicators || indicators.length === 0) {
     return (
       <View style={{ paddingHorizontal: 20 }}>
         <CustomText>No Indicators Data Available</CustomText>
-      </View>)
+      </View>
+    );
   }
 
   return (

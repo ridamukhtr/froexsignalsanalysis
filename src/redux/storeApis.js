@@ -13,7 +13,7 @@ const forexSignalapi = createApi({
 			providesTags: () => [TAG_TYPES.marketData]
 		}),
 		getInnerScreenData: builder.query({
-			query: ({ id, msg_id }) => `/api_data?id=${id}&msg_id=${msg_id}`,
+			query: ({ page_id, msg_id, }) => `/api_data?id=${page_id}&msg_id=${msg_id}`,
 			providesTags: () => [TAG_TYPES.innerScreenData]
 		}),
 		getDetailsAdvanceReport: builder.query({

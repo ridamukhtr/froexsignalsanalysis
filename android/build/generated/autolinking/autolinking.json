@@ -139,7 +139,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\lottie-react-native\\lottie-react-native.podspec",
-          "version": "7.1.0",
+          "version": "7.2.2",
           "configurations": [],
           "scriptPhases": []
         },
@@ -166,7 +166,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-gesture-handler\\RNGestureHandler.podspec",
-          "version": "2.21.2",
+          "version": "2.22.1",
           "configurations": [],
           "scriptPhases": []
         },
@@ -242,7 +242,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-pager-view\\react-native-pager-view.podspec",
-          "version": "6.6.1",
+          "version": "6.7.0",
           "configurations": [],
           "scriptPhases": []
         },
@@ -288,7 +288,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-reanimated\\RNReanimated.podspec",
-          "version": "3.16.6",
+          "version": "3.16.7",
           "configurations": [],
           "scriptPhases": []
         },
@@ -341,7 +341,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-screens\\RNScreens.podspec",
-          "version": "4.4.0",
+          "version": "4.5.0",
           "configurations": [],
           "scriptPhases": []
         },
@@ -451,7 +451,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "E:\\remote\\froexsignalsanalysis\\node_modules\\react-native-svg\\RNSVG.podspec",
-          "version": "15.10.1",
+          "version": "15.11.1",
           "configurations": [],
           "scriptPhases": []
         },

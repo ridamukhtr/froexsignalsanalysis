@@ -8,6 +8,7 @@ import { useCommonFunctions } from '../../lib/customHooks/useCommonFunctions';
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 // import styling
 import globalStyles from '../../styles/global-styles';
+import time_map from '../../../assets/time_map';
 
 const SignalSummery = ({ maSummary, time, ago, ma_summery, }) => {
 
