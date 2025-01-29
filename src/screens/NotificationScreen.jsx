@@ -77,18 +77,18 @@ const NotificationScreen = () => {
 		console.log("pageId", pageId);
 
 		const symbol = item?.symbol || 'Unknown Symbol';
-		const isCurrentlySubscribed = isSubscribed[pageId] || false;
+		const isCurrentlySubscribed = isSubscribed[identifier] || false;
 
 		try {
 			if (isCurrentlySubscribed) {
-				await messaging().unsubscribeFromTopic(pageId);
+				await messaging().unsubscribeFromTopic(identifier);
 				Toast.show({
 					type: 'info',
 					text1: 'Unsubscribed',
 					text2: `You have unsubscribed from ${symbol}.`,
 				});
 			} else {
-				await messaging().subscribeToTopic(pageId);
+				await messaging().subscribeToTopic(identifier);
 				Toast.show({
 					type: 'success',
 					text1: 'Subscribed',
@@ -97,12 +97,12 @@ const NotificationScreen = () => {
 			}
 			setIsSubscribed(prevState => ({
 				...prevState,
-				[pageId]: !isCurrentlySubscribed,
+				[identifier]: !isCurrentlySubscribed,
 			}));
 
 			const updatedSubscriptions = {
 				...isSubscribed,
-				[pageId]: !isCurrentlySubscribed,
+				[identifier]: !isCurrentlySubscribed,
 			};
 			await AsyncStorage.setItem('subscriptions', JSON.stringify(updatedSubscriptions));
 
@@ -121,7 +121,6 @@ const NotificationScreen = () => {
 			console.error('Error loading selected times:', error);
 		}
 	};
-	console.log("time", selectedTime);
 
 	const loadPreferences = async () => {
 		try {

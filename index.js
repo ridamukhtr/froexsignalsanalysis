@@ -9,6 +9,40 @@ import messaging from '@react-native-firebase/messaging';
 import { NavigationService } from './src/navigators/NavigationServices';
 import { ROUTES } from './src/routes/RouteConstants';
 
+messaging().onMessage(remoteMessage => {
+  console.log('Message handled in the foreground:', remoteMessage);
+  const { title, message, topic, msg_id } = remoteMessage?.data || {};
+  if (title && message) {
+    PushNotification.localNotification({
+      channelId: 'test1',
+      title: title || 'Notification',
+      message: message || 'You have a new notification',
+      priority: 'high',
+      userInfo: { topic, msg_id }, // Pass the topic in userInfo to access it in onNotification
+      data: { topic, msg_id }      // For Android
+    });
+  } else {
+    console.log('Invalid message data:', remoteMessage);
+  }
+});
+
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background:', remoteMessage);
+  const { title, message, topic, msg_id } = remoteMessage?.data || {};
+  if (title && message) {
+    PushNotification.localNotification({
+      channelId: 'test1',
+      title: title || 'Notification',
+      message: message || 'You have a new notification',
+      priority: 'high',
+      userInfo: { topic, msg_id }, // Pass the topic in userInfo to access it in onNotification
+      data: { topic, msg_id }      // For Android
+    });
+  } else {
+    console.log('Invalid message data:', remoteMessage);
+  }
+});
+
 // Create notification channel
 PushNotification.createChannel(
   {
@@ -45,40 +79,6 @@ PushNotification.configure({
     }
   },
   requestPermissions: Platform.OS === 'ios',
-});
-
-messaging().onMessage(remoteMessage => {
-  console.log('Message handled in the foreground:', remoteMessage);
-  const { title, message, topic } = remoteMessage?.data || {};
-  if (title && message) {
-    PushNotification.localNotification({
-      channelId: 'test1',
-      title: title || 'Notification',
-      message: message || 'You have a new notification',
-      priority: 'high',
-      userInfo: { topic }, // Pass the topic in userInfo to access it in onNotification
-      data: { topic }      // For Android
-    });
-  } else {
-    console.log('Invalid message data:', remoteMessage);
-  }
-});
-
-messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log('Message handled in the background:', remoteMessage);
-  const { title, message, topic } = remoteMessage?.data || {};
-  if (title && message) {
-    PushNotification.localNotification({
-      channelId: 'test1',
-      title: title || 'Notification',
-      message: message || 'You have a new notification',
-      priority: 'high',
-      userInfo: { topic }, // Pass the topic in userInfo to access it in onNotification
-      data: { topic }      // For Android
-    });
-  } else {
-    console.log('Invalid message data:', remoteMessage);
-  }
 });
 
 AppRegistry.registerComponent(appName, () => App);
