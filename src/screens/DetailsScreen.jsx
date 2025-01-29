@@ -23,22 +23,19 @@ import globalStyles from '../styles/global-styles';
 // import assets
 import time_map from '../../assets/time_map';
 // import hook
-import useDetailsScreen from '../lib/customHooks/useDetailData';
 import { useThemeManager } from '../lib/customHooks/useThemeManager';
 import { useFavManager } from '../lib/customHooks/useFavManager';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { hideLoader, showLoader } from '../redux/LoaderReducer';
 
 const DetailsScreen = () => {
 
 	const route = useRoute();
-	const { page_id, msg_id, } = route?.params;
-	console.log('Route Params:', page_id, msg_id,);
+	const { page_id, msg_id, time } = route?.params;
+	console.log('Route Params:', page_id, msg_id, time);
 	const [data, setData] = useState(null);
 
 	const scrollViewRef = useRef();
 	const [selectedTime, setSelectedTime] = useState(3600);
-	const [activeTime, setActiveTime] = useState(null);
 	const [advanceReportData, setAdvanceReportData] = useState(null);
 	const [isSummaryLoading, setIsSummaryLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
@@ -72,17 +69,7 @@ const DetailsScreen = () => {
 
 	const { all, info } = data || {};
 
-	useEffect(() => {
-		const getSelectedTime = async () => {
-			const storedTime = await AsyncStorage.getItem('selectedTimeofhome');
-			setActiveTime(storedTime);
-		};
-
-		getSelectedTime();
-	}, []);
-
-	const selectedData = data?.all?.find((item) => item?.time === activeTime);
-	console.log("sel", data);
+	const selectedData = data?.all?.find((item) => item?.time === time);
 
 	const getMappedTime = (time) => {
 		return time_map[time] || 'Unknown Time';
@@ -142,7 +129,7 @@ const DetailsScreen = () => {
 	const RightView = () => {
 		return (
 			<View style={{ flexDirection: "row", alignItems: "center", gap: 15 }} >
-				<CustomTouchableOpacity onPress={() => toggleFavorite(page_id)}>
+				<CustomTouchableOpacity onPress={() => toggleFavorite(item)}>
 					{favorites?.find((fav) => fav?.page_id == page_id) ? (
 						<Favourite name="star" size={20} color={textColor} />
 					) : (

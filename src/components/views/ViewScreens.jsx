@@ -44,7 +44,7 @@ const ViewScreens = ({ data, onPressItem, isFavoriteScreen = false, refreshContr
 					)}
 				</CustomTouchableOpacity>
 
-				<CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem?.({ page_id: item?.page_id, msg_id: item?.msg_id })
+				<CustomTouchableOpacity style={{ flex: 1 }} onPress={() => onPressItem(item)
 				}>
 					<View style={[globalStyles.container, {}]}>
 						<CustomText style={[globalStyles.titleText, { lineHeight: 15, paddingBottom: 0, marginBottom: 0 }]} numberOfLines={1}>

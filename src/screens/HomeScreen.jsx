@@ -66,7 +66,10 @@ const HomeScreen = () => {
 	useEffect(() => {
 		const getSelectedTime = async () => {
 			const storedTime = await AsyncStorage.getItem('selectedTimeofhome');
-			if (storedTime) {
+			if (!storedTime) {
+				await AsyncStorage.setItem('selectedTimeofhome', '3600');
+				setActiveTime('3600');
+			} else {
 				setActiveTime(storedTime);
 			}
 		};

@@ -72,23 +72,22 @@ const NotificationScreen = () => {
 	const toggleSubscription = async (item) => {
 		const msgId = item?.msg_id;
 		const pageId = item?.page_id;
-		const identifier = msgId || pageId;
 		console.log("msgId", msgId);
 		console.log("pageId", pageId);
 
 		const symbol = item?.symbol || 'Unknown Symbol';
-		const isCurrentlySubscribed = isSubscribed[identifier] || false;
+		const isCurrentlySubscribed = isSubscribed[pageId] || false;
 
 		try {
 			if (isCurrentlySubscribed) {
-				await messaging().unsubscribeFromTopic(identifier);
+				await messaging().unsubscribeFromTopic(pageId);
 				Toast.show({
 					type: 'info',
 					text1: 'Unsubscribed',
 					text2: `You have unsubscribed from ${symbol}.`,
 				});
 			} else {
-				await messaging().subscribeToTopic(identifier);
+				await messaging().subscribeToTopic(pageId);
 				Toast.show({
 					type: 'success',
 					text1: 'Subscribed',
@@ -97,12 +96,12 @@ const NotificationScreen = () => {
 			}
 			setIsSubscribed(prevState => ({
 				...prevState,
-				[identifier]: !isCurrentlySubscribed,
+				[pageId]: !isCurrentlySubscribed,
 			}));
 
 			const updatedSubscriptions = {
 				...isSubscribed,
-				[identifier]: !isCurrentlySubscribed,
+				[pageId]: !isCurrentlySubscribed,
 			};
 			await AsyncStorage.setItem('subscriptions', JSON.stringify(updatedSubscriptions));
 

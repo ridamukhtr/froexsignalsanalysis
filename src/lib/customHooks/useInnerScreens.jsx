@@ -12,10 +12,10 @@ const useInnerScreens = () => {
 
   const handlePressItem = (item) => {
     if (item?.page_id && item?.msg_id) {
-      console.log("Setting selected item:", item);
       navigation.navigate(ROUTES.screenDetails, {
         page_id: item.page_id,
         msg_id: item.msg_id,
+        time: item.time,
       });
     } else {
       console.error("Invalid item passed to handlePressItem:", item);
