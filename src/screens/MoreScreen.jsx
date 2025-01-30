@@ -1,6 +1,7 @@
 // import packages
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-native-switch';
+import ToggleSwitch from 'toggle-switch-react-native';
 import { LogLevel, OneSignal } from 'react-native-onesignal';
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -104,7 +105,7 @@ const MoreScreen = () => {
         <View style={styles.container(footerColor)}>
           <View style={[globalStyles.container, styles.body(borderColor)]}>
             <CustomText >Dark Mode</CustomText>
-            <Switch
+            {/* <Switch
               value={isEnabled}
               onValueChange={handleThemeToggle}
               activeText={''}
@@ -124,7 +125,23 @@ const MoreScreen = () => {
                   <Icon name="times" size={15} color={iconColor} />
                 )
               }
+            /> */}
+
+            <ToggleSwitch
+              isOn={isEnabled}
+              onColor={dropdownColor}
+              offColor={dropdownColor}
+              size="medium"
+              icon={
+                isEnabled ? (
+                  <Icon name="check" size={15} color={COLORS.GREEN} />
+                ) : (
+                  <Icon name="times" size={15} color={iconColor} />
+                )
+              }
+              onToggle={handleThemeToggle}
             />
+
 
           </View>
           <View style={[styles.body(borderColor), { borderBottomWidth: 0 }]} >

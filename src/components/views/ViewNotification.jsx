@@ -11,6 +11,7 @@ import { COLORS } from '../../styles/theme-styles';
 // import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 import time_map from '../../../assets/time_map';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, onToggleSubscription }) => {
 	const { dropdownColor, iconColor } = useThemeManager();
@@ -18,7 +19,7 @@ const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, 
 		<View>
 			<View style={globalStyles.container}>
 				<CustomText style={{ left: 5 }}>{item?.symbol}</CustomText>
-				<Switch
+				{/* <Switch
 					value={isSubscribed}
 					onValueChange={() => onToggleSubscription(item)}
 					activeText={''}
@@ -32,6 +33,22 @@ const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, 
 					innerCircleStyle={{ alignItems: 'center', justifyContent: 'center' }}
 					renderInsideCircle={() =>
 						isSubscribed ? <Icon name="check" size={15} color={COLORS.GREEN} /> : <Icon name="times" size={15} color={iconColor} />
+					}
+				/> */}
+
+				<ToggleSwitch
+					isOn={isSubscribed}
+					onColor={dropdownColor}
+					offColor={dropdownColor}
+					size="small"
+					circleColor="white"
+					onToggle={() => onToggleSubscription(item)}
+					icon={
+						isSubscribed ? (
+							<Icon name="check" size={15} color={COLORS.GREEN} />
+						) : (
+							<Icon name="times" size={15} color={iconColor} />
+						)
 					}
 				/>
 			</View>

@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from '@react-navigation/native';
 import { Switch } from 'react-native-switch';
+import ToggleSwitch from 'toggle-switch-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Sound from 'react-native-sound';
@@ -23,7 +24,7 @@ const NotificationScreen = () => {
 	const [data, setData] = useState([]);
 	const [selectedTime, setSelectedTime] = useState({});
 	const [isVibrationEnabled, setIsVibrationEnabled] = useState(false);
-	const [isSoundEnabled, setIsSoundEnabled] = useState(false);
+	const [isSoundEnabled, setIsSoundEnabled] = useState();
 	const [isSubscribed, setIsSubscribed] = useState({});
 
 	const { dropdownColor, borderColor, footerColor, iconColor } = useThemeManager();
@@ -174,7 +175,7 @@ const NotificationScreen = () => {
 				<View style={styles.container(footerColor)}>
 					<View style={[styles.body(borderColor), globalStyles.container]}>
 						<CustomText>{'Sound'}</CustomText>
-						<Switch
+						{/* <Switch
 							value={isSoundEnabled}
 							onValueChange={toggleSound}
 							activeText={''}
@@ -189,11 +190,26 @@ const NotificationScreen = () => {
 							renderInsideCircle={() =>
 								isSoundEnabled ? <Icon name="check" size={15} color={COLORS.GREEN} /> : <Icon name="times" size={15} color={iconColor} />
 							}
+						/> */}
+
+						<ToggleSwitch
+							isOn={isSoundEnabled}
+							onColor={dropdownColor}
+							offColor={dropdownColor}
+							size="medium"
+							icon={
+								isSoundEnabled ? (
+									<Icon name="check" size={15} color={COLORS.GREEN} />
+								) : (
+									<Icon name="times" size={15} color={iconColor} />
+								)
+							}
+							onToggle={toggleSound}
 						/>
 					</View>
 					<View style={[styles.body(borderColor), globalStyles.container, { borderBottomWidth: 0 }]}>
 						<CustomText>{'Vibration'}</CustomText>
-						<Switch
+						{/* <Switch
 							value={isVibrationEnabled}
 							onValueChange={toggleVibration}
 							activeText={''}
@@ -208,11 +224,26 @@ const NotificationScreen = () => {
 							renderInsideCircle={() =>
 								isVibrationEnabled ? <Icon name="check" size={15} color={COLORS.GREEN} /> : <Icon name="times" size={15} color={iconColor} />
 							}
+						/> */}
+
+						<ToggleSwitch
+							isOn={isVibrationEnabled}
+							onColor={dropdownColor}
+							offColor={dropdownColor}
+							size="medium"
+							icon={
+								isVibrationEnabled ? (
+									<Icon name="check" size={15} color={COLORS.GREEN} />
+								) : (
+									<Icon name="times" size={15} color={iconColor} />
+								)
+							}
+							onToggle={toggleVibration}
 						/>
 					</View>
 				</View>
 				<Toast
-					position="top"
+					position="top" t
 					visibilityTime={3000}
 					autoHide
 					topOffset={20}
