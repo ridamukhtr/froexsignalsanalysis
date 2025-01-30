@@ -1,5 +1,8 @@
+// import packages
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// services
 import { NavigationService } from './src/navigators/NavigationServices';
 import { ROUTES } from './src/routes/RouteConstants';
 
@@ -80,7 +83,17 @@ async function displayNotification(remoteMessage) {
 export function notificationListener() {
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground Notification:', remoteMessage);
-    await displayNotification(remoteMessage);
+
+    const { time_frame, topic } = remoteMessage?.data || {};
+    const storedTimes = await AsyncStorage.getItem('selectedTimes');
+    console.log("stored", storedTimes);
+
+    const selectedTimes = storedTimes ? JSON.parse(storedTimes) : {};
+    if (selectedTimes[topic]?.includes(time_frame)) {
+      await displayNotification(remoteMessage);
+    } else {
+      console.log('Notification ignored as the time is not marked by the user.');
+    }
   });
 
   messaging().setBackgroundMessageHandler(async remoteMessage => {
@@ -97,7 +110,6 @@ export function notificationListener() {
   messaging().getInitialNotification().then(remoteMessage => {
     if (remoteMessage) {
       console.log('App opened from quit state:', remoteMessage);
-
       handleNavigation(remoteMessage);
     }
   });

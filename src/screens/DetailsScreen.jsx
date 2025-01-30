@@ -31,7 +31,6 @@ const DetailsScreen = () => {
 
 	const route = useRoute();
 	const { page_id, msg_id, time } = route?.params;
-	console.log('Route Params:', page_id, msg_id, time);
 	const [data, setData] = useState(null);
 
 	const scrollViewRef = useRef();
@@ -66,7 +65,6 @@ const DetailsScreen = () => {
 			hideLoader();
 		}
 	};
-
 	const { all, info } = data || {};
 
 	const selectedData = data?.all?.find((item) => item?.time === time);
@@ -126,10 +124,27 @@ const DetailsScreen = () => {
 		setRefreshing(false);
 	};
 
+	const getItem = () => {
+		const item = {
+			page_id: selectedData.page_id,
+			symbol: selectedData.symbol,
+			symbol2: selectedData.symbol2,
+			price: selectedData.price,
+			ma_summery: selectedData.ma_summery,
+			summaryChange: selectedData.summaryChange,
+			summaryChangeP: selectedData.summaryChangeP,
+			technical: selectedData.technical,
+			type: selectedData.type,
+			msg_id: selectedData.msg_id,
+			time: selectedData.time
+		};
+		return item;
+	}
+
 	const RightView = () => {
 		return (
 			<View style={{ flexDirection: "row", alignItems: "center", gap: 15 }} >
-				<CustomTouchableOpacity onPress={() => toggleFavorite(item)}>
+				<CustomTouchableOpacity onPress={() => toggleFavorite(getItem())}>
 					{favorites?.find((fav) => fav?.page_id == page_id) ? (
 						<Favourite name="star" size={20} color={textColor} />
 					) : (

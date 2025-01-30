@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
-import messaging from '@react-native-firebase/messaging';
 // import store
 import { store } from './src/redux/store';
 // import navigator
@@ -27,7 +26,7 @@ const App = () => {
 	useEffect(() => {
 		requestUserPermission();
 		getToken();
-		createNotificationChannel(); // ✅ Only create notification channel once
+		createNotificationChannel();
 		notificationListener();
 	}, []);
 

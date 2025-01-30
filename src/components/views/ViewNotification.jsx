@@ -7,20 +7,11 @@ import { Switch } from 'react-native-switch';
 import CheckBox from '@react-native-community/checkbox';
 // import style
 import globalStyles from '../../styles/global-styles';
+import { COLORS } from '../../styles/theme-styles';
 // import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
-import { COLORS } from '../../styles/theme-styles';
+import time_map from '../../../assets/time_map';
 
-const timeOptions = [
-	{ label: '5m', value: '5m' },
-	{ label: '15m', value: '15m' },
-	{ label: '30m', value: '30m' },
-	{ label: '1h', value: '1h' },
-	{ label: '4h', value: '4h' },
-	{ label: '9h', value: '9h' },
-	{ label: '1d', value: '1d' },
-	{ label: '1w', value: '1w' }
-];
 const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, onToggleSubscription }) => {
 	const { dropdownColor, iconColor } = useThemeManager();
 	return (
@@ -46,17 +37,17 @@ const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, 
 			</View>
 
 			<View style={styles.checkboxContainer}>
-				{timeOptions.map(option => (
-					<View key={option.value} style={styles.checkboxItem}>
+				{Object.entries(time_map).map(([value, label]) => (
+					<View key={value} style={styles.checkboxItem}>
 						<CheckBox
 							disabled={!isSubscribed}
-							value={selectedTime.includes(option.value)}
-							onValueChange={() => onToggleCheckbox(option.value)}
+							value={selectedTime.includes(value)}
+							onValueChange={() => onToggleCheckbox(value)}
 							tintColors={{ true: dropdownColor, false: dropdownColor }}
 							style={styles.checkbox}
 							onCheckColor={dropdownColor}
 						/>
-						<CustomText style={{ fontSize: 14 }}>{option.label}</CustomText>
+						<CustomText style={{ fontSize: 14 }}>{label}</CustomText>
 					</View>
 				))}
 			</View>

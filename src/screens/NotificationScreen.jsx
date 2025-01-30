@@ -27,6 +27,7 @@ const NotificationScreen = () => {
 	const [isSubscribed, setIsSubscribed] = useState({});
 
 	const { dropdownColor, borderColor, footerColor, iconColor } = useThemeManager();
+	console.log("sele-----", selectedTime);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -70,10 +71,9 @@ const NotificationScreen = () => {
 	};
 
 	const toggleSubscription = async (item) => {
-		const msgId = item?.msg_id;
 		const pageId = item?.page_id;
-		console.log("msgId", msgId);
-		console.log("pageId", pageId);
+		console.log("page", pageId);
+		console.log("page", item.msg_id);
 
 		const symbol = item?.symbol || 'Unknown Symbol';
 		const isCurrentlySubscribed = isSubscribed[pageId] || false;
