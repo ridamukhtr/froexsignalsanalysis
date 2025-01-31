@@ -95,6 +95,26 @@ const StockStack = () => {
 					}
 				})}
 			/>
+			<Stack.Screen
+				name={ROUTES.screenNotification}
+				component={NotificationScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: getTabBarStyle(footerColor)
+						});
+					}
+				})}
+			/>
 		</Stack.Navigator>
 	);
 };
@@ -140,6 +160,26 @@ const FavouriteStack = () => {
 			<Stack.Screen
 				name={ROUTES.screenChart}
 				component={ChartScreen}
+				options={{
+					headerShown: false,
+					tabBarStyle: { display: 'none' }
+				}}
+				listeners={({ navigation }) => ({
+					focus: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: { display: 'none' }
+						});
+					},
+					beforeRemove: () => {
+						navigation.getParent()?.setOptions({
+							tabBarStyle: getTabBarStyle(footerColor)
+						});
+					}
+				})}
+			/>
+			<Stack.Screen
+				name={ROUTES.screenNotification}
+				component={NotificationScreen}
 				options={{
 					headerShown: false,
 					tabBarStyle: { display: 'none' }

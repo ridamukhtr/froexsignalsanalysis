@@ -24,11 +24,10 @@ const NotificationScreen = () => {
 	const [data, setData] = useState([]);
 	const [selectedTime, setSelectedTime] = useState({});
 	const [isVibrationEnabled, setIsVibrationEnabled] = useState(false);
-	const [isSoundEnabled, setIsSoundEnabled] = useState();
+	const [isSoundEnabled, setIsSoundEnabled] = useState(false);
 	const [isSubscribed, setIsSubscribed] = useState({});
 
 	const { dropdownColor, borderColor, footerColor, iconColor } = useThemeManager();
-	console.log("sele-----", selectedTime);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -125,6 +124,10 @@ const NotificationScreen = () => {
 	const loadPreferences = async () => {
 		try {
 			const storedTimes = await AsyncStorage.getItem('selectedTimes');
+			const soundPref = await AsyncStorage.getItem('soundEnabled');
+			const vibrationPref = await AsyncStorage.getItem('vibrationEnabled');
+			if (soundPref !== null) setIsSoundEnabled(JSON.parse(soundPref));
+			if (vibrationPref !== null) setIsVibrationEnabled(JSON.parse(vibrationPref));
 			if (storedTimes) {
 				setSelectedTime(JSON.parse(storedTimes));
 			}
@@ -138,8 +141,10 @@ const NotificationScreen = () => {
 		}
 	};
 
-	const toggleSound = () => {
-		setIsSoundEnabled(prev => !prev);
+	const toggleSound = async () => {
+		const newSoundState = !isSoundEnabled;
+		setIsSoundEnabled(newSoundState);
+		await AsyncStorage.setItem('soundEnabled', JSON.stringify(newSoundState));
 		if (!isSoundEnabled) {
 			sound.play(success => {
 				if (!success) {
@@ -156,8 +161,10 @@ const NotificationScreen = () => {
 		}
 	});
 
-	const toggleVibration = () => {
-		setIsVibrationEnabled(prev => !prev);
+	const toggleVibration = async () => {
+		const newVibrationState = !isVibrationEnabled;
+		setIsVibrationEnabled(newVibrationState);
+		await AsyncStorage.setItem('vibrationEnabled', JSON.stringify(newVibrationState));
 		if (!isVibrationEnabled) {
 			Vibration.vibrate(500);
 		} else {

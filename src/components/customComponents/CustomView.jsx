@@ -3,22 +3,18 @@ import React, { useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import Notification from 'react-native-vector-icons/MaterialCommunityIcons';
 import Search from 'react-native-vector-icons/Ionicons';
-import Ioniicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image, KeyboardAvoidingView, StyleSheet, TextInput, View } from 'react-native';
 import Cross from 'react-native-vector-icons/Octicons';
-
 // @import modules
 import CustomText from './CustomText';
-import CustomScrollView from './CustomScrollView';
 import CustomTouchableOpacity from './CustomTouchableOpacity';
 // @import styles
-import { COLORS, IS_IOS } from '../../styles/theme-styles';
+import { IS_IOS } from '../../styles/theme-styles';
 import globalStyles from '../../styles/global-styles';
 // @import hooks
 import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 import useNavigationManager from '../../lib/customHooks/useNavigationManager';
-import CustomSearchField from './CustomSearchField';
 
 const CustomView = ({
 	children,
@@ -36,8 +32,10 @@ const CustomView = ({
 	const [isSearchActive, setIsSearchActive] = useState(false);
 	const [searchQuery, setSearchQuery] = useState('');
 
-	const handleSearchToggle = () => {
+	const { bgColor, textColor, iconColor, dropdownColor, logoColor } = useThemeManager();
+	const { fnNavigateGoBack, fnNavigateToNotification } = useNavigationManager();
 
+	const handleSearchToggle = () => {
 		setIsSearchActive(!isSearchActive);
 		setSearchQuery('');
 		if (onSearch) {
@@ -51,9 +49,6 @@ const CustomView = ({
 			onSearch(text);
 		}
 	};
-
-	const { bgColor, textColor, iconColor, dropdownColor, logoColor } = useThemeManager();
-	const { fnNavigateGoBack, fnNavigateToNotification, fnNavigateToMore } = useNavigationManager();
 
 	return (
 		<SafeAreaView style={styles.safeArea(bgColor)}>
@@ -113,7 +108,7 @@ const CustomView = ({
 											<CustomText style={globalStyles.titleText}>ForaxAnalysis</CustomText>
 										</View>
 										<View style={globalStyles.gapContainer} >
-											<CustomTouchableOpacity onPress={fnNavigateToMore}>
+											<CustomTouchableOpacity onPress={fnNavigateToNotification}>
 												<Notification name="bell-outline" size={20} color={textColor} />
 											</CustomTouchableOpacity>
 											<CustomTouchableOpacity onPress={handleSearchToggle} >
