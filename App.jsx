@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import Toast from 'react-native-toast-message';
+import FlashMessage from "react-native-flash-message";
 // import store
 import { store } from './src/redux/store';
 // import navigator
@@ -35,8 +35,8 @@ const App = () => {
 			<View style={{ flex: 1 }}>
 				<AppInitializer>
 					<Statusbar />
-					<Toast />
 					<AppNavigator />
+					<FlashMessage position="bottom" style={{ height: 60 }} />
 				</AppInitializer>
 			</View>
 		</Provider>

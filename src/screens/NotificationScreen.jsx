@@ -1,14 +1,13 @@
 // import packages
 import { StyleSheet, Vibration, View } from 'react-native';
-import Toast from 'react-native-toast-message';
 import React, { useCallback, useEffect, useState } from 'react';
 import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from '@react-navigation/native';
 import { Switch } from 'react-native-switch';
 import ToggleSwitch from 'toggle-switch-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Sound from 'react-native-sound';
+import { showMessage } from 'react-native-flash-message';
 // components
 import ViewNotification from '../components/views/ViewNotification';
 import CustomScrollView from '../components/customComponents/CustomScrollView';
@@ -74,25 +73,34 @@ const NotificationScreen = () => {
 		const pageId = item?.page_id;
 		console.log("page", pageId);
 		console.log("page", item.msg_id);
-
 		const symbol = item?.symbol || 'Unknown Symbol';
 		const isCurrentlySubscribed = isSubscribed[pageId] || false;
 
 		try {
 			if (isCurrentlySubscribed) {
 				await messaging().unsubscribeFromTopic(pageId);
-				Toast.show({
-					type: 'info',
-					text1: 'Unsubscribed',
-					text2: `You have unsubscribed from ${symbol}.`,
+				showMessage({
+					message: "Unsubscribed",
+					description: `You have unsubscribed from ${symbol}.`,
+					type: "default",
 				});
+				// Toast.show({
+				// 	type: 'info',
+				// 	text1: 'Unsubscribed',
+				// 	text2: `You have unsubscribed from ${symbol}.`,
+				// });
 			} else {
 				await messaging().subscribeToTopic(pageId);
-				Toast.show({
-					type: 'success',
-					text1: 'Subscribed',
-					text2: `You have subscribed to ${symbol}.`,
+				showMessage({
+					message: "Subscribed",
+					description: `You have subscribed to ${symbol}.`,
+					type: "success",
 				});
+				// Toast.show({
+				// 	type: 'success',
+				// 	text1: 'Subscribed',
+				// 	text2: `You have subscribed to ${symbol}.`,
+				// });
 			}
 			setIsSubscribed(prevState => ({
 				...prevState,
@@ -239,13 +247,7 @@ const NotificationScreen = () => {
 						/>
 					</View>
 				</View>
-				<Toast
-					position="top"
-					visibilityTime={3000}
-					autoHide
-					topOffset={20}
-					style={{ backgroundColor: 'white', borderRadius: 8 }}
-				/>
+
 				{data?.length > 0 ? (
 					data?.map((item, index) => (
 						<ViewNotification
