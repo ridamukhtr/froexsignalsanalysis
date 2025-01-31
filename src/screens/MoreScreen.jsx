@@ -95,7 +95,9 @@ const MoreScreen = () => {
     };
   }, []);
 
-
+  const handleEmailPress = () => {
+    Linking.openURL('mailto:droid.st.labs@gmail.com');
+  };
   return (
     <CustomView centered={true}>
       <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
@@ -204,11 +206,12 @@ const MoreScreen = () => {
       </ScrollView>
 
       <CustomModal isVisible={isModalVisible} setIsVisible={setIsModalVisible}>
-        <CustomText style={styles.modalTitle}>Contact Us</CustomText>
-        <CustomText style={styles.modalContent}>
-          For inquiries, please email us at:
-        </CustomText>
-        <CustomText style={styles.email}>support@example.com</CustomText>
+        <CustomText style={styles.modalTitle}>Need Help? Get in Touch!</CustomText>
+        <CustomText >Have any questions or need assistance? Our support team is here to help.</CustomText>
+        <CustomText>Email us:</CustomText>
+        <CustomTouchableOpacity onPress={handleEmailPress} style={{ marginBottom: 15 }}>
+          <CustomText >droid.st.labs@gmail.com</CustomText>
+        </CustomTouchableOpacity>
       </CustomModal>
     </CustomView>
   );

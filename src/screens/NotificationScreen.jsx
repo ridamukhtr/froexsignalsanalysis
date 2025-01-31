@@ -80,9 +80,8 @@ const NotificationScreen = () => {
 			if (isCurrentlySubscribed) {
 				await messaging().unsubscribeFromTopic(pageId);
 				showMessage({
-					message: "Unsubscribed",
-					description: `You have unsubscribed from ${symbol}.`,
-					type: "default",
+					message: `You have unsubscribed to ${symbol}.`,
+					type: "success",
 				});
 				// Toast.show({
 				// 	type: 'info',
@@ -92,8 +91,7 @@ const NotificationScreen = () => {
 			} else {
 				await messaging().subscribeToTopic(pageId);
 				showMessage({
-					message: "Subscribed",
-					description: `You have subscribed to ${symbol}.`,
+					message: `You have subscribed to ${symbol}.`,
 					type: "success",
 				});
 				// Toast.show({

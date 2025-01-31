@@ -36,7 +36,7 @@ const App = () => {
 				<AppInitializer>
 					<Statusbar />
 					<AppNavigator />
-					<FlashMessage position="bottom" style={{ height: 60 }} />
+					<FlashMessage position="bottom" style={{ alignSelf: "center", width: "90%", borderRadius: 5, height: 50, bottom: 20 }} />
 				</AppInitializer>
 			</View>
 		</Provider>
