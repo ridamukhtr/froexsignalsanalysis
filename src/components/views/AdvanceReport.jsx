@@ -29,8 +29,7 @@ const AdvanceReport = ({ advanceDetail, info, selectedTime, onTabChange, isLoadi
     const { textColor, borderColor, dropdownColor } = useThemeManager();
 
     const { getMaSummaryColor } = useCommonFunctions();
-
-    const maSummaryColor = getMaSummaryColor(advanceDetail?.summary);
+    const maSummaryColor = advanceDetail?.summary ? getMaSummaryColor(advanceDetail?.summary) : textColor;
 
     return (
         <View style={{ marginTop: 15 }}>

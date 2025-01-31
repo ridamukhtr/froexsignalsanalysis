@@ -12,10 +12,10 @@ import time_map from '../../../assets/time_map';
 
 const SignalSummery = ({ maSummary, time, ago, ma_summery, }) => {
 
-	const { borderColor } = useThemeManager();
+	const { borderColor, textColor } = useThemeManager();
 	const { getMaSummaryColor } = useCommonFunctions();
 
-	const maSummaryColor = getMaSummaryColor(ma_summery);
+	const maSummaryColor = ma_summery ? getMaSummaryColor(ma_summery) : textColor;
 
 	return (
 

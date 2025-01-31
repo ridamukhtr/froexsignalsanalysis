@@ -40,16 +40,10 @@ const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, 
 					isOn={isSubscribed}
 					onColor={dropdownColor}
 					offColor={dropdownColor}
-					size="small"
-					circleColor="white"
+					size="medium"
 					onToggle={() => onToggleSubscription(item)}
-					icon={
-						isSubscribed ? (
-							<Icon name="check" size={15} color={COLORS.GREEN} />
-						) : (
-							<Icon name="times" size={15} color={iconColor} />
-						)
-					}
+					thumbOnStyle={{ backgroundColor: COLORS.GREEN }}
+					thumbOffStyle={{ backgroundColor: COLORS.OFF_RED }}
 				/>
 			</View>
 
@@ -60,8 +54,7 @@ const ViewNotification = ({ item, selectedTime, onToggleCheckbox, isSubscribed, 
 							disabled={!isSubscribed}
 							value={selectedTime.includes(value)}
 							onValueChange={() => onToggleCheckbox(value)}
-							tintColors={{ true: dropdownColor, false: dropdownColor }}
-							style={styles.checkbox}
+							tintColors={{ true: COLORS.GREEN, false: dropdownColor }}
 							onCheckColor={dropdownColor}
 						/>
 						<CustomText style={{ fontSize: 14 }}>{label}</CustomText>

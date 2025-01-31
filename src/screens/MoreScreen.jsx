@@ -132,13 +132,8 @@ const MoreScreen = () => {
               onColor={dropdownColor}
               offColor={dropdownColor}
               size="medium"
-              icon={
-                isEnabled ? (
-                  <Icon name="check" size={15} color={COLORS.GREEN} />
-                ) : (
-                  <Icon name="times" size={15} color={iconColor} />
-                )
-              }
+              thumbOnStyle={{ backgroundColor: COLORS.GREEN }}
+              thumbOffStyle={{ backgroundColor: COLORS.OFF_RED }}
               onToggle={handleThemeToggle}
             />
 

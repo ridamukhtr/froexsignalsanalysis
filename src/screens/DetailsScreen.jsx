@@ -221,7 +221,7 @@ const DetailsScreen = () => {
 
 						{firstSignalUpdateTime && (
 							<View style={globalStyles.alert}>
-								<CustomText style={{ color: COLORS.DANGER_RED }}>
+								<CustomText style={{ color: COLORS.INFO_BLUE }}>
 									(From {firstSignalUpdateTime.ago}) means: Market in same direction from {firstSignalUpdateTime.ago}. When new sell signal generated
 								</CustomText>
 							</View>

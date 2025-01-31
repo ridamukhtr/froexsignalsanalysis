@@ -176,8 +176,8 @@ const NotificationScreen = () => {
 		<CustomView showBackIcon title={'Notifications'}>
 			<CustomScrollView>
 				<View style={[globalStyles.alert, { marginBottom: 10 }]}>
-					<CustomText style={{ color: COLORS.DANGER_RED }}>Favourite List Notification</CustomText>
-					<CustomText style={{ color: COLORS.DANGER_RED }}>You will get alert only from your favorite list.</CustomText>
+					<CustomText style={{ color: COLORS.INFO_BLUE }}>Favourite List Notification</CustomText>
+					<CustomText style={{ color: COLORS.INFO_BLUE }}>You will get alert only from your favorite list.</CustomText>
 				</View>
 				<View style={styles.container(footerColor)}>
 					<View style={[styles.body(borderColor), globalStyles.container]}>
@@ -204,13 +204,8 @@ const NotificationScreen = () => {
 							onColor={dropdownColor}
 							offColor={dropdownColor}
 							size="medium"
-							icon={
-								isSoundEnabled ? (
-									<Icon name="check" size={15} color={COLORS.GREEN} />
-								) : (
-									<Icon name="times" size={15} color={iconColor} />
-								)
-							}
+							thumbOnStyle={{ backgroundColor: COLORS.GREEN }}
+							thumbOffStyle={{ backgroundColor: COLORS.OFF_RED }}
 							onToggle={toggleSound}
 						/>
 					</View>
@@ -238,19 +233,14 @@ const NotificationScreen = () => {
 							onColor={dropdownColor}
 							offColor={dropdownColor}
 							size="medium"
-							icon={
-								isVibrationEnabled ? (
-									<Icon name="check" size={15} color={COLORS.GREEN} />
-								) : (
-									<Icon name="times" size={15} color={iconColor} />
-								)
-							}
+							thumbOnStyle={{ backgroundColor: COLORS.GREEN }}
+							thumbOffStyle={{ backgroundColor: COLORS.OFF_RED }}
 							onToggle={toggleVibration}
 						/>
 					</View>
 				</View>
 				<Toast
-					position="top" t
+					position="top"
 					visibilityTime={3000}
 					autoHide
 					topOffset={20}

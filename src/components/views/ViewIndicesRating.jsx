@@ -8,8 +8,11 @@ import { COLORS } from '../../styles/theme-styles';
 import globalStyles from '../../styles/global-styles';
 // import components
 import CustomText from '../customComponents/CustomText';
+import { useThemeManager } from '../../lib/customHooks/useThemeManager';
 
 const ViewIndicesRating = ({ price, summaryChange, summaryChangeP, update_time, ago }) => {
+
+	const { textColor } = useThemeManager();
 
 	const localTime = moment(update_time, 'YYYY-MM-DD').local().format('YYYY-MM-DD hh:mm A');
 	const timezone = moment.tz.guess();
@@ -20,7 +23,7 @@ const ViewIndicesRating = ({ price, summaryChange, summaryChangeP, update_time, 
 		if (!isNaN(numericValue)) {
 			return numericValue > 0 ? COLORS.GREEN : COLORS.RED;
 		}
-		return COLORS.WHITE;
+		return textColor;
 	};
 
 	const maSummaryColor = getMaSummaryColor(summaryChangeP);

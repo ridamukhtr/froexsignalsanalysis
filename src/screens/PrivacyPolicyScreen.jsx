@@ -82,7 +82,7 @@ const PrivacyPolicyScreen = () => {
         </View>
         <CustomText>{all_data.detail9}</CustomText>
         <CustomTouchableOpacity onPress={handleEmailPress} style={{ marginBottom: 15 }}>
-          <CustomText style={{ color: COLORS.DANGER_RED }}>droid.st.labs@gmail.com</CustomText>
+          <CustomText style={{ color: COLORS.INFO_BLUE }}>droid.st.labs@gmail.com</CustomText>
         </CustomTouchableOpacity>
       </CustomScrollView>
     </CustomView>
