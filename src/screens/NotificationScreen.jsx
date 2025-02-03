@@ -47,7 +47,7 @@ const NotificationScreen = () => {
 	useEffect(() => {
 		loadSelectedTimes();
 		loadPreferences();
-	}, []);
+	}, [])
 
 	const toggleCheckbox = async (item, value) => {
 		setSelectedTime(prevState => {
